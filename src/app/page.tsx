@@ -190,6 +190,12 @@ export default function Home() {
             </h1>
           </div>
           <div className="flex items-center gap-2">
+            <a
+              href="/blog"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/15 text-white/60 hover:text-white hover:border-white/30 text-xs transition-all"
+            >
+              コラム
+            </a>
             <button
               onClick={handleSave_}
               disabled={isExporting}
@@ -563,7 +569,11 @@ export default function Home() {
           </div>
           <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-[10px] text-white/15">
             <p>© 2024 欧州サッカー 歴史的ベストイレブンメーカー — 非公式ファン考察ツール。All trademarks and copyrights belong to their respective owners.</p>
-            <p className="shrink-0">Powered by Claude AI (Anthropic) | 個人制作・非商用</p>
+            <div className="flex items-center gap-4 shrink-0">
+              <a href="/blog" className="text-white/30 hover:text-gold transition-colors">コラム</a>
+              <a href="/about" className="text-white/30 hover:text-gold transition-colors">運営者情報</a>
+              <p>Powered by Claude AI (Anthropic) | 個人制作・非商用</p>
+            </div>
           </div>
         </div>
       </footer>
