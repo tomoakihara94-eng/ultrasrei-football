@@ -12,6 +12,7 @@ import BenchSection from '@/components/BenchSection';
 import HexChart from '@/components/HexChart';
 import TeamAnalysis from '@/components/TeamAnalysis';
 import ManagerPanel from '@/components/ManagerPanel';
+import VisitorCounter from '@/components/VisitorCounter';
 
 const BENCH_SIZE = 5;
 
@@ -520,6 +521,11 @@ export default function Home() {
       {/* ===== FOOTER — 免責事項 ===== */}
       <footer className="border-t border-white/8 bg-luxury-card mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-10">
+          {/* Access Counter */}
+          <div className="flex items-center justify-between mb-6 px-1">
+            <span className="text-[10px] text-white/20 uppercase tracking-widest">アクセス数</span>
+            <VisitorCounter />
+          </div>
           <div className="bg-black/40 border border-white/8 rounded-2xl p-6 md:p-8 mb-8">
             <div className="flex items-center gap-2 mb-6">
               <Shield size={16} className="text-white/40" />
