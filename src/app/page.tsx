@@ -192,7 +192,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <a
               href="/blog"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/15 text-white/60 hover:text-white hover:border-white/30 text-xs transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37]/10 text-xs font-bold tracking-wide transition-all"
             >
               コラム
             </a>
