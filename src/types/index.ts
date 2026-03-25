@@ -27,7 +27,7 @@ export interface Player {
   description?: string;
 }
 
-export type Formation = '4-4-2' | '4-3-3' | '4-2-3-1' | '3-5-2' | '3-4-3';
+export type Formation = '4-4-2' | '4-3-3' | '4-2-3-1' | '3-5-2' | '3-4-3' | '4-2-4' | '3-2-2-3';
 
 export interface FormationSlot {
   position: Position;

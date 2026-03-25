@@ -332,43 +332,42 @@ export default function Home() {
             </div>
 
             {/* mode toggle + hint */}
-            <div className="px-4 pt-2 flex items-center justify-between">
-              <div className="flex items-center gap-1">
-                <span className="text-[9px] text-white/25 uppercase tracking-wider mr-1">配置:</span>
+            <div className="px-4 pt-3 pb-1 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1.5 bg-white/5 rounded-lg p-1">
                 <button
                   onClick={() => handleFreeModeToggle(false)}
-                  className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                  className={`px-3 py-1 rounded-md text-xs font-bold tracking-wide transition-all ${
                     !freeMode
-                      ? 'bg-gold/20 text-gold border border-gold/30'
-                      : 'text-white/25 hover:text-white/50'
+                      ? 'bg-[#D4AF37] text-black shadow-sm'
+                      : 'text-white/40 hover:text-white/70'
                   }`}
                 >
                   グリッド
                 </button>
                 <button
                   onClick={() => handleFreeModeToggle(true)}
-                  className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                  className={`px-3 py-1 rounded-md text-xs font-bold tracking-wide transition-all ${
                     freeMode
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                      : 'text-white/25 hover:text-white/50'
+                      ? 'bg-blue-500 text-white shadow-sm'
+                      : 'text-white/40 hover:text-white/70'
                   }`}
                 >
                   フリー
                 </button>
+              </div>
+              <div className="flex items-center gap-2">
                 {freeMode && Object.keys(customPositions).length > 0 && (
                   <button
                     onClick={() => setCustomPositions({})}
-                    className="text-[9px] text-white/20 hover:text-white/40 ml-1 underline underline-offset-2"
+                    className="text-[10px] text-white/30 hover:text-white/60 border border-white/15 hover:border-white/30 px-2 py-0.5 rounded transition-all"
                   >
                     リセット
                   </button>
                 )}
-              </div>
-              {starterCount >= 2 && (
-                <span className="text-[9px] text-white/20 tracking-wider">
+                <span className="text-[10px] text-white/25">
                   {freeMode ? 'ドラッグで自由配置' : 'D&Dで並び替え'}
                 </span>
-              )}
+              </div>
             </div>
 
             <div className="px-3 py-3">
