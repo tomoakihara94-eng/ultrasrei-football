@@ -299,13 +299,13 @@ export default function TacticalBoard({
               <g key={k}>
                 <line
                   x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
-                  stroke="rgba(212,175,55,0.07)"
-                  strokeWidth="3"
+                  stroke="rgba(212,175,55,0.05)"
+                  strokeWidth="1.2"
                 />
                 <line
                   x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
-                  stroke="rgba(212,175,55,0.28)"
-                  strokeWidth="0.9"
+                  stroke="rgba(212,175,55,0.22)"
+                  strokeWidth="0.4"
                   strokeDasharray="3 2.5"
                   filter="url(#chem-glow)"
                   className="chemistry-line"
