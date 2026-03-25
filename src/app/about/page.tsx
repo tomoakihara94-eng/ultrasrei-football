@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: '運営者情報 | 欧州サッカー歴史的ベストイレブンメーカー',
+  title: '運営者情報 | 欧州サッカー歴代ベストイレブンメーカー',
   description: 'サイトの運営者情報、制作の目的、サッカーへの想いをご紹介します。',
 };
 
@@ -18,7 +18,7 @@ export default function AboutPage() {
           >
             &larr; ツールに戻る
           </Link>
-          <span className="text-xs text-[#555]">欧州サッカー歴史的ベストイレブンメーカー</span>
+          <span className="text-xs text-[#555]">欧州サッカー歴代ベストイレブンメーカー</span>
         </div>
       </header>
 
@@ -38,7 +38,7 @@ export default function AboutPage() {
             このサイトについて
           </h2>
           <p className="text-[#ccc] leading-relaxed mb-4">
-            「欧州サッカー歴史的ベストイレブンメーカー」は、欧州サッカーを愛する個人が運営するファンサイトです。
+            「欧州サッカー歴代ベストイレブンメーカー」は、欧州サッカーを愛する個人が運営するファンサイトです。
             プレミアリーグ・ラ・リーガ・セリエA・ブンデスリーガ・リーグアンを中心に、
             何十年にもわたる名選手たちを自由に組み合わせて、自分だけのドリームチームを編成できます。
           </p>

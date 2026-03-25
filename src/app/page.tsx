@@ -126,7 +126,7 @@ export default function Home() {
         if (navigator.canShare?.({ files: [file] })) {
           await navigator.share({
             files: [file],
-            title: teamName || '歴史的ベストイレブン',
+            title: teamName || '歴代ベストイレブン',
             text: '#ベストイレブンメーカー #欧州サッカー',
           });
           return;
@@ -187,7 +187,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <Trophy size={22} className="text-gold" />
             <h1 className="font-display text-lg font-bold tracking-wider shimmer-text">
-              欧州サッカー 歴史的ベストイレブンメーカー
+              欧州サッカー 歴代ベストイレブンメーカー
             </h1>
           </div>
           <div className="flex items-center gap-2">
@@ -245,7 +245,7 @@ export default function Home() {
               type="text"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
-              placeholder="例: 歴代レアル最強イレブン"
+              placeholder="例: 歴代マドリー最強イレブン"
               className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder:text-white/20 focus:outline-none focus:border-gold/60 transition-colors text-sm"
             />
           </div>
@@ -320,7 +320,7 @@ export default function Home() {
               <div className="text-center">
                 <div className="text-xs text-gold/60 uppercase tracking-[0.3em] mb-1">Best XI</div>
                 <div className="text-xl font-black text-white font-display tracking-wider">
-                  {teamName || '歴史的ベストイレブン'}
+                  {teamName || '歴代ベストイレブン'}
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-1">
                   <span className="text-xs text-white/30">{formation}</span>
@@ -536,7 +536,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 pb-1 border-b border-white/8">非公式コンテンツについて</h3>
                 <p className="text-xs text-white/30 leading-relaxed">
-                  本サービス「欧州サッカー 歴史的ベストイレブンメーカー」は、サッカーファンが個人で制作した
+                  本サービス「欧州サッカー 歴代ベストイレブンメーカー」は、サッカーファンが個人で制作した
                   <strong className="text-white/50">非公式の考察・分析ツール</strong>です。
                   UEFA・FIFA・各国サッカー協会・プロサッカークラブ・選手本人またはその代理人・関係機関とは
                   <strong className="text-white/50">一切の公式な関係を持ちません</strong>。
@@ -573,7 +573,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-[10px] text-white/15">
-            <p>© 2024 欧州サッカー 歴史的ベストイレブンメーカー — 非公式ファン考察ツール。All trademarks and copyrights belong to their respective owners.</p>
+            <p>© 2024 欧州サッカー 歴代ベストイレブンメーカー — 非公式ファン考察ツール。All trademarks and copyrights belong to their respective owners.</p>
             <div className="flex items-center gap-4 shrink-0">
               <a href="/blog" className="text-white/30 hover:text-gold transition-colors">コラム</a>
               <a href="/about" className="text-white/30 hover:text-gold transition-colors">運営者情報</a>

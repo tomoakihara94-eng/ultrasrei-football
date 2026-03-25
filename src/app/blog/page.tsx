@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { blogPosts } from '@/lib/blogPosts';
 
 export const metadata: Metadata = {
-  title: 'レアル・マドリード深掘りコラム | 欧州サッカー歴史的ベストイレブンメーカー',
+  title: 'レアル・マドリード深掘りコラム | 欧州サッカー歴代ベストイレブンメーカー',
   description:
     'レアル・マドリードの歴史を深掘りするコラム集。ディ・ステファノ、ガラクティコス、ジダン体制のCL3連覇、ベルナベウの歴史、そして新世代の継承まで。',
 };
@@ -19,7 +19,7 @@ export default function BlogIndexPage() {
           <Link href="/" className="text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors">
             &larr; ツールに戻る
           </Link>
-          <span className="text-xs text-[#555]">欧州サッカー歴史的ベストイレブンメーカー</span>
+          <span className="text-xs text-[#555]">欧州サッカー歴代ベストイレブンメーカー</span>
         </div>
       </header>
 

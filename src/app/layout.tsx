@@ -15,10 +15,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: '欧州サッカー歴史的ベストイレブンメーカー',
+  title: '欧州サッカー歴代ベストイレブンメーカー',
   description: '欧州サッカーの歴史的名手でベストイレブンを編成。AI能力査定＆タクティカルボード生成。非公式ファンアプリ。',
   openGraph: {
-    title: '欧州サッカー歴史的ベストイレブンメーカー',
+    title: '欧州サッカー歴代ベストイレブンメーカー',
     description: '歴史的名手でベストイレブンを作成してXにシェア',
     type: 'website',
   },
