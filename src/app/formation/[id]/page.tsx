@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { Trophy, Copy, Check, Send } from 'lucide-react';
+import { Trophy, Copy, Check, Send, Heart, Eye } from 'lucide-react';
 import TacticalBoard from '@/components/TacticalBoard';
 import type { Player, Formation } from '@/types';
 import type { Comment } from '@/lib/supabase';
@@ -16,6 +16,8 @@ type FormationData = {
   bench: (Player | null)[];
   manager_style: string | null;
   custom_positions: Record<number, { x: number; y: number }>;
+  likes: number;
+  view_count: number;
   created_at: string;
 };
 
@@ -125,6 +127,8 @@ export default function FormationPage() {
   const [data, setData] = useState<FormationData | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [likes, setLikes] = useState(0);
+  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     fetch(`/api/formations/${id}`)
@@ -132,8 +136,27 @@ export default function FormationPage() {
         if (!r.ok) { setNotFound(true); return null; }
         return r.json();
       })
-      .then((d) => d && setData(d));
+      .then((d) => {
+        if (!d) return;
+        setData(d);
+        setLikes(d.likes ?? 0);
+        // 閲覧数カウント
+        fetch(`/api/formations/${id}/view`, { method: 'POST' });
+        // localStorage でいいね済みチェック
+        const likedSet = JSON.parse(localStorage.getItem('liked_formations') ?? '[]') as string[];
+        setLiked(likedSet.includes(id));
+      });
   }, [id]);
+
+  async function handleLike() {
+    if (liked) return;
+    const res = await fetch(`/api/formations/${id}/like`, { method: 'POST' });
+    if (!res.ok) return;
+    setLikes((n) => n + 1);
+    setLiked(true);
+    const likedSet = JSON.parse(localStorage.getItem('liked_formations') ?? '[]') as string[];
+    localStorage.setItem('liked_formations', JSON.stringify([...likedSet, id]));
+  }
 
   async function copyUrl() {
     await navigator.clipboard.writeText(window.location.href);
@@ -171,13 +194,21 @@ export default function FormationPage() {
             <Trophy size={16} />
             <span className="text-sm font-bold">ベストイレブンメーカー</span>
           </Link>
-          <button
-            onClick={copyUrl}
-            className="flex items-center gap-1.5 px-3 py-1.5 border border-[#D4AF37]/40 rounded-lg text-xs text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-colors"
-          >
-            {copied ? <Check size={12} /> : <Copy size={12} />}
-            {copied ? 'コピー済み' : 'URLをコピー'}
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/gallery"
+              className="text-xs text-white/40 hover:text-white/70 transition-colors px-2 py-1.5"
+            >
+              一覧
+            </Link>
+            <button
+              onClick={copyUrl}
+              className="flex items-center gap-1.5 px-3 py-1.5 border border-[#D4AF37]/40 rounded-lg text-xs text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-colors"
+            >
+              {copied ? <Check size={12} /> : <Copy size={12} />}
+              {copied ? 'コピー済み' : 'URLをコピー'}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -192,7 +223,27 @@ export default function FormationPage() {
             >
               {data.team_name || '歴代ベストイレブン'}
             </h1>
-            <p className="text-xs text-white/25 mt-1">{starterCount}/11人 · {new Date(data.created_at).toLocaleDateString('ja-JP')}</p>
+            <div className="flex items-center gap-4 mt-2">
+              <span className="text-xs text-white/25">{starterCount}/11人 · {new Date(data.created_at).toLocaleDateString('ja-JP')}</span>
+              <span className="flex items-center gap-1 text-xs text-white/30">
+                <Eye size={11} />
+                {(data.view_count ?? 0).toLocaleString()}
+              </span>
+            </div>
+            {/* Like button */}
+            <button
+              onClick={handleLike}
+              disabled={liked}
+              className={`mt-3 flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold transition-all ${
+                liked
+                  ? 'border-rose-500/50 text-rose-400 bg-rose-500/10 cursor-default'
+                  : 'border-white/20 text-white/50 hover:border-rose-500/50 hover:text-rose-400 hover:bg-rose-500/10'
+              }`}
+            >
+              <Heart size={14} className={liked ? 'fill-rose-400' : ''} />
+              {liked ? 'いいね済み' : 'いいね！'}
+              <span className="ml-1 font-mono">{likes}</span>
+            </button>
           </div>
 
           <TacticalBoard
