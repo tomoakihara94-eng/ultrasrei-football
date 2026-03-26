@@ -228,7 +228,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <a
               href="/gallery"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all"
             >
               みんなのフォーメーション
             </a>
