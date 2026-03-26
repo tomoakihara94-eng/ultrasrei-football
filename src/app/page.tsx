@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { Share2, Download, Trophy, Shield, Sparkles, Zap, BarChart2, X } from 'lucide-react';
+import { Share2, Download, Trophy, Shield, Sparkles, Zap, BarChart2, X, Link2, Copy, Check } from 'lucide-react';
 import type { Player, Formation, Position } from '@/types';
 import { formations } from '@/lib/formations';
 import { MANAGER_STYLES, type ManagerStyle } from '@/lib/managerStyles';
@@ -29,6 +29,9 @@ export default function Home() {
   const [shareHint, setShareHint] = useState(false);
   const [freeMode, setFreeMode] = useState(false);
   const [customPositions, setCustomPositions] = useState<Record<number, { x: number; y: number }>>({});
+  const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [urlCopied, setUrlCopied] = useState(false);
 
   const slots = formations[formation];
 
@@ -109,6 +112,38 @@ export default function Home() {
     } finally {
       setIsExporting(false);
     }
+  }
+
+  async function handlePublish() {
+    setIsPublishing(true);
+    try {
+      const res = await fetch('/api/formations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          team_name: teamName || null,
+          formation,
+          players: starters,
+          bench,
+          manager_style: managerStyle?.id ?? null,
+          custom_positions: freeMode ? customPositions : {},
+        }),
+      });
+      if (!res.ok) throw new Error('Failed');
+      const { id } = await res.json();
+      setPublishedUrl(`${window.location.origin}/formation/${id}`);
+    } catch {
+      alert('保存に失敗しました。Supabaseの設定を確認してください。');
+    } finally {
+      setIsPublishing(false);
+    }
+  }
+
+  async function handleCopyUrl() {
+    if (!publishedUrl) return;
+    await navigator.clipboard.writeText(publishedUrl);
+    setUrlCopied(true);
+    setTimeout(() => setUrlCopied(false), 2000);
   }
 
   async function handleShareX() {
@@ -198,6 +233,14 @@ export default function Home() {
               コラム
             </a>
             <button
+              onClick={handlePublish}
+              disabled={isPublishing || starters.filter(Boolean).length === 0}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#60a5fa]/50 text-[#60a5fa] hover:bg-[#60a5fa]/10 text-xs font-bold transition-all disabled:opacity-30"
+            >
+              <Link2 size={13} />
+              {isPublishing ? '発行中...' : 'URLを発行'}
+            </button>
+            <button
               onClick={handleSave_}
               disabled={isExporting}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/15 text-white/60 hover:text-white hover:border-white/30 text-xs transition-all"
@@ -228,6 +271,41 @@ export default function Home() {
             <button onClick={() => setShareHint(false)} className="text-white/30 hover:text-white ml-1">
               <X size={14} />
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* ===== Published URL panel ===== */}
+      {publishedUrl && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up w-[calc(100vw-2rem)] max-w-md">
+          <div className="flex flex-col gap-2 px-4 py-3 rounded-xl bg-[#0f0f0f] border border-[#60a5fa]/40 shadow-lg text-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Link2 size={13} className="text-[#60a5fa] shrink-0" />
+                <span className="text-white/70 text-xs font-bold">URLを発行しました</span>
+              </div>
+              <button onClick={() => setPublishedUrl(null)} className="text-white/30 hover:text-white">
+                <X size={14} />
+              </button>
+            </div>
+            <div className="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-1.5">
+              <span className="text-[11px] text-white/50 truncate flex-1">{publishedUrl}</span>
+              <button
+                onClick={handleCopyUrl}
+                className="shrink-0 flex items-center gap-1 text-[11px] font-bold text-[#60a5fa] hover:text-white transition-colors"
+              >
+                {urlCopied ? <Check size={11} /> : <Copy size={11} />}
+                {urlCopied ? 'コピー済み' : 'コピー'}
+              </button>
+            </div>
+            <a
+              href={publishedUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] text-center text-[#60a5fa] hover:underline"
+            >
+              ページを開く →
+            </a>
           </div>
         </div>
       )}
