@@ -182,50 +182,67 @@ export default function Home() {
     <div className="min-h-screen bg-luxury-black flex flex-col">
 
       {/* ===== HEADER ===== */}
-      <header className="border-b border-white/5 px-6 py-4 flex-shrink-0">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Trophy size={22} className="text-gold" />
-            <h1 className="font-display text-lg font-bold tracking-wider shimmer-text">
-              欧州サッカー 歴代ベストイレブンメーカー
-            </h1>
+      <header className="border-b border-white/5 px-4 py-3 flex-shrink-0">
+        <div className="max-w-7xl mx-auto">
+
+          {/* ── Row 1: ロゴ + アクションボタン ── */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <Trophy size={18} className="text-gold shrink-0" />
+              <h1 className="font-display font-bold tracking-wider shimmer-text text-sm md:text-base truncate">
+                <span className="hidden sm:inline">欧州サッカー 歴代</span>ベストイレブンメーカー
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-1.5 shrink-0">
+              {/* デスクトップのみナビ表示 */}
+              <a href="/gallery" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all">
+                みんなのフォーメーション
+              </a>
+              <a href="/quiz" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all">
+                🏆 クイズ
+              </a>
+              <a href="/blog" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37]/10 text-xs font-bold tracking-wide transition-all">
+                コラム
+              </a>
+
+              {/* 保存ボタン: モバイルはアイコンのみ */}
+              <button
+                onClick={handleSave_}
+                disabled={isExporting}
+                className="flex items-center gap-1.5 px-2.5 py-2 md:px-3 rounded-lg border border-white/15 text-white/60 hover:text-white hover:border-white/30 text-xs transition-all min-w-[36px] justify-center"
+                aria-label="保存"
+              >
+                <Download size={14} />
+                <span className="hidden sm:inline">保存</span>
+              </button>
+
+              {/* Xシェアボタン: モバイルはアイコンのみ */}
+              <button
+                onClick={handleShareX}
+                disabled={isExporting}
+                className="flex items-center gap-1.5 px-2.5 py-2 sm:px-4 rounded-lg bg-gold-gradient text-black font-bold text-xs tracking-wider hover:shadow-gold transition-all disabled:opacity-50 min-w-[36px] justify-center"
+                aria-label="Xにシェア"
+              >
+                <Share2 size={14} />
+                <span className="hidden sm:inline">Xにシェア</span>
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <a
-              href="/gallery"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all"
-            >
+
+          {/* ── Row 2: モバイルのみ横スクロールナビ ── */}
+          <div className="flex md:hidden gap-2 mt-2.5 overflow-x-auto pb-0.5" style={{ scrollbarWidth: 'none' }}>
+            <a href="/gallery" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 text-xs font-bold whitespace-nowrap">
               みんなのフォーメーション
             </a>
-            <a
-              href="/quiz"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all"
-            >
+            <a href="/quiz" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 text-xs font-bold whitespace-nowrap">
               🏆 クイズ
             </a>
-            <a
-              href="/blog"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37]/10 text-xs font-bold tracking-wide transition-all"
-            >
+            <a href="/blog" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold whitespace-nowrap">
               コラム
             </a>
-            <button
-              onClick={handleSave_}
-              disabled={isExporting}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/15 text-white/60 hover:text-white hover:border-white/30 text-xs transition-all"
-            >
-              <Download size={13} />
-              保存
-            </button>
-            <button
-              onClick={handleShareX}
-              disabled={isExporting}
-              className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-gold-gradient text-black font-bold text-xs tracking-wider hover:shadow-gold transition-all disabled:opacity-50"
-            >
-              <Share2 size={13} />
-              Xにシェア
-            </button>
           </div>
+
         </div>
       </header>
 
@@ -246,25 +263,25 @@ export default function Home() {
 
 
       {/* ===== MAIN ===== */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 flex flex-col lg:flex-row gap-4 sm:gap-6">
 
         {/* ---- LEFT panel ---- */}
-        <aside className="lg:w-72 flex-shrink-0 space-y-4">
+        <aside className="lg:w-72 flex-shrink-0 space-y-3 sm:space-y-4">
 
           {/* team name */}
-          <div className="bg-luxury-card border border-white/8 rounded-xl p-4">
+          <div className="bg-luxury-card border border-white/8 rounded-xl p-3 sm:p-4">
             <label className="block text-xs text-white/40 uppercase tracking-widest mb-2">チーム名</label>
             <input
               type="text"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
               placeholder="例: 歴代マドリー最強イレブン"
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder:text-white/20 focus:outline-none focus:border-gold/60 transition-colors text-sm"
+              className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white placeholder:text-white/20 focus:outline-none focus:border-gold/60 transition-colors text-sm"
             />
           </div>
 
           {/* formation */}
-          <div className="bg-luxury-card border border-white/8 rounded-xl p-4">
+          <div className="bg-luxury-card border border-white/8 rounded-xl p-3 sm:p-4">
             <FormationSelector current={formation} onChange={(f) => { setFormation(f); setCustomPositions({}); }} />
           </div>
 
@@ -407,13 +424,13 @@ export default function Home() {
 
         {/* ---- RIGHT: roster / analysis tabs ---- */}
         <aside className="lg:w-64 flex-shrink-0">
-          <div className="bg-luxury-card border border-white/8 rounded-xl p-4">
+          <div className="bg-luxury-card border border-white/8 rounded-xl p-3 sm:p-4">
 
             {/* tab switcher */}
-            <div className="flex gap-1.5 mb-4">
+            <div className="flex gap-1.5 mb-3 sm:mb-4">
               <button
                 onClick={() => setRightTab('roster')}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
                   rightTab === 'roster'
                     ? 'bg-gold/15 text-gold border border-gold/30'
                     : 'text-white/30 hover:text-white/50 border border-transparent'
@@ -423,7 +440,7 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setRightTab('analysis')}
-                className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
                   rightTab === 'analysis'
                     ? 'bg-gold/15 text-gold border border-gold/30'
                     : 'text-white/30 hover:text-white/50 border border-transparent'
