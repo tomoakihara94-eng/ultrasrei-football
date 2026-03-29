@@ -50,6 +50,19 @@ function getRankLabel(i: number) {
   return { label: `${i + 1}位`, color: 'rgba(255,255,255,0.3)' };
 }
 
+function calcHensachi(score: number, total: number, level: 1 | 2 | 3): number {
+  const base  = { 1: 35, 2: 45, 3: 55 }[level];
+  const range = { 1: 30, 2: 35, 3: 45 }[level];
+  return Math.round(base + (score / total) * range);
+}
+
+function hensachiColor(h: number): string {
+  if (h >= 80) return '#D4AF37';
+  if (h >= 65) return '#FBBF24';
+  if (h >= 50) return '#93C5FD';
+  return '#F87171';
+}
+
 // ─────────────────────────────────────────────────────────────────
 // カラートークン
 // ─────────────────────────────────────────────────────────────────
@@ -174,12 +187,11 @@ export default function QuizPage() {
   }
 
   function handleShareX() {
-    const t   = getTitle(score);
-    const pct = Math.round((score / questions.length) * 100);
-    const passed = score >= PASS_THRESHOLD[selectedLevel];
-    const passText = passed ? `LV.${selectedLevel} 合格！` : `LV.${selectedLevel} 挑戦中`;
-    const text = `【レアル・マドリード経歴クイズ】\n${passText}\n称号：${t.emoji} ${t.title}\n${questions.length}問中${score}問正解（${pct}%）\n#レアルマドリード #HalaMadrid #ベストイレブンメーカー`;
-    window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent('https://ultrasrei.com/quiz')}`, '_blank');
+    const h    = calcHensachi(score, questions.length, selectedLevel);
+    const t    = getTitle(score);
+    const text = `俺のマドリディスタ偏差値は${h}！これを超えられる奴いる？💪\n称号：${t.emoji} ${t.title}\n${score}/${questions.length}問正解 LV.${selectedLevel}\n#レアルマドリード #HalaMadrid`;
+    const shareUrl = `https://ultrasrei.com/quiz/share?h=${h}&lv=${selectedLevel}&s=${score}&t=${questions.length}`;
+    window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
   }
 
   function handleRestart() {
@@ -526,6 +538,8 @@ export default function QuizPage() {
     const pct       = Math.round((score / questions.length) * 100);
     const threshold = PASS_THRESHOLD[selectedLevel];
     const isLv3Legend = selectedLevel === 3 && passed;
+    const hensachi  = calcHensachi(score, questions.length, selectedLevel);
+    const hColor    = hensachiColor(hensachi);
 
     return (
       <div style={{ ...bg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
@@ -622,6 +636,48 @@ export default function QuizPage() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          {/* 偏差値ゲージ */}
+          <div style={{
+            background: 'linear-gradient(160deg,#0d1a30 0%,#0F1E35 100%)',
+            border: `2px solid ${hColor}40`,
+            borderRadius: 20, padding: '20px 22px', marginBottom: 12,
+            boxShadow: `0 0 24px ${hColor}18`,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 12 }}>
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em' }}>マドリディスタ偏差値</span>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                <span style={{ fontFamily: 'Georgia,serif', fontSize: 52, fontWeight: 900, color: hColor, lineHeight: 1 }}>{hensachi}</span>
+                <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.2)' }}>/100</span>
+              </div>
+            </div>
+
+            {/* Gauge bar */}
+            <div style={{ width: '100%', height: 14, backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: 7, overflow: 'hidden', marginBottom: 6 }}>
+              <div style={{
+                width: `${hensachi}%`, height: '100%',
+                background: 'linear-gradient(90deg,#F87171 0%,#FBBF24 40%,#D4AF37 68%,#F0D060 100%)',
+                borderRadius: 7,
+                transition: 'width 1s ease-out',
+              }} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              {['初心者', '普通', '上級', '銀河系', '伝説'].map(l => (
+                <span key={l} style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)' }}>{l}</span>
+              ))}
+            </div>
+
+            {/* Share prompt */}
+            <div style={{
+              marginTop: 14, padding: '10px 14px', borderRadius: 10,
+              backgroundColor: `${hColor}14`, border: `1px solid ${hColor}35`,
+              textAlign: 'center',
+            }}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: hColor }}>
+                俺の偏差値は{hensachi}。これを超えられる奴いる？💪
+              </span>
             </div>
           </div>
 

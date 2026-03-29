@@ -16,30 +16,32 @@ function getDateKeys() {
   const jan1 = new Date(y, 0, 1);
   const week = String(Math.ceil(((now.getTime() - jan1.getTime()) / 86400000 + jan1.getDay() + 1) / 7)).padStart(2, '0');
   return {
-    daily: `daily-${y}-${m}-${d}`,
-    weekly: `weekly-${y}-W${week}`,
+    daily:   `daily-${y}-${m}-${d}`,
+    weekly:  `weekly-${y}-W${week}`,
     monthly: `monthly-${y}-${m}`,
   };
 }
 
-const NAMESPACE = 'ultrasrei-football';
-const POLL_INTERVAL = 30_000; // 30秒ごとに最新値を取得
+const POLL_INTERVAL = 30_000;
 
 async function hitCounter(key: string): Promise<number> {
-  const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${key}`);
+  const res = await fetch('/api/pageviews', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key }),
+  });
   if (!res.ok) return 0;
-  const data = await res.json();
+  const data = await res.json() as { value: number };
   return data.value ?? 0;
 }
 
 async function getCounter(key: string): Promise<number> {
-  const res = await fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${key}`);
+  const res = await fetch(`/api/pageviews?key=${encodeURIComponent(key)}`);
   if (!res.ok) return 0;
-  const data = await res.json();
+  const data = await res.json() as { value: number };
   return data.value ?? 0;
 }
 
-// 数字が変わったときに光るアニメーション用
 function AnimatedNumber({ value }: { value: number | null }) {
   const [flash, setFlash] = useState(false);
   const prevRef = useRef<number | null>(null);
