@@ -489,11 +489,12 @@ export default function QuizPage() {
                 return (
                   <button key={choice} onClick={() => handleSelect(choice)} disabled={selected !== null} style={{
                     backgroundColor: bg2, border: `1px solid ${border2}`, borderRadius: 12,
-                    padding: '14px 10px', color: color2,
+                    padding: '10px', color: color2,
                     fontFamily: /^\d/.test(choice) ? 'Georgia,serif' : 'inherit',
-                    fontSize: choice.length > 10 ? 12 : choice.length > 6 ? 14 : 22,
+                    fontSize: 15,
                     fontWeight: 700, cursor: selected !== null ? 'default' : 'pointer',
-                    transition: 'all 0.15s ease', boxShadow: shadow, lineHeight: 1.3,
+                    transition: 'all 0.15s ease', boxShadow: shadow, lineHeight: 1.4,
+                    minHeight: 60, wordBreak: 'break-word', whiteSpace: 'normal',
                   }}>
                     {choice}
                   </button>
