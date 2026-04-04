@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSupabase } from '@/lib/supabase';
 
 // ─────────────────────────────────────────────────────────────────
 // 統一問題型
@@ -9,257 +8,279 @@ export interface QuizQuestion {
   choices: string[];
   correct_answer: string;
   level: 1 | 2 | 3;
-  genre: 'stats' | 'history';
+  genre: 'winners' | 'legends';
   context?: string;
   emoji?: string;
   hint?: string;
 }
 
 // ─────────────────────────────────────────────────────────────────
-// フォールバック用スタッツデータ
+// LV.1 — 近年のスター選手と優勝クラブ（12問からランダム10問）
 // ─────────────────────────────────────────────────────────────────
-const FALLBACK_PLAYERS = [
-  { player_name: 'クリスティアーノ・ロナウド', season: '2009-10', goals: 33,  assists: 11 },
-  { player_name: 'クリスティアーノ・ロナウド', season: '2010-11', goals: 53,  assists: 20 },
-  { player_name: 'クリスティアーノ・ロナウド', season: '2011-12', goals: 60,  assists: 18 },
-  { player_name: 'カリム・ベンゼマ',           season: '2020-21', goals: 30,  assists: 9  },
-  { player_name: 'カリム・ベンゼマ',           season: '2021-22', goals: 44,  assists: 15 },
-  { player_name: 'カリム・ベンゼマ',           season: '2022-23', goals: 19,  assists: 6  },
-  { player_name: 'ジュード・ベリンガム',        season: '2023-24', goals: 23,  assists: 13 },
-  { player_name: 'ヴィニシウス・ジュニオール',  season: '2021-22', goals: 22,  assists: 20 },
-  { player_name: 'ヴィニシウス・ジュニオール',  season: '2022-23', goals: 23,  assists: 8  },
-  { player_name: 'ヴィニシウス・ジュニオール',  season: '2023-24', goals: 24,  assists: 11 },
-];
-
-const PLAYER_EMOJI: Record<string, string> = {
-  'クリスティアーノ・ロナウド': '🇵🇹',
-  'カリム・ベンゼマ':           '🇫🇷',
-  'ジュード・ベリンガム':        '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-  'ヴィニシウス・ジュニオール':  '🇧🇷',
-  'トニ・クロース':              '🇩🇪',
-};
-
-type PlayerRow = { player_name: string; season: string; goals: number; assists: number };
-
-function numChoices(correct: number, spread: number[]): string[] {
-  const s = new Set<number>([correct]);
-  for (const o of spread) {
-    if (s.size < 4 && correct - o >= 0) s.add(correct - o);
-    if (s.size < 4) s.add(correct + o);
-  }
-  let n = 1;
-  while (s.size < 4) {
-    if (!s.has(correct + n)) s.add(correct + n);
-    if (s.size < 4 && correct - n >= 0) s.add(correct - n);
-    n++;
-  }
-  return Array.from(s).sort(() => Math.random() - 0.5).map(String);
-}
-
-function buildGoalQuestions(rows: PlayerRow[]): QuizQuestion[] {
-  return rows.map(r => ({
-    question_text: 'このシーズンのレアル・マドリードでのゴール数は？',
-    choices: numChoices(r.goals, [3, 7, 12, 18]),
-    correct_answer: String(r.goals),
-    level: 1 as const, genre: 'stats' as const,
-    context: `${r.player_name}｜${r.season} シーズン`,
-    emoji: PLAYER_EMOJI[r.player_name] ?? '⚽',
-    hint: '全コンペティション通算（推定値）',
-  }));
-}
-
-function buildAssistQuestions(rows: PlayerRow[]): QuizQuestion[] {
-  return rows.map(r => ({
-    question_text: 'このシーズンのレアル・マドリードでのアシスト数は？',
-    choices: numChoices(r.assists, [2, 4, 7, 11]),
-    correct_answer: String(r.assists),
-    level: 2 as const, genre: 'stats' as const,
-    context: `${r.player_name}｜${r.season} シーズン`,
-    emoji: PLAYER_EMOJI[r.player_name] ?? '⚽',
-  }));
-}
-
-// ─────────────────────────────────────────────────────────────────
-// LV.3 スタッツ: クロース パス成功率
-// ─────────────────────────────────────────────────────────────────
-const KROOS_STATS: QuizQuestion[] = [
+const QUESTIONS_LV1: QuizQuestion[] = [
   {
-    question_text: 'このシーズンのパス成功率は？（全コンペティション）',
-    choices: ['90.6%', '92.1%', '92.8%', '94.4%'],
-    correct_answer: '92.8%',
-    level: 3, genre: 'stats',
-    context: 'トニ・クロース｜2019-20 シーズン',
-    emoji: '🇩🇪',
-    hint: 'クロースはシーズン通じて90%超を維持した',
+    question_text: '2023-24シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['レアル・マドリード', 'マンチェスター・シティ', 'バイエルン・ミュンヘン', 'ボルシア・ドルトムント'],
+    correct_answer: 'レアル・マドリード',
+    level: 1, genre: 'winners', emoji: '🏆',
+    hint: 'ウェンブリーでドルトムントを2-0で下し、15度目の優勝',
   },
   {
-    question_text: 'このシーズンのパス成功率は？（全コンペティション）',
-    choices: ['90.4%', '91.4%', '92.1%', '93.5%'],
-    correct_answer: '92.1%',
-    level: 3, genre: 'stats',
-    context: 'トニ・クロース｜2021-22 シーズン',
-    emoji: '🇩🇪',
-    hint: 'CL優勝シーズンでも高水準を記録',
+    question_text: '2022-23シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['マンチェスター・シティ', 'インテル', 'レアル・マドリード', 'ナポリ'],
+    correct_answer: 'マンチェスター・シティ',
+    level: 1, genre: 'winners', emoji: '🌟',
+    hint: 'グアルディオラ監督のもとリーグ・FA杯との3冠を達成',
   },
   {
-    question_text: 'このシーズンのパス成功率は？（全コンペティション）',
-    choices: ['91.8%', '92.9%', '93.8%', '95.2%'],
-    correct_answer: '93.8%',
-    level: 3, genre: 'stats',
-    context: 'トニ・クロース｜2022-23 シーズン',
-    emoji: '🇩🇪',
-    hint: 'ラスト近いシーズンでもキャリアハイ水準',
+    question_text: '2021-22シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['レアル・マドリード', 'リバプール', 'マンチェスター・シティ', 'チェルシー'],
+    correct_answer: 'レアル・マドリード',
+    level: 1, genre: 'winners', emoji: '⭐',
+    hint: 'ヴィニシウスJrのゴールでリバプールを1-0で下した',
+  },
+  {
+    question_text: '2020-21シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['チェルシー', 'マンチェスター・シティ', 'バイエルン・ミュンヘン', 'パリSG'],
+    correct_answer: 'チェルシー',
+    level: 1, genre: 'winners', emoji: '🏆',
+    hint: 'ポルトでの決勝。ハヴェルツのゴールで1-0',
+  },
+  {
+    question_text: '2019-20シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['バイエルン・ミュンヘン', 'パリSG', 'ライプツィヒ', 'アトレティコ・マドリード'],
+    correct_answer: 'バイエルン・ミュンヘン',
+    level: 1, genre: 'winners', emoji: '⭐',
+    hint: 'リスボンでのバブル大会。PSGを1-0で下し無敗優勝',
+  },
+  {
+    question_text: '2018-19シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['リバプール', 'トットナム', 'バルセロナ', 'アヤックス'],
+    correct_answer: 'リバプール',
+    level: 1, genre: 'winners', emoji: '🌟',
+    hint: 'マドリードでの決勝。オリギの2ゴールでトットナムを2-0',
+  },
+  {
+    question_text: 'チャンピオンズリーグ史上最多優勝クラブは？（2024時点）',
+    choices: ['レアル・マドリード', 'ACミラン', 'リバプール', 'バルセロナ'],
+    correct_answer: 'レアル・マドリード',
+    level: 1, genre: 'winners', emoji: '👑',
+    hint: '2024年時点で15度の欧州制覇を誇る',
+  },
+  {
+    question_text: 'CLで最多通算ゴールを記録している選手は？（2024時点）',
+    choices: ['クリスティアーノ・ロナウド', 'リオネル・メッシ', 'ラウール', 'カリム・ベンゼマ'],
+    correct_answer: 'クリスティアーノ・ロナウド',
+    level: 1, genre: 'winners', emoji: '🇵🇹',
+    hint: 'マンU・レアル・ユーベ・アル・ナスルで積み上げた記録',
+  },
+  {
+    question_text: '2023-24 CL決勝でレアルの2得点を記録した2人は？',
+    choices: ['カルバハルとヴィニシウスJr', 'ベリンガムとヴィニシウスJr', 'ロドリゴとカルバハル', 'ベリンガムとロドリゴ'],
+    correct_answer: 'カルバハルとヴィニシウスJr',
+    level: 1, genre: 'winners', emoji: '🎯',
+    hint: '守備の要DFが先制し、エースFWがダメ押し',
+  },
+  {
+    question_text: '2016-17シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['レアル・マドリード', 'ユベントス', 'モナコ', 'アトレティコ・マドリード'],
+    correct_answer: 'レアル・マドリード',
+    level: 1, genre: 'winners', emoji: '⭐',
+    hint: 'カーディフでユベントスを4-1。CL初の連覇達成',
+  },
+  {
+    question_text: '2015-16シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['レアル・マドリード', 'アトレティコ・マドリード', 'バイエルン', 'マンチェスター・C'],
+    correct_answer: 'レアル・マドリード',
+    level: 1, genre: 'winners', emoji: '🏆',
+    hint: 'ミラノ決勝でシティダービーを制し、PK戦でも勝利',
+  },
+  {
+    question_text: '2013-14シーズンのチャンピオンズリーグ優勝クラブは？',
+    choices: ['レアル・マドリード', 'アトレティコ・マドリード', 'バイエルン', 'ドルトムント'],
+    correct_answer: 'レアル・マドリード',
+    level: 1, genre: 'winners', emoji: '👑',
+    hint: 'デシマ達成。ラモスの93分同点弾から逆転優勝',
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────
-// ヒストリー問題 LV.1（初級）
+// LV.2 — 伝説の逆転劇や有名な得点シーン（12問からランダム10問）
 // ─────────────────────────────────────────────────────────────────
-const HISTORY_LV1: QuizQuestion[] = [
+const QUESTIONS_LV2: QuizQuestion[] = [
   {
-    question_text: 'デシマ（10度目のCL優勝）を達成した年は？',
-    choices: ['2012年', '2013年', '2014年', '2016年'],
-    correct_answer: '2014年',
-    level: 1, genre: 'history', emoji: '🏆',
-    hint: 'リスボンのエスタジオ・ダ・ルスで延長戦の末アトレティコを下した',
+    question_text: '「イスタンブールの奇跡」(2005 CL決勝)ハーフタイムのスコアは？',
+    choices: ['ミラン 3-0 リバプール', 'ミラン 2-0 リバプール', 'ミラン 4-0 リバプール', 'ミラン 1-0 リバプール'],
+    correct_answer: 'ミラン 3-0 リバプール',
+    level: 2, genre: 'legends', emoji: '🔥',
+    hint: '後半6分間に3点を奪い追いつき、PK戦で優勝した奇跡',
   },
   {
-    question_text: 'デシマ決勝、後半アディショナルタイムに同点ゴールを決めたのは誰？',
-    choices: ['クリスティアーノ・ロナウド', 'ガレス・ベイル', 'セルヒオ・ラモス', 'カリム・ベンゼマ'],
-    correct_answer: 'セルヒオ・ラモス',
-    level: 1, genre: 'history', emoji: '⚽',
-    hint: 'コーナーキックから93分にヘッドで叩き込み、延長戦に持ち込んだ',
+    question_text: '2005 CL決勝PK戦で決定的なセーブを連発したリバプールのGKは？',
+    choices: ['ジェルジ・デュデク', 'ジェームズ・リーチ', 'クリス・カービン', 'イケル・カシジャス'],
+    correct_answer: 'ジェルジ・デュデク',
+    level: 2, genre: 'legends', emoji: '🧤',
+    hint: 'シェフチェンコのシュートを奇跡的に止めたポーランド人GK',
   },
   {
-    question_text: 'ジュード・ベリンガムがReal Madridに加入した年は？',
-    choices: ['2021年', '2022年', '2023年', '2024年'],
-    correct_answer: '2023年',
-    level: 1, genre: 'history', emoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-    hint: 'ドルトムントから約1億ユーロで移籍',
-  },
-  {
-    question_text: '2022年CL準決勝・マンチェスター・C戦でベンゼマが達成した記録は？',
-    choices: ['先制ゴール2発', 'PK2本', '逆転ハットトリック', 'アシスト3本'],
-    correct_answer: '逆転ハットトリック',
-    level: 1, genre: 'history', emoji: '🇫🇷',
-    hint: '2試合合計で逆転を演出した伝説のパフォーマンス',
-  },
-  {
-    question_text: 'ジダンがReal Madrid監督としてCLを初めて制したのは何年？',
-    choices: ['2014年', '2015年', '2016年', '2017年'],
-    correct_answer: '2016年',
-    level: 1, genre: 'history', emoji: '🇫🇷',
-    hint: 'PK戦でアトレティコ・マドリードを下した',
-  },
-];
-
-// ─────────────────────────────────────────────────────────────────
-// ヒストリー問題 LV.2（中級）
-// ─────────────────────────────────────────────────────────────────
-const HISTORY_LV2: QuizQuestion[] = [
-  {
-    question_text: 'ジダンの伝説のボレーゴールが生まれたCL決勝の年は？',
-    choices: ['1998年', '2000年', '2002年', '2004年'],
-    correct_answer: '2002年',
-    level: 2, genre: 'history', emoji: '🇫🇷',
-    hint: 'ハンプデン・パーク（グラスゴー）でのゴールは「世紀のゴール」と称される',
-  },
-  {
-    question_text: 'ジダンのボレーゴールの相手チームは？',
-    choices: ['バイエルン・ミュンヘン', 'ユベントス', 'バイエル・レバークーゼン', 'マンチェスター・U'],
+    question_text: '2001-02 CL決勝でジダンが決めた伝説のボレーゴールの相手クラブは？',
+    choices: ['バイエル・レバークーゼン', 'バイエルン・ミュンヘン', 'ユベントス', 'バレンシア'],
     correct_answer: 'バイエル・レバークーゼン',
-    level: 2, genre: 'history', emoji: '🏆',
-    hint: 'ロベルト・カルロスのクロスをジダンが左足ボレーで合わせた',
+    level: 2, genre: 'legends', emoji: '🇫🇷',
+    hint: 'グラスゴーのハンプデン・パーク。ロベルト・カルロスのクロスを左足で合わせた',
   },
   {
-    question_text: 'ルイス・フィーゴがバルセロナからReal Madridに移籍したのは何年？',
-    choices: ['1999年', '2000年', '2001年', '2002年'],
-    correct_answer: '2000年',
-    level: 2, genre: 'history', emoji: '🇵🇹',
-    hint: 'ガラクティコス第1弾の移籍。後のカンプ・ノウ凱旋試合は伝説に',
+    question_text: '2019 CLSFでアヤックスに逆転、90+6分の決勝弾を決めたトットナムの選手は？',
+    choices: ['ルーカス・モウラ', 'ハリー・ケイン', 'ソン・フンミン', 'デレ・アリ'],
+    correct_answer: 'ルーカス・モウラ',
+    level: 2, genre: 'legends', emoji: '🇧🇷',
+    hint: 'この試合3点目のゴールはほぼ同時にゴールラインを割った',
   },
   {
-    question_text: 'ラウールのReal Madrid公式戦通算ゴール数は？',
-    choices: ['289ゴール', '306ゴール', '323ゴール', '341ゴール'],
-    correct_answer: '323ゴール',
-    level: 2, genre: 'history', emoji: '🇪🇸',
-    hint: 'ロナウドが2015年に更新するまでのクラブ最多記録',
+    question_text: '2019 CLSFでリバプールがバルサを4-0逆転。コーナーの「奇策」ゴールを演出したのは？',
+    choices: ['トレント・アレクサンダー=アーノルド', 'ジョルジニオ・ワイナルドゥム', 'アンドリュー・ロバートソン', 'ジョーダン・ヘンダーソン'],
+    correct_answer: 'トレント・アレクサンダー=アーノルド',
+    level: 2, genre: 'legends', emoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    hint: 'バルサ守備陣がぼんやりしている隙を突いた速攻CK',
   },
   {
-    question_text: 'ロベルト・カルロスがReal Madridに在籍したのは何年から何年まで？',
-    choices: ['1994〜2004年', '1996〜2006年', '1998〜2007年', '1996〜2009年'],
-    correct_answer: '1996〜2006年',
-    level: 2, genre: 'history', emoji: '🇧🇷',
-    hint: '10年間にわたりDFとして活躍し、強烈なFKは今も語り継がれる',
+    question_text: '2021-22 CL R16でベンゼマがPSGに対してハットトリックを達成した試合は？',
+    choices: ['第2戦（ホーム・ベルナベウ）', '第1戦（アウェイ・パリ）', '第1戦（ホーム）', '第2戦（アウェイ）'],
+    correct_answer: '第2戦（ホーム・ベルナベウ）',
+    level: 2, genre: 'legends', emoji: '🇫🇷',
+    hint: 'ベルナベウで0-1から逆転。3点はすべて後半に生まれた',
   },
   {
-    question_text: 'ガラクティコス政策を推進した会長は？',
-    choices: ['ラモン・カルデロン', 'フロレンティーノ・ペレス', 'ロレンソ・サンス', 'アルベルト・ゴンサレス'],
-    correct_answer: 'フロレンティーノ・ペレス',
-    level: 2, genre: 'history', emoji: '👔',
-    hint: '毎夏にスーパースターを獲得し続けた伝説の補強路線',
+    question_text: '2012 CL決勝でバイエルンを本拠地ミュンヘンでPK戦の末に下したクラブは？',
+    choices: ['チェルシー', 'レアル・マドリード', 'バルセロナ', 'マンチェスター・U'],
+    correct_answer: 'チェルシー',
+    level: 2, genre: 'legends', emoji: '🔵',
+    hint: 'ドログバが延長後半に同点ゴール。PK戦でチェフが躍動',
+  },
+  {
+    question_text: '2003-04 CL優勝の立役者FCポルトの監督は誰？',
+    choices: ['ジョゼ・モウリーニョ', 'カルロ・アンチェロッティ', 'ルイス・ファン・ハール', 'ルイス・フェリペ・スコラリ'],
+    correct_answer: 'ジョゼ・モウリーニョ',
+    level: 2, genre: 'legends', emoji: '🏆',
+    hint: 'この優勝でチェルシー監督へ。後に「スペシャル・ワン」を名乗る',
+  },
+  {
+    question_text: '2011 CL決勝でバルサがマンUを3-1で下した。先制ゴールを決めたのは？',
+    choices: ['ペドロ', 'リオネル・メッシ', 'ダビド・ビジャ', 'セスク・ファブレガス'],
+    correct_answer: 'ペドロ',
+    level: 2, genre: 'legends', emoji: '🇪🇸',
+    hint: '27分にルーニーに追いつかれるも、後半メッシとビジャが追加点',
+  },
+  {
+    question_text: '2009 CL決勝でバルセロナがマンチェスター・Uを下したスコアは？',
+    choices: ['2-0', '1-0', '3-1', '2-1'],
+    correct_answer: '2-0',
+    level: 2, genre: 'legends', emoji: '🇪🇸',
+    hint: 'エトーとメッシが得点。グアルディオラ就任1年目での欧州制覇',
+  },
+  {
+    question_text: '2006-07 CL決勝でACミランがリバプールを下したスコアは？',
+    choices: ['2-1', '1-0', '3-1', '2-0'],
+    correct_answer: '2-1',
+    level: 2, genre: 'legends', emoji: '🇮🇹',
+    hint: '「イスタンブールの奇跡」の2年後。ミランがリベンジを果たした',
+  },
+  {
+    question_text: '2014-15 CL決勝でユベントスを3-1で下したバルセロナの3点目を決めたのは？',
+    choices: ['ネイマール', 'リオネル・メッシ', 'ルイス・スアレス', 'セルヒオ・ブスケッツ'],
+    correct_answer: 'ネイマール',
+    level: 2, genre: 'legends', emoji: '🇧🇷',
+    hint: '最後はゴールを空にして猛攻するユーベに対し、無人のゴールへ流し込んだ',
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────
-// ヒストリー問題 LV.3（上級・マニアック）
+// LV.3 — 詳細な記録・スタッツ・歴史的データ（12問からランダム10問）
 // ─────────────────────────────────────────────────────────────────
-const HISTORY_LV3: QuizQuestion[] = [
+const QUESTIONS_LV3: QuizQuestion[] = [
   {
-    question_text: 'レアル・マドリードの欧州制覇5連覇、最初の優勝年は？',
-    choices: ['1952年', '1954年', '1956年', '1958年'],
-    correct_answer: '1956年',
-    level: 3, genre: 'history', emoji: '👑',
-    hint: '1956〜1960年の5連覇。ディ・ステファノ、プシュカシュが率いた黄金期',
+    question_text: 'CL1シーズン最多ゴール記録は？（2024時点）',
+    choices: ['17ゴール（ロナウド, 2013-14）', '15ゴール（レワンドフスキ, 2019-20）', '14ゴール（メッシ, 2011-12）', '12ゴール（ファン・ニステルローイ, 2002-03）'],
+    correct_answer: '17ゴール（ロナウド, 2013-14）',
+    level: 3, genre: 'legends', emoji: '🇵🇹',
+    hint: 'レアル・マドリードでの圧倒的な1シーズン。グループステージから決勝まで全試合で結果を残した',
   },
   {
-    question_text: '1960年 欧州カップ決勝（vs アインクラハト・フランクフルト）のスコアは？',
-    choices: ['5-1', '6-2', '7-3', '8-1'],
-    correct_answer: '7-3',
-    level: 3, genre: 'history', emoji: '🏆',
-    hint: 'ハンプデン・パークに13万7000人。プシュカシュが4得点、ディ・ステファノが3得点',
+    question_text: '2000-01 CL決勝の対戦カードは？',
+    choices: ['バイエルン・ミュンヘン vs バレンシア', 'レアル・マドリード vs バレンシア', 'バルセロナ vs バレンシア', 'バイエルン vs バルセロナ'],
+    correct_answer: 'バイエルン・ミュンヘン vs バレンシア',
+    level: 3, genre: 'legends', emoji: '🏆',
+    hint: 'バイエルンがPK戦でバレンシアを下し優勝。オリバー・カーン伝説の試合',
   },
   {
-    question_text: 'デシマ決勝でラモスが同点ゴールを決めたのは何分？',
-    choices: ['88分', '90分', '93分', '96分'],
+    question_text: '2003-04 CL決勝の対戦カードは？',
+    choices: ['FCポルト vs ASモナコ', 'FCポルト vs マンチェスター・U', 'チェルシー vs ASモナコ', 'アーセナル vs FCポルト'],
+    correct_answer: 'FCポルト vs ASモナコ',
+    level: 3, genre: 'legends', emoji: '🏆',
+    hint: 'モウリーニョのポルトが3-0で快勝。モナコは準決勝でチェルシーを下していた',
+  },
+  {
+    question_text: '2009-10 CL優勝インテルを率いた監督は？',
+    choices: ['ジョゼ・モウリーニョ', 'ロベルト・マンチーニ', 'ラファエル・ベニテス', 'マッシミリアーノ・アッレグリ'],
+    correct_answer: 'ジョゼ・モウリーニョ',
+    level: 3, genre: 'legends', emoji: '🇮🇹',
+    hint: 'インテルでセリエA・コッパ・CLの3冠。翌年レアルへ移籍',
+  },
+  {
+    question_text: '2014 CL決勝「デシマ」でラモスが同点ゴールを決めたのは何分？',
+    choices: ['93分', '88分', '90分', '96分'],
     correct_answer: '93分',
-    level: 3, genre: 'history', emoji: '⚽',
-    hint: 'あと数秒でアトレティコの初CL優勝という場面を覆した奇跡のヘッド',
+    level: 3, genre: 'legends', emoji: '⚽',
+    hint: 'アトレティコが優勝目前だった。コーナーキックからのヘッドで試合を延長へ',
   },
   {
-    question_text: 'Real Madridがリーガ・エスパニョーラを初めて制覇したのは何年？',
-    choices: ['1920年', '1926年', '1932年', '1940年'],
-    correct_answer: '1932年',
-    level: 3, genre: 'history', emoji: '🏅',
-    hint: '当時は「カンペオナート・ナシオナル・デ・リーガ」と称されていた',
+    question_text: '2015-16 CL決勝（レアル vs アトレティコ）の延長後のスコアは？',
+    choices: ['1-1', '2-1', '1-0', '0-0'],
+    correct_answer: '1-1',
+    level: 3, genre: 'legends', emoji: '🏆',
+    hint: 'ラモスが15分に先制。カラスコが79分に同点。PK戦でレアルが制した',
   },
   {
-    question_text: 'アルフレッド・ディ・ステファノのReal Madrid公式戦通算ゴール数は？',
-    choices: ['268ゴール', '289ゴール', '308ゴール', '326ゴール'],
-    correct_answer: '308ゴール',
-    level: 3, genre: 'history', emoji: '🇦🇷',
-    hint: '1953〜1964年在籍。5連覇を牽引しクラブの礎を築いた',
+    question_text: '2016-17 CL決勝でレアルがユベントスを下したスコアは？',
+    choices: ['4-1', '3-1', '3-0', '2-1'],
+    correct_answer: '4-1',
+    level: 3, genre: 'legends', emoji: '⭐',
+    hint: 'ロナウドが2得点。マンジュキッチの芸術的なオーバーヘッドも話題に',
   },
   {
-    question_text: 'Real Madridの選手として初めてバロンドールを受賞したのは誰？（1957年）',
-    choices: ['フランシスコ・ヘント', 'レイモン・コパ', 'アルフレッド・ディ・ステファノ', 'フェレンツ・プシュカシュ'],
-    correct_answer: 'アルフレッド・ディ・ステファノ',
-    level: 3, genre: 'history', emoji: '🏅',
-    hint: '1957年と1959年の2度受賞。欧州カップ5連覇の象徴的存在',
+    question_text: '「イスタンブールの奇跡」でリバプールの同点3点目（PKの跳ね返り）を決めたのは？',
+    choices: ['シャビ・アロンソ', 'スティーブン・ジェラード', 'ウラジミール・シュマイケル', 'ディルク・カウト'],
+    correct_answer: 'シャビ・アロンソ',
+    level: 3, genre: 'legends', emoji: '🇪🇸',
+    hint: 'PKは一度止められたが、跳ね返りを自ら押し込み3-3に',
   },
   {
-    question_text: '1998年 CL優勝時の決勝の相手は？',
-    choices: ['バルセロナ', 'ユベントス', 'バイエルン・ミュンヘン', 'PSV'],
-    correct_answer: 'ユベントス',
-    level: 3, genre: 'history', emoji: '🏆',
-    hint: '32年ぶり7度目のCL優勝。ミヤトビッチの1点を守りきった',
+    question_text: '2021-22 CL決勝でヴィニシウスJrのゴールをアシストしたのは？',
+    choices: ['フェデリコ・バルベルデ', 'トニ・クロース', 'ルカ・モドリッチ', 'カルロス・カルバハル'],
+    correct_answer: 'フェデリコ・バルベルデ',
+    level: 3, genre: 'legends', emoji: '🇺🇾',
+    hint: '右サイドをえぐってヴィニシウスJrに折り返した決定的なアシスト',
   },
   {
-    question_text: 'ラウールがReal Madridを退団した後、最初に移籍したクラブは？',
-    choices: ['アル・サッド', 'シャルケ04', 'ニューヨーク・コスモス', 'CSKAモスクワ'],
-    correct_answer: 'シャルケ04',
-    level: 3, genre: 'history', emoji: '🇪🇸',
-    hint: '2010年に移籍し、後に北米でもプレー',
+    question_text: '2022-23 CL決勝でマンCがインテルを下したスコアは？',
+    choices: ['1-0', '2-0', '1-1（PK）', '2-1'],
+    correct_answer: '1-0',
+    level: 3, genre: 'legends', emoji: '🌟',
+    hint: 'ロドリのゴールのみ。長年の悲願だったCL初制覇',
+  },
+  {
+    question_text: 'CLで最多出場回数を誇る選手は？（2024時点）',
+    choices: ['クリスティアーノ・ロナウド', 'リオネル・メッシ', 'イケル・カシジャス', 'ジャビ・アロンソ'],
+    correct_answer: 'クリスティアーノ・ロナウド',
+    level: 3, genre: 'legends', emoji: '🇵🇹',
+    hint: '複数クラブでCLに出場し続け、最多出場・最多得点の二冠',
+  },
+  {
+    question_text: '2007-08 CL決勝の対戦カードは？',
+    choices: ['マンチェスター・U vs チェルシー', 'マンチェスター・U vs バルセロナ', 'チェルシー vs リバプール', 'アーセナル vs チェルシー'],
+    correct_answer: 'マンチェスター・U vs チェルシー',
+    level: 3, genre: 'legends', emoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    hint: 'モスクワのプレミア対決。テリーのPK失敗でユナイテッドが優勝',
   },
 ];
 
@@ -277,38 +298,18 @@ export async function GET(req: NextRequest) {
   const levelParam = req.nextUrl.searchParams.get('level');
   const level = (levelParam === '2' ? 2 : levelParam === '3' ? 3 : 1) as 1 | 2 | 3;
 
-  // DB からスタッツデータ取得（失敗 or 空はフォールバック）
-  let playerRows: PlayerRow[] = [];
-  try {
-    const supabase = getSupabase();
-    const { data } = await supabase.from('quiz_players').select('*');
-    if (data && data.length > 0) playerRows = data as PlayerRow[];
-  } catch { /* ignore */ }
-  if (playerRows.length === 0) playerRows = FALLBACK_PLAYERS;
-
   let questions: QuizQuestion[];
 
   if (level === 1) {
-    // LV.1: ゴール数5問 + ヒストリー初級5問 = 10問
-    const goalQs = buildGoalQuestions(playerRows);
-    questions = [
-      ...pick(goalQs, 5),
-      ...pick(HISTORY_LV1, 5),
-    ];
+    questions = pick(QUESTIONS_LV1, 10);
   } else if (level === 2) {
-    // LV.2: アシスト数4問 + ヒストリー中級6問 = 10問
-    const assistQs = buildAssistQuestions(playerRows);
-    questions = [
-      ...pick(assistQs, 4),
-      ...pick(HISTORY_LV2, 6),
-    ];
+    questions = pick(QUESTIONS_LV2, 10);
   } else {
-    // LV.3: クロース3問 + ヒストリー上級7問 = 10問
-    questions = [
-      ...pick(KROOS_STATS, 3),
-      ...pick(HISTORY_LV3, 7),
-    ];
+    questions = pick(QUESTIONS_LV3, 10);
   }
 
-  return NextResponse.json(questions.sort(() => Math.random() - 0.5));
+  // シャッフル
+  questions = questions.sort(() => Math.random() - 0.5);
+
+  return NextResponse.json(questions);
 }

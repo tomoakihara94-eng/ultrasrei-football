@@ -50,11 +50,11 @@ export async function GET(req: NextRequest) {
               <span style={{ color: '#D4AF37', fontSize: 18, fontWeight: 900 }}>R</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <span style={{ fontSize: 15, color: '#D4AF37', letterSpacing: '0.15em', fontWeight: 700 }}>REAL MADRID CF</span>
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>経歴クイズ — LV.{lv}</span>
+              <span style={{ fontSize: 15, color: '#D4AF37', letterSpacing: '0.15em', fontWeight: 700 }}>UEFA CHAMPIONS LEAGUE</span>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>21世紀 CLマスタークイズ — LV.{lv}</span>
             </div>
           </div>
-          <span style={{ fontSize: 13, color: 'rgba(212,175,55,0.4)', letterSpacing: '0.08em' }}>ultrasrei.com/quiz</span>
+          <span style={{ fontSize: 13, color: 'rgba(212,175,55,0.4)', letterSpacing: '0.08em' }}>ultrasrei.com/quiz ⭐</span>
         </div>
 
         {/* Main row */}

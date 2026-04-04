@@ -14,7 +14,7 @@ interface QuizQuestion {
   choices: string[];
   correct_answer: string;
   level: 1 | 2 | 3;
-  genre: 'stats' | 'history';
+  genre: 'winners' | 'legends';
   context?: string;
   emoji?: string;
   hint?: string;
@@ -33,13 +33,13 @@ const PASS_THRESHOLD: Record<1 | 2 | 3, number> = { 1: 8, 2: 9, 3: 10 };
 // 称号
 // ─────────────────────────────────────────────────────────────────
 const TITLES = [
-  { min: 10, title: '永遠のレジェンド "Hala Madrid"',  emoji: '👑' },
-  { min: 9,  title: 'サンティアゴ・ベルナベウの英雄',   emoji: '🏆' },
-  { min: 7,  title: '銀河系の住人',                     emoji: '⭐' },
-  { min: 5,  title: 'ガラクティコス候補',                emoji: '🌟' },
-  { min: 3,  title: 'カスティーリャの戦士',              emoji: '⚔️' },
-  { min: 1,  title: 'ベルナベウ初訪問者',                emoji: '🎫' },
-  { min: 0,  title: '見習いマドリディスタ',              emoji: '📚' },
+  { min: 10, title: 'CL完全制覇マスター',    emoji: '🌟' },
+  { min: 9,  title: 'ビッグイヤー常連',       emoji: '🏆' },
+  { min: 7,  title: '欧州の強豪',             emoji: '⭐' },
+  { min: 5,  title: 'CL出場常連クラブ級',     emoji: '🎯' },
+  { min: 3,  title: 'グループ突破レベル',      emoji: '⚽' },
+  { min: 1,  title: 'CL初出場',               emoji: '🎫' },
+  { min: 0,  title: 'CL予備知識なし',          emoji: '📺' },
 ] as const;
 function getTitle(score: number) { return TITLES.find(t => score >= t.min) ?? TITLES[TITLES.length - 1]; }
 
@@ -76,8 +76,8 @@ const C = {
 };
 
 const GENRE_CONFIG = {
-  stats:   { label: 'スタッツ',   Icon: BarChart2, color: C.gold,      bg: 'rgba(212,175,55,0.12)', border: 'rgba(212,175,55,0.35)',   cardBg: 'linear-gradient(160deg,#122040 0%,#0F1E35 60%)', cardBorder: '#1E3A5F' },
-  history: { label: 'ヒストリー', Icon: BookOpen,  color: C.cyanLight, bg: 'rgba(6,182,212,0.12)',  border: 'rgba(6,182,212,0.35)',    cardBg: 'linear-gradient(160deg,#0a2030 0%,#0F1E35 60%)', cardBorder: 'rgba(6,182,212,0.25)' },
+  winners: { label: '優勝クラブ・スター', Icon: Trophy,    color: C.gold,      bg: 'rgba(212,175,55,0.12)', border: 'rgba(212,175,55,0.35)',   cardBg: 'linear-gradient(160deg,#122040 0%,#0F1E35 60%)', cardBorder: '#1E3A5F' },
+  legends: { label: '伝説の名場面',       Icon: BookOpen,  color: C.cyanLight, bg: 'rgba(6,182,212,0.12)',  border: 'rgba(6,182,212,0.35)',    cardBg: 'linear-gradient(160deg,#0a2030 0%,#0F1E35 60%)', cardBorder: 'rgba(6,182,212,0.25)' },
 };
 
 const LV_CONFIG = {
@@ -189,7 +189,7 @@ export default function QuizPage() {
   function handleShareX() {
     const h    = calcHensachi(score, questions.length, selectedLevel);
     const t    = getTitle(score);
-    const text = `俺のマドリディスタ偏差値は${h}！これを超えられる奴いる？💪\n称号：${t.emoji} ${t.title}\n${score}/${questions.length}問正解 LV.${selectedLevel}\n#レアルマドリード #HalaMadrid`;
+    const text = `俺のCL偏差値は${h}！これを超えられる奴いる？💪\n称号：${t.emoji} ${t.title}\n${score}/${questions.length}問正解 LV.${selectedLevel}\n#ChampionsLeague #UEFA #CL好きと繋がりたい`;
     const shareUrl = `https://ultrasrei.com/quiz/share?h=${h}&lv=${selectedLevel}&s=${score}&t=${questions.length}`;
     window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
   }
@@ -211,26 +211,26 @@ export default function QuizPage() {
       {
         lv: 1 as const,
         title: '初級',
-        sub: '現役スターのゴール数＆デシマの歴史',
+        sub: '近年の優勝クラブ＆スター選手',
         pass: '10問中8問正解で合格',
         unlock: 'LV.2が解放されます',
-        tip: 'ロナウド・ベンゼマ・ベリンガム・ヴィニシウスを中心に出題',
+        tip: '2000年代以降の優勝クラブ・ロナウド・メッシ・ベンゼマなど',
       },
       {
         lv: 2 as const,
         title: '中級',
-        sub: 'アシスト数＆ガラクティコス時代の歴史',
+        sub: '伝説の逆転劇＆名勝負',
         pass: '10問中9問正解で合格',
         unlock: 'LV.3が解放されます',
-        tip: 'フィーゴ・ジダン・ラウールなど2000年代の知識も試される',
+        tip: 'イスタンブールの奇跡・ジダンのボレー・モウリーニョのポルトなど',
       },
       {
         lv: 3 as const,
         title: '上級',
-        sub: 'クロースのパス成功率＆5連覇時代の深い歴史',
+        sub: '詳細な記録・スタッツ・歴史的データ',
         pass: '10問全問正解のみ合格',
-        unlock: '👑 伝説のレジェンド 称号を授与',
-        tip: '1950〜60年代の知識が必須。古参ファン向けの超マニアック問題',
+        unlock: '🌟 CL完全制覇マスター 称号を授与',
+        tip: '得点記録・決勝スコア・対戦カードまで細部を問う超マニアック問題',
       },
     ];
 
@@ -247,12 +247,13 @@ export default function QuizPage() {
               border: `2px solid ${C.gold}`, marginBottom: 14,
               boxShadow: `0 0 32px rgba(212,175,55,0.22)`,
             }}>
-              <Crown size={34} color={C.gold} />
+              <span style={{ fontSize: 32 }}>⭐</span>
             </div>
+            <div style={{ fontSize: 10, color: C.gold, letterSpacing: '0.2em', fontWeight: 700, marginBottom: 6 }}>UEFA CHAMPIONS LEAGUE</div>
             <h1 style={{ fontFamily: 'Georgia,serif', fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 4 }}>
-              レアル・マドリード 経歴クイズ
+              21世紀 CLマスタークイズ
             </h1>
-            <p style={{ fontSize: 12, color: C.dim }}>全10問・4択形式　スタッツ＆ヒストリー</p>
+            <p style={{ fontSize: 12, color: C.dim }}>全10問・4択形式　2000-01〜現在</p>
           </div>
 
           {/* Level selector */}
@@ -441,8 +442,8 @@ export default function QuizPage() {
 
           {/* Question card */}
           <div style={{
-            background: isLv3 && q.genre === 'stats' ? 'linear-gradient(160deg,#130d2a 0%,#0f1e35 60%)' : genre.cardBg,
-            border: `1px solid ${isLv3 && q.genre === 'stats' ? 'rgba(167,139,250,0.35)' : genre.cardBorder}`,
+            background: isLv3 && q.genre === 'legends' ? 'linear-gradient(160deg,#130d2a 0%,#0f1e35 60%)' : genre.cardBg,
+            border: `1px solid ${isLv3 && q.genre === 'legends' ? 'rgba(167,139,250,0.35)' : genre.cardBorder}`,
             borderRadius: 18, padding: '24px 20px 20px', marginBottom: 12,
             animation: 'slideUp 0.25s ease-out',
           }}>
@@ -610,7 +611,7 @@ export default function QuizPage() {
                     backgroundColor: ok ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.15)',
                     border: `1px solid ${ok ? C.green + '80' : C.red + '80'}`,
                     color: ok ? C.green : C.red,
-                    outline: qq?.genre === 'history' ? `1px solid ${C.cyanLight}40` : 'none',
+                    outline: qq?.genre === 'legends' ? `1px solid ${C.cyanLight}40` : 'none',
                     outlineOffset: 2,
                   }}>
                     {ok ? '○' : '✗'}
@@ -621,7 +622,7 @@ export default function QuizPage() {
 
             {/* Genre breakdown */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginTop: 14, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-              {(['stats', 'history'] as const).map(genre => {
+              {(['winners', 'legends'] as const).map(genre => {
                 const g  = GENRE_CONFIG[genre];
                 const qs = questions.filter(qq => qq.genre === genre);
                 const ok = qs.reduce((acc, qq, i) => {
@@ -647,7 +648,7 @@ export default function QuizPage() {
             boxShadow: `0 0 24px ${hColor}18`,
           }}>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 12 }}>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em' }}>マドリディスタ偏差値</span>
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em' }}>CL偏差値</span>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
                 <span style={{ fontFamily: 'Georgia,serif', fontSize: 52, fontWeight: 900, color: hColor, lineHeight: 1 }}>{hensachi}</span>
                 <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.2)' }}>/100</span>
@@ -676,7 +677,7 @@ export default function QuizPage() {
               textAlign: 'center',
             }}>
               <span style={{ fontSize: 13, fontWeight: 700, color: hColor }}>
-                俺の偏差値は{hensachi}。これを超えられる奴いる？💪
+                俺のCL偏差値は{hensachi}。これを超えられる奴いる？💪
               </span>
             </div>
           </div>

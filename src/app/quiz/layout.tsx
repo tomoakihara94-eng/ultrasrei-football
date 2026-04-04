@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'レアル・マドリード 経歴クイズ | ウルトラスレイ',
-  description: '全10問・4択形式。スタッツ＆ヒストリーで腕試し！あなたのマドリディスタ偏差値は？',
+  title: '21世紀 CLマスタークイズ | ウルトラスレイ',
+  description: '全10問・4択形式。2000-01シーズンから現在までのCLを3段階で徹底検証！あなたのCL偏差値は？',
   openGraph: {
-    title: 'レアル・マドリード 経歴クイズ',
-    description: '全10問・4択形式。あなたのマドリディスタ偏差値は？ #HalaMadrid',
+    title: '21世紀 CLマスタークイズ',
+    description: '全10問・4択形式。優勝クラブ・伝説の名場面・記録データを問う本格CL検定！',
     url: 'https://ultrasrei.com/quiz',
     siteName: 'ウルトラスレイ',
     images: [
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'レアル・マドリード 経歴クイズ',
-    description: '全10問・4択形式。あなたのマドリディスタ偏差値は？ #HalaMadrid',
+    title: '21世紀 CLマスタークイズ',
+    description: '全10問・4択形式。あなたのCL偏差値は？ #ChampionsLeague',
     images: ['https://ultrasrei.com/api/og?h=75&lv=2&s=9&t=10'],
   },
 };
