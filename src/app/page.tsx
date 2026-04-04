@@ -16,6 +16,16 @@ import VisitorCounter from '@/components/VisitorCounter';
 
 const BENCH_SIZE = 5;
 
+const AUTOSAVE_KEY = 'best11_autosave';
+
+function loadAutosave() {
+  try {
+    const raw = localStorage.getItem(AUTOSAVE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch { return null; }
+}
+
 export default function Home() {
   const [teamName, setTeamName] = useState('');
   const [formation, setFormation] = useState<Formation>('4-3-3');
@@ -29,8 +39,33 @@ export default function Home() {
   const [shareHint, setShareHint] = useState(false);
   const [freeMode, setFreeMode] = useState(false);
   const [customPositions, setCustomPositions] = useState<Record<number, { x: number; y: number }>>({});
+  const [autoSaved, setAutoSaved] = useState(false);
 
   const slots = formations[formation];
+
+  // 初回マウント時: 自動保存データを復元
+  useEffect(() => {
+    const saved = loadAutosave();
+    if (!saved) return;
+    if (saved.teamName)        setTeamName(saved.teamName);
+    if (saved.formation)       setFormation(saved.formation);
+    if (saved.starters)        setStarters(saved.starters);
+    if (saved.bench)           setBench(saved.bench);
+    if (saved.managerStyle)    setManagerStyle(saved.managerStyle);
+    if (saved.customPositions) setCustomPositions(saved.customPositions);
+  }, []);
+
+  // 状態変化時: localStorageに自動保存
+  useEffect(() => {
+    try {
+      localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({
+        teamName, formation, starters, bench, managerStyle, customPositions,
+      }));
+      setAutoSaved(true);
+      const t = setTimeout(() => setAutoSaved(false), 2000);
+      return () => clearTimeout(t);
+    } catch { /* ignore */ }
+  }, [teamName, formation, starters, bench, managerStyle, customPositions]);
 
   // Auto-dismiss share hint
   useEffect(() => {
@@ -205,6 +240,11 @@ export default function Home() {
               <a href="/blog" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37]/10 text-xs font-bold tracking-wide transition-all">
                 コラム
               </a>
+
+              {/* 自動保存インジケーター */}
+              {autoSaved && (
+                <span className="hidden sm:inline text-[10px] text-green-400/70 animate-pulse">✓ 自動保存</span>
+              )}
 
               {/* 保存ボタン: モバイルはアイコンのみ */}
               <button
