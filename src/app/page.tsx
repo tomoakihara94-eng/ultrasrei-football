@@ -547,6 +547,33 @@ export default function Home() {
         </aside>
       </main>
 
+      {/* ===== モバイル用 固定ボタン（スマホのみ表示） ===== */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 px-4 py-3 flex gap-3"
+        style={{ background: 'linear-gradient(to top, rgba(11,22,40,0.98) 60%, transparent)' }}
+      >
+        <button
+          onClick={handleSave_}
+          disabled={isExporting}
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border border-white/20 text-white/80 font-bold text-sm transition-all active:scale-95 disabled:opacity-40"
+          style={{ backgroundColor: 'rgba(255,255,255,0.07)' }}
+        >
+          <Download size={16} />
+          保存
+        </button>
+        <button
+          onClick={handleShareX}
+          disabled={isExporting}
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-black transition-all active:scale-95 disabled:opacity-40"
+          style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}
+        >
+          <Share2 size={16} />
+          Xにシェア
+        </button>
+      </div>
+
+      {/* モバイル固定ボタン分の余白 */}
+      <div className="lg:hidden h-20" />
+
       {/* ===== FOOTER — 免責事項 ===== */}
       <footer className="border-t border-white/8 bg-luxury-card mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-10">
