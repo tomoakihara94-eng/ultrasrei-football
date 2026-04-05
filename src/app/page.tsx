@@ -237,6 +237,9 @@ export default function Home() {
               <a href="/quiz" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all">
                 🏆 クイズ
               </a>
+              <a href="/diagnosis" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all">
+                ⚽ 選手診断
+              </a>
               <a href="/blog" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37]/10 text-xs font-bold tracking-wide transition-all">
                 コラム
               </a>
@@ -277,6 +280,9 @@ export default function Home() {
             </a>
             <a href="/quiz" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 text-xs font-bold whitespace-nowrap">
               🏆 クイズ
+            </a>
+            <a href="/diagnosis" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 text-xs font-bold whitespace-nowrap">
+              ⚽ 選手診断
             </a>
             <a href="/blog" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold whitespace-nowrap">
               コラム
