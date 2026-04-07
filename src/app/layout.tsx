@@ -34,7 +34,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <footer style={{ borderTop: '1px solid #1e1e1e', backgroundColor: '#0d0d0d', padding: '24px 16px', marginTop: '0', fontFamily: 'var(--font-inter)' }}>
+          <div style={{ maxWidth: '960px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
+            <p style={{ color: '#444', fontSize: '12px', margin: 0 }}>
+              © 2024 欧州サッカー歴代ベストイレブンメーカー — 非公式ファンサイト
+            </p>
+            <nav style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+              <a href="/about" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>運営者情報</a>
+              <a href="/privacy" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</a>
+              <a href="/blog" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>コラム</a>
+            </nav>
+          </div>
+        </footer>
+      </body>
     </html>
   );
 }

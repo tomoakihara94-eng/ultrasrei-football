@@ -112,7 +112,7 @@ export default function PrivacyPage() {
             <p className="mt-3">
               サイト名：欧州サッカー歴代ベストイレブンメーカー（ultrasrei.com）<br />
               運営者：Tomoaki Hara<br />
-              メールアドレス：tomoaki.hara94@gmail.com
+              メールアドレス：ren90no@hotmail.co.jp
             </p>
           </section>
 
