@@ -620,6 +620,36 @@ export default function Home() {
       {/* モバイル固定ボタン分の余白 */}
       <div className="lg:hidden h-20" />
 
+      {/* ===== COLUMN SECTION ===== */}
+      <section className="border-t border-white/5 bg-black/20 py-14 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[10px] tracking-[0.3em] text-[#D4AF37] uppercase mb-2">Column</p>
+          <h2 className="text-2xl font-bold text-white mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+            サッカー戦術コラム
+          </h2>
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <a href="/blog/best-eleven-maker-guide" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
+              <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">ツール紹介</p>
+              <h3 className="text-sm font-bold text-white leading-snug mb-2">「歴代最強11人」を選ぶ喜び——ベストイレブンメーカーの楽しみ方</h3>
+              <p className="text-[11px] text-[#666]">約5分</p>
+            </a>
+            <a href="/blog/4-3-3-evolution-real-madrid" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
+              <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">戦術分析</p>
+              <h3 className="text-sm font-bold text-white leading-snug mb-2">4-3-3の進化論：なぜレアル・マドリードはこの布陣で世界を制し続けるのか</h3>
+              <p className="text-[11px] text-[#666]">約10分</p>
+            </a>
+            <a href="/blog/di-stefano-european-cups" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
+              <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">1950年代</p>
+              <h3 className="text-sm font-bold text-white leading-snug mb-2">ディ・ステファノが変えた伝説——欧州5連覇という奇跡</h3>
+              <p className="text-[11px] text-[#666]">約8分</p>
+            </a>
+          </div>
+          <a href="/blog" className="text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors">
+            コラム一覧を見る →
+          </a>
+        </div>
+      </section>
+
       {/* ===== FOOTER — 免責事項 ===== */}
       <footer className="border-t border-white/8 bg-luxury-card mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-10">
@@ -680,6 +710,7 @@ export default function Home() {
             <div className="flex items-center gap-4 shrink-0">
               <a href="/blog" className="text-white/30 hover:text-gold transition-colors">コラム</a>
               <a href="/about" className="text-white/30 hover:text-gold transition-colors">運営者情報</a>
+              <a href="/privacy" className="text-white/30 hover:text-gold transition-colors">プライバシーポリシー</a>
               <p>Powered by Claude AI (Anthropic) | 個人制作・非商用</p>
             </div>
           </div>
