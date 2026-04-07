@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { blogPosts } from '@/lib/blogPosts';
 
 export const metadata: Metadata = {
-  title: 'レアル・マドリード深掘りコラム | 欧州サッカー歴代ベストイレブンメーカー',
+  title: 'サッカー戦術・歴史コラム | 欧州サッカー歴代ベストイレブンメーカー',
   description:
-    'レアル・マドリードの歴史を深掘りするコラム集。ディ・ステファノ、ガラクティコス、ジダン体制のCL3連覇、ベルナベウの歴史、そして新世代の継承まで。',
+    'レアル・マドリードの歴史、4-3-3などの戦術分析、歴代名選手の考察まで。欧州サッカーを深く楽しむための専門コラム集。ディ・ステファノ、ロナウド、ベンゼマ、ジダンなど歴代スターを深掘りします。',
 };
 
 const ACCENT = '#D4AF37';
@@ -26,17 +26,18 @@ export default function BlogIndexPage() {
       <main className="max-w-5xl mx-auto px-6 py-16">
         {/* Hero */}
         <div className="mb-14">
-          <p className="text-xs tracking-[0.3em] text-[#D4AF37] uppercase mb-3">Real Madrid Column</p>
+          <p className="text-xs tracking-[0.3em] text-[#D4AF37] uppercase mb-3">Football Column</p>
           <h1
             className="text-4xl md:text-5xl font-bold mb-4 shimmer-text"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            レアル・マドリード深掘りコラム
+            サッカー戦術・歴史コラム
           </h1>
-          <p className="text-[#888] max-w-2xl leading-relaxed">
-            欧州サッカーの王者レアル・マドリードが歩んできた歴史の断章。
-            ディ・ステファノが刻んだ5連覇の奇跡から、ベリンガム世代による新章まで——
-            白い巨人の魂を深く掘り下げる5本のコラム。
+          <p className="text-[#888] max-w-2xl leading-relaxed mb-6">
+            欧州サッカーの歴史と戦術を深く掘り下げる専門コラム。レアル・マドリードの栄光の歴史から、4-3-3をはじめとする現代戦術の進化、ロナウド・ベンゼマ・ジダンら歴代名選手の考察まで——サッカーをより深く、より面白く楽しむための読み物です。
+          </p>
+          <p className="text-[#666] max-w-2xl leading-relaxed text-sm">
+            「ベストイレブンメーカー」でドリームチームを作る前に、ここで欧州サッカーの歴史と戦術の知識を深めておくと、より戦略的で楽しいチーム編成ができます。各コラムは約5〜10分で読めるよう構成されています。
           </p>
         </div>
 
