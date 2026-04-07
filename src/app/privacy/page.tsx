@@ -44,10 +44,10 @@ export default function PrivacyPage() {
               Cookie とは、ウェブサイトがユーザーのブラウザに保存する小さなテキストファイルです。Google はこの Cookie を使用して、ユーザーが当サイトや他のサイトを訪問した際の情報をもとに、適切な広告を配信します。
             </p>
             <p className="mb-3">
-              ユーザーは、Google の広告設定ページ（<span className="text-[#D4AF37]">https://www.google.com/settings/ads</span>）から、パーソナライズ広告を無効にすることができます。また、<span className="text-[#D4AF37]">www.aboutads.info</span> にアクセスすることで、第三者配信事業者による Cookie の使用を無効にすることもできます。
+              ユーザーは、Google の広告設定ページ（<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:underline">https://www.google.com/settings/ads</a>）から、パーソナライズ広告を無効にすることができます。また、<a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:underline">www.aboutads.info</a> にアクセスすることで、第三者配信事業者による Cookie の使用を無効にすることもできます。
             </p>
             <p>
-              Google による Cookie の使用方法については、Google のプライバシーポリシー（<span className="text-[#D4AF37]">https://policies.google.com/privacy</span>）をご参照ください。
+              Google による Cookie の使用方法については、Google のプライバシーポリシー（<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:underline">https://policies.google.com/privacy</a>）をご参照ください。
             </p>
           </section>
 
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
               収集されるデータは匿名で処理されており、個人を特定するものではありません。当サイトはこのデータをサイトの改善や利便性向上を目的としてのみ使用します。
             </p>
             <p>
-              Google Analytics のデータ収集を無効にするには、Google Analytics オプトアウトアドオン（<span className="text-[#D4AF37]">https://tools.google.com/dlpage/gaoptout</span>）をブラウザにインストールしてください。Google Analytics の利用規約およびプライバシーポリシーについては、Google のウェブサイトをご確認ください。
+              Google Analytics のデータ収集を無効にするには、Google Analytics オプトアウトアドオン（<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:underline">https://tools.google.com/dlpage/gaoptout</a>）をブラウザにインストールしてください。Google Analytics の利用規約およびプライバシーポリシーについては、Google のウェブサイトをご確認ください。
             </p>
           </section>
 
