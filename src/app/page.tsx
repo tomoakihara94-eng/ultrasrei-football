@@ -644,9 +644,14 @@ export default function Home() {
               <p className="text-[11px] text-[#666]">約8分</p>
             </a>
           </div>
-          <a href="/blog" className="text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors">
-            コラム一覧を見る →
-          </a>
+          <div className="flex flex-wrap gap-4 items-center">
+            <a href="/blog" className="text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors">
+              コラム一覧を見る →
+            </a>
+            <a href="/mourinho" className="text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors border border-[#D4AF37]/30 px-4 py-1.5 rounded-full">
+              モウリーニョ名言集 →
+            </a>
+          </div>
         </div>
       </section>
 

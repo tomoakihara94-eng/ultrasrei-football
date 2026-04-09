@@ -44,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
               <a href="/guide" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>使い方ガイド</a>
               <a href="/blog" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>コラム</a>
+              <a href="/mourinho" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>モウリーニョ名言集</a>
               <a href="/about" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>運営者情報</a>
               <a href="/privacy" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</a>
             </nav>
