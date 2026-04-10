@@ -1,69 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 
 const POSITIONS = [
-  {
-    key: 'GK',
-    label: 'GK / ゴールキーパー',
-    players: ['イカー・カシージャス', 'ジャンルイジ・ブッフォン', 'マヌエル・ノイアー', 'エドウィン・ファン・デル・サル', 'ペーター・シュマイケル', 'ディノ・ゾフ', 'オリバー・カーン'],
-  },
-  {
-    key: 'RB',
-    label: 'RB / 右サイドバック',
-    players: ['カフー', 'ダニ・アウベス', 'マイコン', 'ハビエル・サネッティ', 'フィリップ・ラーム', 'クラレンス・セードルフ（RB）'],
-  },
-  {
-    key: 'CB',
-    label: 'CB / センターバック',
-    players: ['フランツ・ベッケンバウアー', 'フランコ・バレージ', 'パオロ・マルディーニ', 'カルレス・プジョル', 'アレッサンドロ・ネスタ', 'ファビオ・カンナバーロ', 'セルヒオ・ラモス', 'ロナルド・クーマン'],
-  },
-  {
-    key: 'LB',
-    label: 'LB / 左サイドバック',
-    players: ['ロベルト・カルロス', 'マルセロ', 'アシュリー・コール', 'エリック・アビダル', 'フィリップ・ラーム（LB）', 'ブライサン・ガルシア'],
-  },
-  {
-    key: 'DM',
-    label: 'DM / ディフェンシブMF',
-    players: ['クロード・マケレレ', 'パトリック・ビエイラ', 'ロイ・キーン', 'ディディエ・デシャン', 'セルヒオ・ブスケツ', 'ダシルバ・ガットゥーゾ'],
-  },
-  {
-    key: 'CM',
-    label: 'CM / セントラルMF',
-    players: ['シャビ・エルナンデス', 'アンドレス・イニエスタ', 'アンドレア・ピルロ', 'ポール・スコールズ', 'スティーブン・ジェラード', 'フランク・ランパード', 'ミヒャエル・バラック', 'ルート・グリット'],
-  },
-  {
-    key: 'CAM',
-    label: 'CAM / 攻撃的MF',
-    players: ['ジネディーヌ・ジダン', 'ミシェル・プラティニ', 'アレッサンドロ・デル・ピエーロ', 'フランチェスコ・トッティ', 'ルイ・コスタ', 'カカ', 'ファン・ロマン・リケルメ'],
-  },
-  {
-    key: 'LW',
-    label: 'LW / 左ウイング',
-    players: ['ロナウジーニョ', 'フランク・リベリー', 'ライアン・ギグス', 'パヴェル・ネドベド', 'クリスティアーノ・ロナウド（LW）', 'ルイス・フィーゴ（LW）'],
-  },
-  {
-    key: 'RW',
-    label: 'RW / 右ウイング',
-    players: ['クリスティアーノ・ロナウド', 'ルイス・フィーゴ', 'デービッド・ベッカム', 'アリエン・ロッベン', 'ロビニョ', 'ジョージ・ベスト'],
-  },
-  {
-    key: 'SS',
-    label: 'SS / セカンドトップ',
-    players: ['ティエリ・アンリ', 'ラウール', 'デニス・ベルカンプ', 'カルロス・テベス', 'ウェイン・ルーニー', 'フィリッポ・インザーギ'],
-  },
-  {
-    key: 'ST',
-    label: 'ST / センターフォワード',
-    players: ['ロナウド・ナザーリオ', 'ズラタン・イブラヒモビッチ', 'ルート・ファン・ニステルローイ', 'ガブリエル・バティストゥータ', 'マルコ・ファン・バステン', 'アンドリー・シェフチェンコ', 'ディディエ・ドログバ'],
-  },
+  { key: 'GK',  label: 'GK / ゴールキーパー' },
+  { key: 'RB',  label: 'RB / 右サイドバック' },
+  { key: 'CB',  label: 'CB / センターバック' },
+  { key: 'LB',  label: 'LB / 左サイドバック' },
+  { key: 'DM',  label: 'DM / ディフェンシブMF' },
+  { key: 'CM',  label: 'CM / セントラルMF' },
+  { key: 'CAM', label: 'CAM / 攻撃的MF' },
+  { key: 'LW',  label: 'LW / 左ウイング' },
+  { key: 'RW',  label: 'RW / 右ウイング' },
+  { key: 'SS',  label: 'SS / セカンドトップ' },
+  { key: 'ST',  label: 'ST / センターフォワード' },
 ];
 
 type RankMap = { first: string; second: string; third: string };
 type VoteState = Record<string, RankMap>;
-
 type ResultEntry = { player: string; points: number; votes: number };
 type ResultsMap = Record<string, ResultEntry[]>;
 
@@ -75,11 +30,152 @@ const RANK_POINTS = [3, 2, 1];
 function getVoterId(): string {
   const key = 'ube_voter_id';
   let id = localStorage.getItem(key);
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem(key, id);
-  }
+  if (!id) { id = crypto.randomUUID(); localStorage.setItem(key, id); }
   return id;
+}
+
+function PlayerSearch({ posKey, vote, onSelect, onClear }: {
+  posKey: string;
+  vote: RankMap;
+  onSelect: (posKey: string, rankKey: keyof RankMap, player: string) => void;
+  onClear: (posKey: string, rankKey: keyof RankMap) => void;
+}) {
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const search = useCallback(async (q: string) => {
+    if (q.trim().length < 1) { setSuggestions([]); return; }
+    setLoading(true);
+    try {
+      const res = await fetch('/api/vote/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: q }),
+      });
+      const data = await res.json();
+      setSuggestions(data.players || []);
+      setShowDropdown(true);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value;
+    setQuery(val);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (val.trim().length === 0) { setSuggestions([]); setShowDropdown(false); return; }
+    timerRef.current = setTimeout(() => search(val), 500);
+  }
+
+  function handleSelect(player: string) {
+    // 既に選択済みの場合はスキップ
+    if (Object.values(vote).includes(player)) return;
+    // 空いている最初のランクに割り当て
+    const emptyRank = RANK_KEYS.find(rk => !vote[rk]);
+    if (emptyRank) onSelect(posKey, emptyRank, player);
+    setQuery('');
+    setSuggestions([]);
+    setShowDropdown(false);
+  }
+
+  const selectedPlayers = Object.values(vote).filter(Boolean);
+  const isFull = selectedPlayers.length >= 3;
+
+  return (
+    <div>
+      {/* Rank slots */}
+      <div className="flex gap-2 mb-4">
+        {RANK_KEYS.map((rk, i) => (
+          <div key={rk} className="flex-1 min-w-0">
+            <p className="text-[10px] text-center mb-1" style={{ color: RANK_COLORS[i] }}>
+              {RANK_LABELS[i]}（{RANK_POINTS[i]}pt）
+            </p>
+            <div
+              className="h-9 rounded-lg border flex items-center justify-between px-2 text-xs transition-all"
+              style={{
+                borderColor: vote[rk] ? RANK_COLORS[i] + '80' : '#2a2a2a',
+                background: vote[rk] ? RANK_COLORS[i] + '15' : '#151515',
+              }}
+            >
+              <span className="truncate" style={{ color: vote[rk] ? '#fff' : '#444' }}>
+                {vote[rk] || '未選択'}
+              </span>
+              {vote[rk] && (
+                <button
+                  onClick={() => onClear(posKey, rk)}
+                  className="text-[#666] hover:text-white ml-1 shrink-0 text-base leading-none"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Search input */}
+      {!isFull && (
+        <div className="relative">
+          <input
+            ref={inputRef}
+            type="text"
+            value={query}
+            onChange={handleInput}
+            onFocus={() => suggestions.length > 0 && setShowDropdown(true)}
+            onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+            placeholder="選手名を入力して検索（例：カシージャス、Ronaldo）"
+            className="w-full rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+            style={{
+              background: '#151515',
+              border: '1px solid #2a2a2a',
+              color: '#fff',
+            }}
+          />
+          {loading && (
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#555]">検索中...</span>
+          )}
+          {showDropdown && suggestions.length > 0 && (
+            <div
+              className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-10"
+              style={{ background: '#1a1a1a', border: '1px solid #2a2a2a' }}
+            >
+              {suggestions.map(player => {
+                const alreadySelected = Object.values(vote).includes(player);
+                return (
+                  <button
+                    key={player}
+                    onMouseDown={() => handleSelect(player)}
+                    disabled={alreadySelected}
+                    className="w-full text-left px-4 py-2.5 text-sm transition-all hover:bg-[#2a2a2a] disabled:opacity-40"
+                    style={{ color: alreadySelected ? '#555' : '#fff' }}
+                  >
+                    {player}
+                    {alreadySelected && <span className="text-xs text-[#555] ml-2">選択済み</span>}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {showDropdown && !loading && query.trim().length > 0 && suggestions.length === 0 && (
+            <div
+              className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-xs z-10"
+              style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#555' }}
+            >
+              該当する選手が見つかりませんでした
+            </div>
+          )}
+        </div>
+      )}
+      {isFull && (
+        <p className="text-xs text-[#5CB85C] text-center py-1">3人選択完了 ✓</p>
+      )}
+    </div>
+  );
 }
 
 export default function VotePage() {
@@ -94,23 +190,14 @@ export default function VotePage() {
 
   useEffect(() => {
     const saved = localStorage.getItem('ube_votes');
-    if (saved) {
-      setVotes(JSON.parse(saved));
-      setSubmitted(true);
-    }
+    if (saved) { setVotes(JSON.parse(saved)); setSubmitted(true); }
   }, []);
-
-  const currentPos = POSITIONS.find(p => p.key === activePos)!;
-  const currentVote = votes[activePos] || { first: '', second: '', third: '' };
 
   function selectPlayer(posKey: string, rankKey: keyof RankMap, player: string) {
     setVotes(prev => {
       const current = prev[posKey] || { first: '', second: '', third: '' };
-      // 既に他のランクに割り当て済みなら外す
       const cleared = { ...current };
-      (Object.keys(cleared) as (keyof RankMap)[]).forEach(k => {
-        if (cleared[k] === player) cleared[k] = '';
-      });
+      (Object.keys(cleared) as (keyof RankMap)[]).forEach(k => { if (cleared[k] === player) cleared[k] = ''; });
       cleared[rankKey] = player;
       const next = { ...prev, [posKey]: cleared };
       localStorage.setItem('ube_votes', JSON.stringify(next));
@@ -180,6 +267,8 @@ export default function VotePage() {
     if (view === 'results' && !results) loadResults();
   }, [view]);
 
+  const currentVote = votes[activePos] || { first: '', second: '', third: '' };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white" style={{ fontFamily: 'var(--font-inter)' }}>
       <header className="border-b border-[#1e1e1e] bg-[#0d0d0d]">
@@ -192,18 +281,16 @@ export default function VotePage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-10">
-        {/* Hero */}
         <div className="mb-8 text-center">
           <p className="text-xs tracking-[0.3em] text-[#D4AF37] uppercase mb-3">Community Vote</p>
           <h1 className="text-3xl md:text-4xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)' }}>
             歴代ベストイレブン投票
           </h1>
           <p className="text-[#888] text-sm max-w-xl mx-auto">
-            各ポジションで最高の選手トップ3を選んでランク付け。あなたの投票が集計されてポジション別世界ランキングを決定します。
+            各ポジションで好きな選手を検索して1〜3位にランク付け。投票がポイントに変換されてポジション別世界ランキングを決定します。
           </p>
         </div>
 
-        {/* Tab */}
         <div className="flex gap-2 justify-center mb-8">
           <button
             onClick={() => setView('vote')}
@@ -242,10 +329,7 @@ export default function VotePage() {
                         color: activePos === p.key ? '#fff' : '#666',
                       }}
                     >
-                      <span
-                        className="w-2 h-2 rounded-full shrink-0"
-                        style={{ background: done ? '#5CB85C' : '#333' }}
-                      />
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ background: done ? '#5CB85C' : '#333' }} />
                       {p.label}
                     </button>
                   );
@@ -265,95 +349,21 @@ export default function VotePage() {
               </div>
             </div>
 
-            {/* Position panel */}
+            {/* Panel */}
             <div className="flex-1">
               <div className="bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl p-6">
-                <h2 className="text-lg font-bold mb-1">{currentPos.label}</h2>
-                <p className="text-xs text-[#555] mb-5">1位・2位・3位にそれぞれ1人ずつ選んでください</p>
-
-                {/* Rank slots */}
-                <div className="flex gap-3 mb-6">
-                  {RANK_KEYS.map((rk, i) => (
-                    <div key={rk} className="flex-1 min-w-0">
-                      <p className="text-[10px] text-center mb-1.5" style={{ color: RANK_COLORS[i] }}>
-                        {RANK_LABELS[i]}（{RANK_POINTS[i]}pt）
-                      </p>
-                      <div
-                        className="h-10 rounded-lg border flex items-center justify-center px-2 text-xs text-center transition-all"
-                        style={{
-                          borderColor: currentVote[rk] ? RANK_COLORS[i] + '80' : '#2a2a2a',
-                          background: currentVote[rk] ? RANK_COLORS[i] + '15' : '#151515',
-                          color: currentVote[rk] ? '#fff' : '#444',
-                        }}
-                      >
-                        {currentVote[rk] ? (
-                          <span className="truncate">{currentVote[rk]}</span>
-                        ) : (
-                          <span>未選択</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Player cards */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {currentPos.players.map(player => {
-                    const assignedRankIdx = RANK_KEYS.findIndex(rk => currentVote[rk] === player);
-                    const isAssigned = assignedRankIdx >= 0;
-                    return (
-                      <div key={player} className="relative">
-                        <button
-                          onClick={() => {
-                            if (isAssigned) {
-                              clearRank(activePos, RANK_KEYS[assignedRankIdx]);
-                            } else {
-                              // 空いている最初のランクに割り当て
-                              const emptyRank = RANK_KEYS.find(rk => !currentVote[rk]);
-                              if (emptyRank) selectPlayer(activePos, emptyRank, player);
-                            }
-                          }}
-                          className="w-full text-left px-3 py-2.5 rounded-xl text-xs transition-all"
-                          style={{
-                            background: isAssigned ? RANK_COLORS[assignedRankIdx] + '20' : '#151515',
-                            border: isAssigned ? `1px solid ${RANK_COLORS[assignedRankIdx]}60` : '1px solid #2a2a2a',
-                            color: isAssigned ? '#fff' : '#aaa',
-                          }}
-                        >
-                          {isAssigned && (
-                            <span
-                              className="inline-block text-[9px] font-bold px-1.5 py-0.5 rounded-full mr-1.5"
-                              style={{ background: RANK_COLORS[assignedRankIdx], color: '#000' }}
-                            >
-                              {RANK_LABELS[assignedRankIdx]}
-                            </span>
-                          )}
-                          {player}
-                        </button>
-                        {/* 順位変更ボタン（割り当て済みの場合） */}
-                        {isAssigned && (
-                          <div className="flex gap-1 mt-1">
-                            {RANK_KEYS.map((rk, i) => (
-                              <button
-                                key={rk}
-                                onClick={() => selectPlayer(activePos, rk, player)}
-                                className="flex-1 text-[9px] py-0.5 rounded transition-all"
-                                style={{
-                                  background: currentVote[rk] === player ? RANK_COLORS[i] : '#1e1e1e',
-                                  color: currentVote[rk] === player ? '#000' : '#555',
-                                }}
-                              >
-                                {RANK_LABELS[i]}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Nav buttons */}
+                <h2 className="text-lg font-bold mb-1">
+                  {POSITIONS.find(p => p.key === activePos)?.label}
+                </h2>
+                <p className="text-xs text-[#555] mb-5">
+                  このポジションの歴代最高選手を1位・2位・3位で選んでください
+                </p>
+                <PlayerSearch
+                  posKey={activePos}
+                  vote={currentVote}
+                  onSelect={selectPlayer}
+                  onClear={clearRank}
+                />
                 <div className="flex justify-between mt-6 pt-4 border-t border-[#1e1e1e]">
                   <button
                     onClick={() => {
@@ -378,7 +388,6 @@ export default function VotePage() {
                 </div>
               </div>
 
-              {/* Submit */}
               <div className="mt-6 text-center">
                 {submitted ? (
                   <p className="text-[#5CB85C] text-sm">投票済みです。結果タブで確認できます。</p>
@@ -389,7 +398,11 @@ export default function VotePage() {
                     className="px-8 py-3 rounded-full font-bold text-sm transition-all disabled:opacity-40"
                     style={{ background: allComplete ? '#D4AF37' : '#333', color: allComplete ? '#000' : '#666' }}
                   >
-                    {submitting ? '送信中...' : allComplete ? '投票を確定する' : `あと${POSITIONS.length - completedCount}ポジション残っています`}
+                    {submitting
+                      ? '送信中...'
+                      : allComplete
+                      ? '投票を確定する'
+                      : `あと${POSITIONS.length - completedCount}ポジション残っています`}
                   </button>
                 )}
               </div>
@@ -439,7 +452,9 @@ export default function VotePage() {
                                     }}
                                   />
                                 </div>
-                                <span className="text-xs text-[#666] w-16 text-right shrink-0">{entry.points}pt ({entry.votes}票)</span>
+                                <span className="text-xs text-[#666] w-16 text-right shrink-0">
+                                  {entry.points}pt ({entry.votes}票)
+                                </span>
                               </div>
                             );
                           })}
