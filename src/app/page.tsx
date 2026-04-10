@@ -631,17 +631,14 @@ export default function Home() {
             <a href="/blog/best-eleven-maker-guide" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
               <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">ツール紹介</p>
               <h3 className="text-sm font-bold text-white leading-snug mb-2">「歴代最強11人」を選ぶ喜び——ベストイレブンメーカーの楽しみ方</h3>
-              <p className="text-[11px] text-[#666]">約5分</p>
             </a>
             <a href="/blog/4-3-3-evolution-real-madrid" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
               <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">戦術分析</p>
               <h3 className="text-sm font-bold text-white leading-snug mb-2">4-3-3の進化論：なぜレアル・マドリードはこの布陣で世界を制し続けるのか</h3>
-              <p className="text-[11px] text-[#666]">約10分</p>
             </a>
             <a href="/blog/di-stefano-european-cups" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
               <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">1950年代</p>
               <h3 className="text-sm font-bold text-white leading-snug mb-2">ディ・ステファノが変えた伝説——欧州5連覇という奇跡</h3>
-              <p className="text-[11px] text-[#666]">約8分</p>
             </a>
           </div>
           <div className="flex flex-wrap gap-4 items-center">
