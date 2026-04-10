@@ -190,7 +190,9 @@ export default function VotePage() {
 
   useEffect(() => {
     const saved = localStorage.getItem('ube_votes');
-    if (saved) { setVotes(JSON.parse(saved)); setSubmitted(true); }
+    if (saved) setVotes(JSON.parse(saved));
+    const done = localStorage.getItem('ube_submitted');
+    if (done === 'true') setSubmitted(true);
   }, []);
 
   function selectPlayer(posKey: string, rankKey: keyof RankMap, player: string) {
@@ -242,6 +244,7 @@ export default function VotePage() {
         )
       );
       setSubmitted(true);
+      localStorage.setItem('ube_submitted', 'true');
       await loadResults();
       setView('results');
     } catch {
