@@ -154,6 +154,9 @@ export default function Home() {
     try {
       const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 2 });
 
+      const siteUrl = 'https://ultrasrei.com';
+      const tweetText = `${teamName || '歴代最強イレブン'} 🏆\n#ベストイレブンメーカー #欧州サッカー\n${siteUrl}`;
+
       // Try Web Share API (works on mobile/modern browsers with image support)
       try {
         const blob = await (await fetch(dataUrl)).blob();
@@ -162,7 +165,8 @@ export default function Home() {
           await navigator.share({
             files: [file],
             title: teamName || '歴代ベストイレブン',
-            text: '#ベストイレブンメーカー #欧州サッカー',
+            text: tweetText,
+            url: siteUrl,
           });
           return;
         }
@@ -174,9 +178,8 @@ export default function Home() {
       link.href = dataUrl;
       link.click();
       setShareHint(true);
-      const text = `${teamName || '歴代最強イレブン'} #ベストイレブンメーカー #欧州サッカー`;
       setTimeout(() => {
-        window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+        window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(tweetText)}`, '_blank');
       }, 700);
     } finally {
       setIsExporting(false);
@@ -312,7 +315,7 @@ export default function Home() {
           <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-luxury-card border border-gold/30 shadow-gold text-sm">
             <Share2 size={14} className="text-gold shrink-0" />
             <span className="text-white/80">
-              画像を保存しました。Xに投稿する際は<strong className="text-gold">手動で画像を添付</strong>してください。
+              画像を保存しました。Xの投稿画面が開いたら<strong className="text-gold">📎で画像を添付</strong>してポスト！
             </span>
             <button onClick={() => setShareHint(false)} className="text-white/30 hover:text-white ml-1">
               <X size={14} />
