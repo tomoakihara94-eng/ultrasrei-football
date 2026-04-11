@@ -196,6 +196,20 @@ export default function Home() {
   }, [starters]);
 
   const chemistryPairs = useMemo<[number, number][]>(() => {
+    // クラブ名を正規化：FC/CF/C.F./スペース等を除去し、主要単語で比較
+    const normalizeClub = (s: string) =>
+      s.trim().toLowerCase()
+        .replace(/[.\-]/g, ' ')
+        .replace(/\b(fc|cf|sc|ac|as|afc|fk|sv|bv|real|cf)\b/g, v => v === 'real' ? 'real' : '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    const clubMatch = (a: string, b: string) => {
+      const na = normalizeClub(a);
+      const nb = normalizeClub(b);
+      return na === nb || na.includes(nb) || nb.includes(na);
+    };
+
     const pairs: [number, number][] = [];
     for (let i = 0; i < starters.length; i++) {
       for (let j = i + 1; j < starters.length; j++) {
@@ -203,7 +217,7 @@ export default function Home() {
         const b = starters[j];
         if (!a || !b) continue;
         const sameNat  = a.nationality && b.nationality && a.nationality === b.nationality;
-        const sameClub = a.club && b.club && a.club.trim().toLowerCase() === b.club.trim().toLowerCase();
+        const sameClub = a.club && b.club && clubMatch(a.club, b.club);
         if (sameNat || sameClub) pairs.push([i, j]);
       }
     }
