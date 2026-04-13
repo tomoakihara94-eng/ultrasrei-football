@@ -88,6 +88,22 @@ const LV_CONFIG = {
 
 // localStorage キー
 const LS_KEY = 'rm_quiz_cleared';
+const LS_SEEN_PREFIX = 'rm_quiz_seen_lv';
+
+function getSeenIds(level: 1 | 2 | 3): string[] {
+  try {
+    const raw = localStorage.getItem(`${LS_SEEN_PREFIX}${level}`);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function addSeenIds(level: 1 | 2 | 3, ids: string[]) {
+  try {
+    const current = getSeenIds(level);
+    const merged = Array.from(new Set([...current, ...ids]));
+    localStorage.setItem(`${LS_SEEN_PREFIX}${level}`, JSON.stringify(merged));
+  } catch { /* ignore */ }
+}
 
 // ─────────────────────────────────────────────────────────────────
 // Component
@@ -134,10 +150,14 @@ export default function QuizPage() {
   const fetchQuestions = useCallback(async (lv: 1 | 2 | 3) => {
     setLoading(true); setError('');
     try {
-      const res = await fetch(`/api/quiz/questions?level=${lv}`);
+      const seen = getSeenIds(lv);
+      const excludeParam = seen.length ? `&exclude=${seen.join(',')}` : '';
+      const res = await fetch(`/api/quiz/questions?level=${lv}${excludeParam}`);
       if (!res.ok) throw new Error('問題の取得に失敗しました');
-      const data = await res.json();
+      const data: (QuizQuestion & { id: string })[] = await res.json();
       if (!data.length) throw new Error('問題データがありません');
+      // 表示した問題IDを記録
+      addSeenIds(lv, data.map(q => q.id).filter(Boolean));
       setQuestions(data);
       setCurrentIdx(0); setAnswers([]); setScore(0);
       setSelected(null); setSubmitted(false);
