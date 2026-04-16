@@ -15,12 +15,56 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: '欧州サッカー歴代ベストイレブンメーカー',
-  description: '欧州サッカーの歴史的名手でベストイレブンを編成。AI能力査定＆タクティカルボード生成。非公式ファンアプリ。',
+  title: {
+    default: '欧州サッカー歴代ベストイレブンメーカー | ultrasrei.com',
+    template: '%s | 欧州サッカー歴代ベストイレブンメーカー',
+  },
+  description: '欧州サッカーの歴代名選手でベストイレブンを編成できる無料ツール。AIが選手の能力を査定し、タクティカルボードを自動生成。レアル・マドリード、バルセロナ、CL優勝クラブの名手を自由に組み合わせてXにシェアしよう。',
+  keywords: ['欧州サッカー', 'ベストイレブン', 'レアルマドリード', 'チャンピオンズリーグ', 'サッカー歴代選手', 'フォーメーション', 'タクティカルボード'],
+  authors: [{ name: 'Hara Tech' }],
+  creator: 'Hara Tech',
+  metadataBase: new URL('https://ultrasrei.com'),
   openGraph: {
     title: '欧州サッカー歴代ベストイレブンメーカー',
-    description: '歴史的名手でベストイレブンを作成してXにシェア',
+    description: '歴代名選手でベストイレブンを作成してXにシェア。AI能力査定＆タクティカルボード生成。',
     type: 'website',
+    url: 'https://ultrasrei.com',
+    siteName: '欧州サッカー歴代ベストイレブンメーカー',
+    locale: 'ja_JP',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '欧州サッカー歴代ベストイレブンメーカー',
+    description: '歴代名選手でベストイレブンを作成してXにシェア',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: '欧州サッカー歴代ベストイレブンメーカー',
+  url: 'https://ultrasrei.com',
+  description: '欧州サッカーの歴代名選手でベストイレブンを編成できる無料ツール。AIが選手の能力を査定し、タクティカルボードを自動生成。',
+  applicationCategory: 'SportsApplication',
+  operatingSystem: 'Web',
+  inLanguage: 'ja',
+  author: {
+    '@type': 'Organization',
+    name: 'Hara Tech',
+    url: 'https://ultrasrei.com/about',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'JPY',
   },
 };
 
@@ -28,6 +72,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" className={`${playfair.variable} ${inter.variable}`}>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5901528172536391"

@@ -14,8 +14,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getBlogPost(slug);
   if (!post) return {};
   return {
-    title: `${post.title} | レアル・マドリードコラム`,
+    title: `${post.title} | 欧州サッカーコラム`,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      url: `https://ultrasrei.com/blog/${slug}`,
+      siteName: '欧州サッカー歴代ベストイレブンメーカー',
+      locale: 'ja_JP',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+    },
   };
 }
 
@@ -28,8 +41,24 @@ export default async function BlogPostPage({ params }: Props) {
   const prev = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
   const next = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    author: { '@type': 'Organization', name: 'Hara Tech', url: 'https://ultrasrei.com/about' },
+    publisher: { '@type': 'Organization', name: 'Hara Tech', url: 'https://ultrasrei.com' },
+    url: `https://ultrasrei.com/blog/${slug}`,
+    inLanguage: 'ja',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://ultrasrei.com/blog/${slug}` },
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white" style={{ fontFamily: 'var(--font-inter)' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* Header */}
       <header className="border-b border-[#1e1e1e] bg-[#0d0d0d]">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">

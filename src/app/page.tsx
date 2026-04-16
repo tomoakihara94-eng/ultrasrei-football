@@ -637,6 +637,52 @@ export default function Home() {
       {/* モバイル固定ボタン分の余白 */}
       <div className="lg:hidden h-20" />
 
+      {/* ===== ABOUT SECTION（SEO用静的コンテンツ） ===== */}
+      <section className="border-t border-white/5 bg-black/30 py-14 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[10px] tracking-[0.3em] text-[#D4AF37] uppercase mb-2">About</p>
+          <h2 className="text-2xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
+            欧州サッカー歴代ベストイレブンメーカーとは
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 text-[#888] text-sm leading-relaxed">
+            <div>
+              <p className="mb-4">
+                本ツールは、欧州サッカー史に名を刻んだ歴代の名選手たちを自由に組み合わせ、あなただけの「ベストイレブン」を編成できる無料サービスです。レアル・マドリード、バルセロナ、ACミラン、マンチェスター・ユナイテッドなど、欧州の名門クラブで活躍した選手を自由に選択できます。
+              </p>
+              <p className="mb-4">
+                選手名と国籍を入力すると、AIが歴史的な能力値（スピード・シュート・パス・ドリブル・守備・フィジカル）を査定。4-3-3、4-4-2、3-5-2など豊富なフォーメーションからタクティカルボードを生成し、Xにシェアすることができます。
+              </p>
+              <p>
+                ディ・ステファノ、プラティニ、ロナウド、ジダン、メッシ、クリスティアーノ・ロナウドといったレジェンドたちを同じピッチに並べる夢のシミュレーションをお楽しみください。
+              </p>
+            </div>
+            <div>
+              <h3 className="text-white font-bold mb-3 text-base">主な機能</h3>
+              <ul className="space-y-2">
+                {[
+                  'AI選手能力査定（Claude by Anthropic使用）',
+                  '11種類以上のフォーメーション対応',
+                  'タクティカルボードの自動生成・画像保存',
+                  'チームケミストリー（同国籍・同クラブ）算出',
+                  'ベストイレブン投票ランキング機能',
+                  'CLクイズで知識を試せる',
+                  'コラム20本以上：欧州サッカーの歴史を深掘り',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="text-[#D4AF37] mt-0.5 shrink-0">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex gap-3 flex-wrap">
+                <a href="/guide" className="text-xs text-[#D4AF37] hover:text-[#F0D060] transition-colors border border-[#D4AF37]/30 px-3 py-1.5 rounded-full">使い方ガイドを見る →</a>
+                <a href="/blog" className="text-xs text-[#D4AF37] hover:text-[#F0D060] transition-colors border border-[#D4AF37]/30 px-3 py-1.5 rounded-full">コラム一覧 →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== COLUMN SECTION ===== */}
       <section className="border-t border-white/5 bg-black/20 py-14 px-6">
         <div className="max-w-5xl mx-auto">
