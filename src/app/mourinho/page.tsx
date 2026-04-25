@@ -128,6 +128,96 @@ const quotes = [
     context: '審判や対戦相手についてコメントを求められた際の発言。しばしばその後で話し続ける。',
     category: 'ユーモア',
   },
+  {
+    text: 'I am the happiest man in the world.',
+    translation: '私は世界一幸せな男だ。',
+    context: 'インテルでのトレブル（セリエA・コッパ・CL三冠）達成後、2010年CL優勝の瞬間に。',
+    category: '自信',
+  },
+  {
+    text: 'You can say what you want about me. But not my team. Not my players.',
+    translation: '私についてはいくらでも言え。しかし私のチームについては、私の選手たちについては駄目だ。',
+    context: 'メディアやファンからの批判に対して、チームを守る発言。',
+    category: '哲学',
+  },
+  {
+    text: 'Zero. Zero. Zero. I don\'t like pressure? Put pressure on me. Zero, zero, zero.',
+    translation: 'ゼロ。ゼロ。ゼロ。プレッシャーが嫌い？かけてみろ。ゼロ、ゼロ、ゼロだ。',
+    context: 'プレッシャーへの耐性を問われた際の名物回答。繰り返すことで逆に自信を強調した。',
+    category: '自信',
+  },
+  {
+    text: 'Loyalty is when someone supports you when you are wrong. Respect is when someone supports you when you are right.',
+    translation: '忠誠とは、あなたが間違っているときでも支持してくれること。敬意とは、あなたが正しいときに支持してくれること。',
+    context: '選手・スタッフとの関係性について語った哲学的な言葉。',
+    category: '哲学',
+  },
+  {
+    text: 'I was born to be a manager. I think I was born to be a winner.',
+    translation: '私は監督として生まれてきた。勝者として生まれてきたと思う。',
+    context: '自身の天職についての確信に満ちた発言。',
+    category: '自信',
+  },
+  {
+    text: 'The day you stop dreaming is the day you start dying.',
+    translation: '夢を見ることをやめた日が、死に始める日だ。',
+    context: '向上心と目標を持ち続けることの重要性を語った言葉。',
+    category: '哲学',
+  },
+  {
+    text: 'I am not a defensive coach. I am a coach who knows how to defend.',
+    translation: '私は守備的な監督ではない。守り方を知っている監督だ。',
+    context: '守備的戦術への批判に反論した言葉。定義の違いを逆手に取った名答。',
+    category: '哲学',
+  },
+  {
+    text: 'When you lose, the dressing room smells bad. When you win, everything smells fantastic.',
+    translation: '負けたとき、更衣室は臭い。勝ったとき、何もかも最高の香りがする。',
+    context: '勝敗がチームの雰囲気に与える影響について、直感的に語った言葉。',
+    category: 'ユーモア',
+  },
+  {
+    text: 'I am proud of my own statue.',
+    translation: '自分の銅像を誇りに思う。',
+    context: 'チェルシーから銅像贈呈を打診された際のコメント。自己評価の高さを笑いに変えた。',
+    category: 'ユーモア',
+  },
+  {
+    text: 'If players are not motivated to play Real Madrid, it is because they are not football players.',
+    translation: 'レアル・マドリードと対戦することにモチベーションを感じない選手は、フットボール選手ではない。',
+    context: 'レアル・マドリード監督時代、敵チームへの発言。クラブの格を示した言葉。',
+    category: '挑発',
+  },
+  {
+    text: 'Three years without a title is a long time for me.',
+    translation: '私にとって3年間タイトルなしは長すぎる。',
+    context: 'レアル・マドリード監督時代、国内ではリーガを制したが欧州タイトルを逃した時期に。',
+    category: '自信',
+  },
+  {
+    text: 'The best place in the world to manage is England. But the best league is the Premier League.',
+    translation: '監督するのに世界最高の場所はイングランドだ。そして最高のリーグはプレミアリーグだ。',
+    context: 'プレミアリーグへの愛着を何度も語ったモウリーニョらしい発言。',
+    category: '哲学',
+  },
+  {
+    text: 'I am not in the business of losing.',
+    translation: '私は負けるビジネスをしていない。',
+    context: '敗北を受け入れない姿勢を表した短く力強い言葉。',
+    category: '自信',
+  },
+  {
+    text: 'Some people believe football is a matter of life and death. I assure you, it\'s much more serious than that.',
+    translation: 'フットボールは死活問題だと思っている人がいる。断言するが、それよりずっと深刻だ。',
+    context: 'ビル・シャンクリーの名言のオマージュとして語ったもの。サッカーへの情熱を示す。',
+    category: '哲学',
+  },
+  {
+    text: 'A lion doesn\'t concern himself with the opinions of sheep.',
+    translation: 'ライオンは羊の意見を気にしない。',
+    context: '批評家やメディアの批判を意に介さないことを示した言葉。',
+    category: '哲学',
+  },
 ];
 
 const categories = ['すべて', '哲学', '自信', '挑発', 'ユーモア', '過去'];
