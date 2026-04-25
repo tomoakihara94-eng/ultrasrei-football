@@ -68,4 +68,9 @@ export const postTags: Record<string, BlogTag[]> = {
   'chelsea-abramovich-era': ['戦術・歴史'],
   'ibrahimovic-the-unique': ['選手列伝'],
   'euro-2020-italy-resurrection': ['戦術・歴史'],
+  'kaka-acmilan-golden-years': ['選手列伝', 'チャンピオンズリーグ'],
+  'wayne-rooney-manchester-united-legacy': ['選手列伝'],
+  'calcio-italy-serie-a-golden-age': ['戦術・歴史'],
+  'beckham-real-madrid-impact': ['レアル・マドリード', '選手列伝'],
+  'jose-mourinho-early-career': ['戦術・歴史', 'チャンピオンズリーグ'],
 };
