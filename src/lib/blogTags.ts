@@ -73,4 +73,9 @@ export const postTags: Record<string, BlogTag[]> = {
   'calcio-italy-serie-a-golden-age': ['戦術・歴史'],
   'beckham-real-madrid-impact': ['レアル・マドリード', '選手列伝'],
   'jose-mourinho-early-career': ['戦術・歴史', 'チャンピオンズリーグ'],
+  'neymar-psg-and-brazil': ['バルセロナ', '選手列伝'],
+  'arsenal-invincibles-2004': ['戦術・歴史'],
+  'germany-2014-world-cup': ['戦術・歴史'],
+  'claudio-ranieri-leicester-miracle': ['戦術・歴史'],
+  'ronaldinho-barcelona-peak': ['バルセロナ', '選手列伝'],
 };
