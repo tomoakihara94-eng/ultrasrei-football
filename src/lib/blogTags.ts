@@ -78,4 +78,9 @@ export const postTags: Record<string, BlogTag[]> = {
   'germany-2014-world-cup': ['戦術・歴史'],
   'claudio-ranieri-leicester-miracle': ['戦術・歴史'],
   'ronaldinho-barcelona-peak': ['バルセロナ', '選手列伝'],
+  'paul-scholes-the-unsung-maestro': ['選手列伝'],
+  'champions-league-greatest-comebacks': ['チャンピオンズリーグ', '戦術・歴史'],
+  'luis-figo-real-madrid-transfer': ['レアル・マドリード', '選手列伝'],
+  'eden-hazard-chelsea-years': ['選手列伝'],
+  'real-madrid-la-decima-2014': ['レアル・マドリード', 'チャンピオンズリーグ'],
 };
