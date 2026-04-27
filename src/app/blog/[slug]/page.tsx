@@ -84,9 +84,28 @@ export default async function BlogPostPage({ params }: Props) {
         </h1>
 
         {/* Meta */}
-        <div className="flex items-center gap-4 text-xs text-[#555] mb-8 pb-8 border-b border-[#1e1e1e]">
+        <div className="flex flex-wrap items-center gap-4 text-xs text-[#555] mb-6 pb-6 border-b border-[#1e1e1e]">
           <span>{post.date}</span>
           <span>{post.readTime}</span>
+        </div>
+
+        {/* Author */}
+        <div className="flex items-center gap-3 bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl px-5 py-4 mb-10">
+          <div className="w-9 h-9 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center shrink-0">
+            <span className="text-[#D4AF37] text-xs font-bold">H</span>
+          </div>
+          <div>
+            <p className="text-xs text-white font-semibold">Hara Tech 編集部</p>
+            <p className="text-[10px] text-[#555] leading-relaxed mt-0.5">
+              欧州サッカー専門メディア「ultrasrei.com」編集部。プレミアリーグ・ラ・リーガ・セリエAを中心に、戦術・歴史・選手考察を発信。
+            </p>
+          </div>
+          <a
+            href="/about"
+            className="ml-auto text-[10px] text-[#D4AF37]/60 hover:text-[#D4AF37] transition-colors shrink-0"
+          >
+            詳細 →
+          </a>
         </div>
 
         {/* Lead */}

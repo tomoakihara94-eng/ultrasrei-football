@@ -95,6 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/blog" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>コラム</a>
               <a href="/mourinho" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>モウリーニョ名言集</a>
               <a href="/about" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>運営者情報</a>
+              <a href="/contact" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>お問い合わせ</a>
               <a href="/privacy" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</a>
             </nav>
           </div>

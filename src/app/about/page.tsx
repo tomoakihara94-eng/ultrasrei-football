@@ -32,18 +32,51 @@ export default function AboutPage() {
         </h1>
         <p className="text-[#555] text-sm mb-12">About This Site</p>
 
+        {/* Section 0: Editor profile */}
+        <section className="mb-12">
+          <div className="bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl p-7">
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-14 h-14 rounded-full bg-[#D4AF37]/20 border-2 border-[#D4AF37]/40 flex items-center justify-center shrink-0">
+                <span className="text-[#D4AF37] text-xl font-bold">H</span>
+              </div>
+              <div>
+                <p className="text-white font-bold text-lg">原 智明（Tomoaki Hara）</p>
+                <p className="text-[#D4AF37] text-xs tracking-wider">Hara Tech 代表 / サッカーコラムニスト</p>
+              </div>
+            </div>
+            <div className="space-y-3 text-[#aaa] text-sm leading-relaxed">
+              <p>
+                欧州サッカー歴30年以上のファン。1990年代のセリエA黄金期からプレミアリーグの勃興、ガラクティコス時代のレアル・マドリード、バルセロナのティキタカ革命まで、欧州サッカーの転換点をリアルタイムで観戦し続けてきた。
+              </p>
+              <p>
+                エンジニアとしてのバックグラウンドを活かし、AIと欧州サッカーの知識を組み合わせた本ツールを開発。選手の能力査定・フォーメーション分析・戦術コラムを通じて、サッカーの奥深さを広く伝えることを目指している。
+              </p>
+              <div className="flex flex-wrap gap-2 mt-3">
+                {['プレミアリーグ観戦歴30年+', 'チャンピオンズリーグ全大会追跡', '欧州4大リーグ分析', 'AI×サッカー開発'].map((badge) => (
+                  <span key={badge} className="text-[10px] px-2.5 py-1 rounded-full border border-[#D4AF37]/30 text-[#D4AF37]/70">
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Section 1: Who */}
         <section className="mb-12">
           <h2 className="text-xl font-semibold text-[#D4AF37] mb-4 border-b border-[#1e1e1e] pb-2">
             このサイトについて
           </h2>
           <p className="text-[#ccc] leading-relaxed mb-4">
-            「欧州サッカー歴代ベストイレブンメーカー」は、欧州サッカーを愛する個人が運営するファンサイトです。
+            「欧州サッカー歴代ベストイレブンメーカー」は、欧州サッカーを愛するエンジニア・コラムニストが運営するファンメディアです。
             プレミアリーグ・ラ・リーガ・セリエA・ブンデスリーガ・リーグアンを中心に、
             何十年にもわたる名選手たちを自由に組み合わせて、自分だけのドリームチームを編成できます。
           </p>
+          <p className="text-[#ccc] leading-relaxed mb-4">
+            コラム記事では、ディ・ステファノからヴィニシウスまで60本以上の選手・戦術・歴史記事を独自の視点で執筆。モウリーニョ名言集や欧州CLクイズなど、サッカーファンが楽しめるコンテンツを継続的に更新しています。
+          </p>
           <p className="text-[#ccc] leading-relaxed">
-            本サービスは特定のクラブ・選手・団体とは一切関係のない非公式のファンアプリです。
+            本サービスは特定のクラブ・選手・団体とは一切関係のない非公式のファンサイトです。
             選手名・チーム名・国名はすべて識別目的で使用しており、各権利は各権利保有者に帰属します。
           </p>
         </section>

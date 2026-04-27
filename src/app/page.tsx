@@ -683,6 +683,54 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== FAQ SECTION ===== */}
+      <section className="border-t border-white/5 bg-black/25 py-14 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[10px] tracking-[0.3em] text-[#D4AF37] uppercase mb-2">FAQ</p>
+          <h2 className="text-2xl font-bold text-white mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+            よくある質問
+          </h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: '無料で使えますか？',
+                a: 'はい、すべての機能を無料でご利用いただけます。アカウント登録も不要です。',
+              },
+              {
+                q: 'どの時代の選手を選べますか？',
+                a: '1950年代のディ・ステファノ・プスカスから、現代のベリンガム・ヴィニシウスまで、欧州サッカーを代表する歴代の名選手を幅広く選択できます。',
+              },
+              {
+                q: 'AIの能力査定はどうやって算出されますか？',
+                a: 'Anthropic社のAI（Claude）が各選手の歴史的な実績・プレースタイル・全盛期のパフォーマンスをもとに、スピード・シュート・パス・ドリブル・守備・フィジカルの6項目を査定します。あくまでエンターテインメント目的の推定値です。',
+              },
+              {
+                q: 'Xにシェアするにはどうすればいいですか？',
+                a: 'チームを編成後、「Xにシェア」ボタンを押すと、タクティカルボードの画像とテキストが自動生成されます。画像をダウンロードして投稿に添付する形でシェアできます。',
+              },
+              {
+                q: 'スマートフォンでも使えますか？',
+                a: 'はい、スマートフォン・タブレット・PCのすべてで動作するよう設計されています。ブラウザのみで利用でき、アプリのインストールは不要です。',
+              },
+              {
+                q: '選手情報の誤りや削除依頼はどこに連絡すればいいですか？',
+                a: 'お問い合わせページまたはメール（ren90no@hotmail.co.jp）からご連絡ください。正当な権利に基づくご連絡には速やかに対応いたします。',
+              },
+            ].map(({ q, a }) => (
+              <div key={q} className="bg-black/30 border border-white/6 rounded-xl p-5">
+                <p className="text-sm font-bold text-white mb-2">Q. {q}</p>
+                <p className="text-sm text-[#888] leading-relaxed">A. {a}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6">
+            <a href="/contact" className="text-xs text-[#D4AF37] hover:text-[#F0D060] transition-colors border border-[#D4AF37]/30 px-4 py-1.5 rounded-full">
+              その他のお問い合わせはこちら →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ===== COLUMN SECTION ===== */}
       <section className="border-t border-white/5 bg-black/20 py-14 px-6">
         <div className="max-w-5xl mx-auto">
