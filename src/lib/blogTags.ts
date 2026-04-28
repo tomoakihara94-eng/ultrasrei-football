@@ -83,4 +83,9 @@ export const postTags: Record<string, BlogTag[]> = {
   'luis-figo-real-madrid-transfer': ['レアル・マドリード', '選手列伝'],
   'eden-hazard-chelsea-years': ['選手列伝'],
   'real-madrid-la-decima-2014': ['レアル・マドリード', 'チャンピオンズリーグ'],
+  'thierry-henry-world-cup-1998': ['選手列伝', '戦術・歴史'],
+  'roberto-baggio-italy-1994': ['選手列伝'],
+  'manchester-city-pep-dynasty': ['戦術・歴史'],
+  'pirlo-italy-euro-2012': ['選手列伝', '戦術・歴史'],
+  'sergio-aguero-manchester-city': ['選手列伝'],
 };
