@@ -257,6 +257,9 @@ export default function Home() {
               <a href="/diagnosis" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all">
                 ⚽ 選手診断
               </a>
+              <a href="/records" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-bold transition-all">
+                📊 記録集
+              </a>
               <a href="/blog" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37]/10 text-xs font-bold tracking-wide transition-all">
                 コラム
               </a>
@@ -300,6 +303,9 @@ export default function Home() {
             </a>
             <a href="/diagnosis" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 text-xs font-bold whitespace-nowrap">
               ⚽ 選手診断
+            </a>
+            <a href="/records" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 text-xs font-bold whitespace-nowrap">
+              📊 記録集
             </a>
             <a href="/blog" className="flex-shrink-0 px-3 py-1.5 rounded-lg border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold whitespace-nowrap">
               コラム
@@ -821,6 +827,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-[10px] text-white/15">
             <p>© 2024 欧州サッカー 歴代ベストイレブンメーカー — 非公式ファン考察ツール。All trademarks and copyrights belong to their respective owners.</p>
             <div className="flex items-center gap-4 shrink-0">
+              <a href="/records" className="text-white/30 hover:text-gold transition-colors">記録集</a>
               <a href="/blog" className="text-white/30 hover:text-gold transition-colors">コラム</a>
               <a href="/about" className="text-white/30 hover:text-gold transition-colors">運営者情報</a>
               <a href="/privacy" className="text-white/30 hover:text-gold transition-colors">プライバシーポリシー</a>
