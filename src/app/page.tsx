@@ -13,6 +13,7 @@ import HexChart from '@/components/HexChart';
 import TeamAnalysis from '@/components/TeamAnalysis';
 import ManagerPanel from '@/components/ManagerPanel';
 import VisitorCounter from '@/components/VisitorCounter';
+import BulletinBoard from '@/components/BulletinBoard';
 
 const BENCH_SIZE = 5;
 
@@ -770,6 +771,8 @@ export default function Home() {
       </section>
 
       {/* ===== FOOTER — 免責事項 ===== */}
+      <BulletinBoard />
+
       <footer className="border-t border-white/8 bg-luxury-card mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-10">
           {/* Access Counter */}
