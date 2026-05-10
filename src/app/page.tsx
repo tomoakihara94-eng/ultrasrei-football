@@ -771,6 +771,42 @@ export default function Home() {
       </section>
 
       {/* ===== FOOTER — 免責事項 ===== */}
+      {/* ===== MOURINHO SECTION ===== */}
+      <section className="border-t border-[#1e1e1e] py-14 px-6" style={{ background: 'linear-gradient(135deg, #0d0d0d 0%, #110800 50%, #0d0d0d 100%)' }}>
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs tracking-[0.4em] text-[#D4AF37] uppercase mb-3">The Special One</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-playfair)' }}>
+            ジョゼ・モウリーニョ
+          </h2>
+          <blockquote className="text-lg md:text-2xl italic text-[#D4AF37]/80 mb-6 border-l-4 border-[#D4AF37]/40 pl-5" style={{ fontFamily: 'var(--font-playfair)' }}>
+            &ldquo;I am not in the business of losing.&rdquo;
+            <span className="block text-sm text-[#666] not-italic mt-1 pl-0">「私は負けるビジネスをしていない。」</span>
+          </blockquote>
+          <p className="text-[#777] text-sm leading-relaxed mb-8 max-w-2xl">
+            FCポルト・チェルシー・インテル・マドリード・マンU・ローマ——欧州の頂点を渡り歩いた「スペシャル・ワン」の名言・戦術・物語を徹底特集。
+          </p>
+          <div className="grid sm:grid-cols-3 gap-3 mb-6">
+            <a href="/mourinho" className="bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-xl p-4 hover:bg-[#D4AF37]/20 transition-all group">
+              <p className="text-[10px] tracking-widest text-[#D4AF37]/60 uppercase mb-1">名言集</p>
+              <p className="text-white text-sm font-bold group-hover:text-[#D4AF37] transition-colors">モウリーニョ名言集 全35本 →</p>
+            </a>
+            <a href="/blog/mourinho-chelsea-era" className="bg-[#111] border border-[#1e1e1e] rounded-xl p-4 hover:border-[#D4AF37]/30 transition-all group">
+              <p className="text-[10px] tracking-widest text-[#D4AF37]/60 uppercase mb-1">チェルシー時代</p>
+              <p className="text-white text-sm font-bold group-hover:text-[#D4AF37] transition-colors">プレミア3冠の光と確執 →</p>
+            </a>
+            <a href="/blog/mourinho-defensive-philosophy" className="bg-[#111] border border-[#1e1e1e] rounded-xl p-4 hover:border-[#D4AF37]/30 transition-all group">
+              <p className="text-[10px] tracking-widest text-[#D4AF37]/60 uppercase mb-1">戦術解剖</p>
+              <p className="text-white text-sm font-bold group-hover:text-[#D4AF37] transition-colors">守備哲学の真髄 →</p>
+            </a>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a href="/blog/mourinho-roma-conference-league" className="text-xs text-[#D4AF37]/70 hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/20 px-3 py-1.5 rounded-full">ASローマとコンフェレンスリーグ制覇 →</a>
+            <a href="/blog/mourinho-real-madrid-era" className="text-xs text-[#D4AF37]/70 hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/20 px-3 py-1.5 rounded-full">マドリード3年間の功罪 →</a>
+            <a href="/blog/jose-mourinho-vs-guardiola" className="text-xs text-[#D4AF37]/70 hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/20 px-3 py-1.5 rounded-full">モウリーニョ対グアルディオラ →</a>
+          </div>
+        </div>
+      </section>
+
       <BulletinBoard />
 
       <footer className="border-t border-white/8 bg-luxury-card mt-auto">

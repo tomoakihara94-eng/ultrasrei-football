@@ -218,9 +218,69 @@ const quotes = [
     context: '批評家やメディアの批判を意に介さないことを示した言葉。',
     category: '哲学',
   },
+  // 追加10本
+  {
+    text: 'Pressure is a privilege. It only comes to those who earn it.',
+    translation: 'プレッシャーは特権だ。それを勝ち取った者にしか訪れない。',
+    context: '重圧を恐れるのではなく、誇るべきものとして語った言葉。モウリーニョの勝者の思考を示す。',
+    category: '哲学',
+  },
+  {
+    text: 'I don\'t need the media to make me who I am. The trophies do that.',
+    translation: 'メディアに私を定義してもらう必要はない。トロフィーがそれをやってくれる。',
+    context: 'メディアとの関係を問われた際の発言。実績が全てという姿勢を貫いた。',
+    category: '自信',
+  },
+  {
+    text: 'At the end of the day, it\'s the result that counts. Not the performance, not the possession, not the passes. The result.',
+    translation: '最終的には結果だけが重要だ。パフォーマンスでも、ポゼッションでも、パス数でもない。結果だ。',
+    context: '美しいサッカーよりも勝利を優先するモウリーニョの哲学を直接的に語った言葉。',
+    category: '哲学',
+  },
+  {
+    text: 'I gave everything at Inter. Treble. And they still want more. That\'s football — you\'re only as good as your last game.',
+    translation: 'インテルには全てを捧げた。三冠だ。それでもまだ求めてくる。それがフットボールだ——最後の試合の結果が全て。',
+    context: 'インテルでの三冠達成後に監督を離れた際のコメント。クラブと監督の関係性の難しさを示した。',
+    category: '過去',
+  },
+  {
+    text: 'I\'d rather win 1-0 than lose 5-4. It\'s not boring. It\'s professional.',
+    translation: '5-4で負けるより1-0で勝つほうがいい。退屈ではない。プロフェッショナルなんだ。',
+    context: '守備的な戦い方を批判されることへの反論。勝利こそがプロの仕事だと主張した。',
+    category: '哲学',
+  },
+  {
+    text: 'I am the manager who wins the league in every country I\'ve been to.',
+    translation: '私は行った先々の国でリーグ優勝した監督だ。',
+    context: 'ポルトガル・イングランド・イタリア・スペインでのリーグ制覇を誇った発言。歴史的な事実に裏打ちされた自信。',
+    category: '自信',
+  },
+  {
+    text: 'When I left Chelsea the first time, I was sacked. The second time, I was sacked. I always come back. That\'s what winners do.',
+    translation: '最初にチェルシーを去ったのは解任だった。2度目もそうだ。しかし私は常に戻ってくる。それが勝者のやることだ。',
+    context: 'チェルシーとの複雑な関係を自らのレジリエンスとして語った言葉。',
+    category: '過去',
+  },
+  {
+    text: 'My teams never die in the first minute. They die in the last minute, fighting.',
+    translation: '私のチームは試合開始1分で死なない。最後の1分まで戦って、倒れる。',
+    context: 'チームの戦う姿勢と諦めない精神について語った言葉。モウリーニョの選手に求めるメンタリティを示す。',
+    category: '哲学',
+  },
+  {
+    text: 'I can\'t be afraid of winning. Winning is my oxygen.',
+    translation: '勝つことを恐れることはできない。勝利が私の酸素だ。',
+    context: '勝利への執念を生命維持に例えた言葉。勝つために生きているという信念を示した。',
+    category: '自信',
+  },
+  {
+    text: 'In football you need great players. But you also need a great leader on the touchline. That\'s me.',
+    translation: 'フットボールでは優秀な選手が必要だ。しかし同時に、タッチライン上に偉大なリーダーも必要だ。それが私だ。',
+    context: '監督としての自分の役割と存在価値を明確に語った言葉。',
+    category: '自信',
+  },
 ];
 
-const categories = ['すべて', '哲学', '自信', '挑発', 'ユーモア', '過去'];
 const categoryColors: Record<string, string> = {
   哲学: '#4A90D9',
   自信: '#D4AF37',
@@ -229,68 +289,152 @@ const categoryColors: Record<string, string> = {
   過去: '#9B59B6',
 };
 
+const trophies = [
+  { label: 'チャンピオンズリーグ', count: 2, years: '2004, 2010' },
+  { label: 'リーグ優勝', count: 8, years: 'POR / ENG / ESP / ITA' },
+  { label: 'FAカップ / コッパ', count: 3, years: '諸国カップ戦' },
+  { label: 'コンフェレンスL', count: 1, years: '2023 ASローマ' },
+];
+
 export default function MourinhoPage() {
+  const quoteCount = quotes.length;
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white" style={{ fontFamily: 'var(--font-inter)' }}>
-      <header className="border-b border-[#1e1e1e] bg-[#0d0d0d]">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[#060606] text-white" style={{ fontFamily: 'var(--font-inter)' }}>
+      {/* Top nav */}
+      <header className="border-b border-[#1a1a1a] bg-[#060606]/90 sticky top-0 z-20 backdrop-blur">
+        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors">
             &larr; ツールに戻る
           </Link>
-          <span className="text-xs text-[#555]">欧州サッカー歴代ベストイレブンメーカー</span>
+          <span className="text-xs text-[#444]">欧州サッカー歴代ベストイレブンメーカー</span>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-14">
-        {/* Hero */}
-        <div className="mb-12">
-          <p className="text-xs tracking-[0.3em] text-[#D4AF37] uppercase mb-3">The Special One</p>
-          <h1
-            className="text-4xl md:text-5xl font-bold mb-4"
-            style={{ fontFamily: 'var(--font-playfair)' }}
+      {/* ====== HERO ====== */}
+      <section
+        className="relative overflow-hidden"
+        style={{ background: 'linear-gradient(160deg, #0d0000 0%, #0a0a0a 40%, #060606 100%)' }}
+      >
+        {/* Decorative background text */}
+        <div
+          className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden select-none"
+          aria-hidden="true"
+        >
+          <span
+            className="text-[18vw] font-black tracking-tighter leading-none whitespace-nowrap"
+            style={{
+              fontFamily: 'var(--font-playfair)',
+              color: 'transparent',
+              WebkitTextStroke: '1px rgba(212,175,55,0.04)',
+            }}
           >
-            モウリーニョ名言集
-          </h1>
-          <p className="text-[#888] leading-relaxed max-w-2xl mb-4">
-            ジョゼ・モウリーニョ——「スペシャル・ワン」の異名を持つ、欧州サッカー史上最も雄弁な監督。
-            FCポルト、チェルシー、インテル・ミラン、レアル・マドリード、マンチェスター・ユナイテッド、トッテナムで指揮を執り、
-            数々の名言・迷言を世界に残してきた。その言葉には、サッカーへの深い哲学と、唯一無二のキャラクターが凝縮されている。
-          </p>
-          <p className="text-[#555] text-sm">全{quotes.length}本の名言を収録</p>
+            MOURINHO
+          </span>
         </div>
 
+        <div className="relative max-w-5xl mx-auto px-6 py-20 md:py-28">
+          <p className="text-[10px] tracking-[0.5em] text-[#D4AF37] uppercase mb-5 font-semibold">
+            ⸻ The Special One ⸻
+          </p>
+          <h1
+            className="text-5xl md:text-7xl font-black mb-2 leading-none"
+            style={{ fontFamily: 'var(--font-playfair)', letterSpacing: '-0.02em' }}
+          >
+            <span className="text-white">JOSÉ</span>
+          </h1>
+          <h1
+            className="text-5xl md:text-7xl font-black mb-8 leading-none"
+            style={{ fontFamily: 'var(--font-playfair)', letterSpacing: '-0.02em' }}
+          >
+            <span style={{ color: '#D4AF37' }}>MOURINHO</span>
+          </h1>
+
+          <blockquote
+            className="text-xl md:text-2xl italic mb-8 max-w-2xl"
+            style={{ fontFamily: 'var(--font-playfair)', color: 'rgba(255,255,255,0.75)', borderLeft: '4px solid #D4AF37', paddingLeft: '1.25rem' }}
+          >
+            &ldquo;I am not in the business of losing.&rdquo;
+          </blockquote>
+
+          <p className="text-[#666] text-sm leading-relaxed max-w-2xl mb-10">
+            FCポルト・チェルシー・インテル・マドリード・マンU・ローマ——欧州の頂点を渡り歩いた「スペシャル・ワン」。
+            勝利への執念、恐るべき自信、時に辛辣な挑発、そしてユーモア。
+            全{quoteCount}本の名言でモウリーニョという男の全貌に迫る。
+          </p>
+
+          {/* Trophy stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {trophies.map((t) => (
+              <div
+                key={t.label}
+                className="rounded-xl px-4 py-4 text-center"
+                style={{ background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.15)' }}
+              >
+                <div
+                  className="text-3xl font-black mb-1"
+                  style={{ fontFamily: 'var(--font-playfair)', color: '#D4AF37' }}
+                >
+                  {t.count}
+                </div>
+                <div className="text-white text-xs font-semibold mb-0.5">{t.label}</div>
+                <div className="text-[#555] text-[10px]">{t.years}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Divider line */}
+      <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }} />
+
+      <main className="max-w-5xl mx-auto px-6 py-14">
         {/* Category legend */}
-        <div className="flex flex-wrap gap-3 mb-10">
+        <div className="flex flex-wrap gap-3 mb-12 justify-center">
           {Object.entries(categoryColors).map(([cat, color]) => (
             <span
               key={cat}
-              className="text-xs px-3 py-1 rounded-full border"
-              style={{ borderColor: color + '60', color: color, backgroundColor: color + '15' }}
+              className="text-xs px-4 py-1.5 rounded-full font-semibold"
+              style={{ borderColor: color + '60', color: color, backgroundColor: color + '15', border: `1px solid ${color}40` }}
             >
               {cat}
             </span>
           ))}
         </div>
 
+        {/* Quote count */}
+        <p
+          className="text-center text-[#444] text-xs tracking-[0.3em] uppercase mb-10"
+        >
+          全{quoteCount}本 収録
+        </p>
+
         {/* Quotes */}
-        <div className="space-y-6">
+        <div className="space-y-5">
           {quotes.map((quote, i) => {
             const color = categoryColors[quote.category] || '#D4AF37';
+            const isGold = quote.category === '自信';
             return (
               <article
                 key={i}
-                className="bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl p-6 md:p-8 hover:border-[#D4AF37]/20 transition-all"
+                className="rounded-2xl p-6 md:p-8 transition-all"
+                style={{
+                  background: isGold
+                    ? 'linear-gradient(135deg, #0f0d06 0%, #100f09 100%)'
+                    : '#0c0c0c',
+                  border: `1px solid ${isGold ? 'rgba(212,175,55,0.25)' : '#1a1a1a'}`,
+                }}
               >
-                <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex items-start justify-between gap-4 mb-5">
                   <span
-                    className="text-xs px-2.5 py-1 rounded-full shrink-0"
+                    className="text-[10px] px-3 py-1 rounded-full font-bold tracking-wider uppercase"
                     style={{ backgroundColor: color + '20', color: color, border: `1px solid ${color}40` }}
                   >
                     {quote.category}
                   </span>
                   <span
-                    className="text-4xl font-black leading-none shrink-0"
-                    style={{ fontFamily: 'var(--font-playfair)', color: '#D4AF3715' }}
+                    className="text-3xl font-black leading-none shrink-0 tabular-nums"
+                    style={{ fontFamily: 'var(--font-playfair)', color: 'rgba(212,175,55,0.08)' }}
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
@@ -299,18 +443,23 @@ export default function MourinhoPage() {
                 {/* English quote */}
                 <blockquote
                   className="text-lg md:text-xl font-medium leading-relaxed mb-3 italic"
-                  style={{ color: '#e0e0e0', fontFamily: 'var(--font-playfair)', borderLeft: `3px solid ${color}`, paddingLeft: '1rem' }}
+                  style={{
+                    color: isGold ? '#f0e4b0' : '#e0e0e0',
+                    fontFamily: 'var(--font-playfair)',
+                    borderLeft: `3px solid ${color}`,
+                    paddingLeft: '1rem',
+                  }}
                 >
                   &ldquo;{quote.text}&rdquo;
                 </blockquote>
 
                 {/* Japanese translation */}
-                <p className="text-[#aaa] text-sm leading-relaxed mb-4 pl-4">
+                <p className="text-[#999] text-sm leading-relaxed mb-5 pl-5">
                   「{quote.translation}」
                 </p>
 
                 {/* Context */}
-                <p className="text-[#555] text-xs leading-relaxed border-t border-[#1a1a1a] pt-4">
+                <p className="text-[#444] text-xs leading-relaxed border-t pt-4" style={{ borderColor: '#1a1a1a' }}>
                   {quote.context}
                 </p>
               </article>
@@ -319,11 +468,18 @@ export default function MourinhoPage() {
         </div>
 
         {/* Profile section */}
-        <section className="mt-16 bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl p-8">
-          <h2 className="text-xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <section
+          className="mt-16 rounded-2xl p-8"
+          style={{ background: 'linear-gradient(135deg, #0d0d0d 0%, #0f0a00 100%)', border: '1px solid rgba(212,175,55,0.2)' }}
+        >
+          <p className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-2">Profile</p>
+          <h2
+            className="text-xl font-bold mb-5"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
             ジョゼ・モウリーニョとは
           </h2>
-          <div className="text-[#888] text-sm leading-relaxed space-y-3">
+          <div className="text-[#777] text-sm leading-relaxed space-y-4">
             <p>
               ジョゼ・モウリーニョ（1963年1月26日生まれ、ポルトガル・セトゥーバル出身）は、欧州サッカー史上最も成功した監督の一人。選手時代は目立った実績がなかったが、指導者に転身後はFCポルトでチャンピオンズリーグを制覇（2004年）し、一気に世界の注目を集めた。
             </p>
@@ -336,13 +492,35 @@ export default function MourinhoPage() {
           </div>
         </section>
 
-        <div className="border-t border-[#1e1e1e] pt-10 mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        {/* Related links */}
+        <section className="mt-10 grid sm:grid-cols-3 gap-3">
+          {[
+            { href: '/blog/mourinho-chelsea-era', label: 'チェルシー時代の栄光と確執' },
+            { href: '/blog/mourinho-defensive-philosophy', label: '守備哲学の真髄' },
+            { href: '/blog/mourinho-roma-conference-league', label: 'ローマ・コンフェレンス制覇' },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block rounded-xl px-5 py-4 text-sm text-[#D4AF37] font-medium transition-all hover:bg-[#D4AF37]/10"
+              style={{ background: 'rgba(212,175,55,0.05)', border: '1px solid rgba(212,175,55,0.2)' }}
+            >
+              {link.label} →
+            </Link>
+          ))}
+        </section>
+
+        <div className="border-t border-[#1a1a1a] pt-10 mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/" className="text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors font-medium">
             ベストイレブンを作る →
           </Link>
           <span className="text-[#333] hidden sm:block">|</span>
           <Link href="/blog" className="text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors font-medium">
             コラムを読む →
+          </Link>
+          <span className="text-[#333] hidden sm:block">|</span>
+          <Link href="/records" className="text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors font-medium">
+            レアルの記録を見る →
           </Link>
         </div>
       </main>
