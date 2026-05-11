@@ -393,7 +393,7 @@ export default function QuizPage() {
           </button>
 
           <div style={{ textAlign: 'center', marginTop: 12 }}>
-            <a href="/" style={{ fontSize: 11, color: C.dimmer, textDecoration: 'none' }}>← ベストイレブンメーカーに戻る</a>
+            <a href="/tool" style={{ fontSize: 11, color: C.dimmer, textDecoration: 'none' }}>← ベストイレブンメーカーに戻る</a>
           </div>
         </div>
       </div>
@@ -787,7 +787,7 @@ export default function QuizPage() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 14 }}>
-          <a href="/" style={{ fontSize: 11, color: C.dimmer, textDecoration: 'none' }}>← ベストイレブンメーカーに戻る</a>
+          <a href="/tool" style={{ fontSize: 11, color: C.dimmer, textDecoration: 'none' }}>← ベストイレブンメーカーに戻る</a>
         </div>
       </div>
     </div>
