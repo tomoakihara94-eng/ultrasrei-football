@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/mourinho`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/records`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/tool`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/diagnosis/real-madrid`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/vote`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${base}/quiz`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
