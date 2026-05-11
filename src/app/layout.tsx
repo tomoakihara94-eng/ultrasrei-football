@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
+import VisitorCounter from '@/components/VisitorCounter';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -84,6 +85,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {children}
+
+        {/* ── アクセス数 固定ウィジェット（右下） ── */}
+        <div
+          style={{
+            position: 'fixed', bottom: '16px', right: '16px', zIndex: 50,
+            backgroundColor: 'rgba(10,10,10,0.88)',
+            border: '1px solid rgba(212,175,55,0.25)',
+            borderRadius: '12px',
+            padding: '8px 14px',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+          }}
+        >
+          <VisitorCounter />
+        </div>
+
         <footer style={{ borderTop: '1px solid #1e1e1e', backgroundColor: '#0d0d0d', padding: '24px 16px', marginTop: '0', fontFamily: 'var(--font-inter)' }}>
           <div style={{ maxWidth: '960px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
             <p style={{ color: '#444', fontSize: '12px', margin: 0 }}>
