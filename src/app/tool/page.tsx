@@ -37,7 +37,7 @@ export default function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [rightTab, setRightTab] = useState<'roster' | 'analysis'>('roster');
   const [managerStyle, setManagerStyle] = useState<ManagerStyle | null>(null);
-  const [shareHint, setShareHint] = useState(false);
+  const [shareHint, setShareHint] = useState<false | 'clipboard' | 'download'>(false);
   const [freeMode, setFreeMode] = useState(false);
   const [customPositions, setCustomPositions] = useState<Record<number, { x: number; y: number }>>({});
   const [autoSaved, setAutoSaved] = useState(false);
@@ -71,7 +71,7 @@ export default function Home() {
   // Auto-dismiss share hint
   useEffect(() => {
     if (!shareHint) return;
-    const t = setTimeout(() => setShareHint(false), 6000);
+    const t = setTimeout(() => setShareHint(false), 8000);
     return () => clearTimeout(t);
   }, [shareHint]);
 
@@ -173,15 +173,23 @@ export default function Home() {
         }
       } catch { /* fall through to manual flow */ }
 
-      // Fallback: download image + open tweet
-      const link = document.createElement('a');
-      link.download = `best-eleven-${Date.now()}.png`;
-      link.href = dataUrl;
-      link.click();
-      setShareHint(true);
+      // Fallback: clipboard copy + open tweet
+      const blob = await (await fetch(dataUrl)).blob();
+      let copied = false;
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+        copied = true;
+      } catch {
+        // clipboard API unsupported → fall back to download
+        const link = document.createElement('a');
+        link.download = `best-eleven-${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+      }
+      setShareHint(copied ? 'clipboard' : 'download');
       setTimeout(() => {
         window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(tweetText)}`, '_blank');
-      }, 700);
+      }, 600);
     } finally {
       setIsExporting(false);
     }
@@ -318,13 +326,20 @@ export default function Home() {
 
       {/* ===== Share Hint Toast ===== */}
       {shareHint && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up" style={{ width: 'max-content', maxWidth: '90vw' }}>
           <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-luxury-card border border-gold/30 shadow-gold text-sm">
             <Share2 size={14} className="text-gold shrink-0" />
-            <span className="text-white/80">
-              画像を保存しました。Xの投稿画面が開いたら<strong className="text-gold">📎で画像を添付</strong>してポスト！
-            </span>
-            <button onClick={() => setShareHint(false)} className="text-white/30 hover:text-white ml-1">
+            {shareHint === 'clipboard' ? (
+              <span className="text-white/80">
+                画像をクリップボードにコピーしました。<br />
+                Xの投稿画面で<strong className="text-gold">Cmd+V（またはCtrl+V）で貼り付け</strong>てポスト！
+              </span>
+            ) : (
+              <span className="text-white/80">
+                画像を保存しました。Xの投稿画面が開いたら<strong className="text-gold">📎で画像を添付</strong>してポスト！
+              </span>
+            )}
+            <button onClick={() => setShareHint(false)} className="text-white/30 hover:text-white ml-1 shrink-0">
               <X size={14} />
             </button>
           </div>
