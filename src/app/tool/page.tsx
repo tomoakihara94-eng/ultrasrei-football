@@ -173,6 +173,22 @@ export default function Home() {
         }
       } catch { /* fall through to manual flow */ }
 
+      // Upload image → get share URL → tweet with URL (X shows image card automatically)
+      try {
+        const res = await fetch('/api/share', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageData: dataUrl, teamName }),
+        });
+        if (res.ok) {
+          const { shareId } = await res.json() as { shareId: string };
+          const shareUrl = `https://ultrasrei.com/share/${shareId}`;
+          const shareTweetText = `${teamName || '歴代最強イレブン'} 🏆\n#ベストイレブンメーカー #欧州サッカー\n${shareUrl}`;
+          window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(shareTweetText)}`, '_blank');
+          return;
+        }
+      } catch { /* fall through */ }
+
       // Fallback: clipboard copy + open tweet
       const blob = await (await fetch(dataUrl)).blob();
       let copied = false;
@@ -180,7 +196,6 @@ export default function Home() {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
         copied = true;
       } catch {
-        // clipboard API unsupported → fall back to download
         const link = document.createElement('a');
         link.download = `best-eleven-${Date.now()}.png`;
         link.href = dataUrl;
