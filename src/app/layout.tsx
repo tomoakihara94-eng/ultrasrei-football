@@ -17,26 +17,26 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: '欧州サッカー歴代ベストイレブンメーカー | ultrasrei.com',
-    template: '%s | 欧州サッカー歴代ベストイレブンメーカー',
+    default: 'レアル・マドリード ファンサイト | ultrasrei.com',
+    template: '%s | ultrasrei.com',
   },
-  description: '欧州サッカーの歴代名選手でベストイレブンを編成できる無料ツール。AIが選手の能力を査定し、タクティカルボードを自動生成。レアル・マドリード、バルセロナ、CL優勝クラブの名手を自由に組み合わせてXにシェアしよう。',
+  description: 'Hala Madrid y nada más. レアル・マドリードとモウリーニョを愛するファンが作る考察サイト。CL15回優勝クラブの歴史・選手・戦術を深掘り。モウリーニョ名言集・ベストイレブンメーカーも無料公開中。',
   keywords: ['欧州サッカー', 'ベストイレブン', 'レアルマドリード', 'チャンピオンズリーグ', 'サッカー歴代選手', 'フォーメーション', 'タクティカルボード'],
   authors: [{ name: 'Hara Tech' }],
   creator: 'Hara Tech',
   metadataBase: new URL('https://ultrasrei.com'),
   openGraph: {
-    title: '欧州サッカー歴代ベストイレブンメーカー',
-    description: '歴代名選手でベストイレブンを作成してXにシェア。AI能力査定＆タクティカルボード生成。',
+    title: 'レアル・マドリード ファンサイト | ultrasrei.com',
+    description: 'Hala Madrid y nada más. CL15回優勝クラブの歴史・選手・戦術をファン目線で深掘り。モウリーニョ名言集も。',
     type: 'website',
     url: 'https://ultrasrei.com',
-    siteName: '欧州サッカー歴代ベストイレブンメーカー',
+    siteName: 'ultrasrei.com',
     locale: 'ja_JP',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '欧州サッカー歴代ベストイレブンメーカー',
-    description: '歴代名選手でベストイレブンを作成してXにシェア',
+    title: 'レアル・マドリード ファンサイト | ultrasrei.com',
+    description: 'Hala Madrid y nada más. CL15回優勝クラブの歴史・選手・戦術を深掘り。モウリーニョ名言集も。',
   },
   robots: {
     index: true,

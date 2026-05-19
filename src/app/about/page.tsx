@@ -40,8 +40,8 @@ export default function AboutPage() {
                 <span className="text-[#D4AF37] text-xl font-bold">H</span>
               </div>
               <div>
-                <p className="text-white font-bold text-lg">原 智明（Tomoaki Hara）</p>
-                <p className="text-[#D4AF37] text-xs tracking-wider">Hara Tech 代表 / サッカーコラムニスト</p>
+                <p className="text-white font-bold text-lg">Hara Tech</p>
+                <p className="text-[#D4AF37] text-xs tracking-wider">サッカーコラムニスト / エンジニア</p>
               </div>
             </div>
             <div className="space-y-3 text-[#aaa] text-sm leading-relaxed">

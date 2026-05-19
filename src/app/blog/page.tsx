@@ -16,7 +16,7 @@ export default function BlogIndexPage() {
       <header className="border-b border-[#1e1e1e] bg-[#0d0d0d]">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors">
-            &larr; ツールに戻る
+            &larr; トップへ戻る
           </Link>
           <span className="text-xs text-[#555]">欧州サッカー歴代ベストイレブンメーカー</span>
         </div>
@@ -40,10 +40,41 @@ export default function BlogIndexPage() {
         {/* Search + Filter + List (client component) */}
         <BlogSearch posts={blogPosts} />
 
-        {/* Footer nav */}
-        <div className="border-t border-[#1e1e1e] pt-10 mt-16 text-center">
-          <Link href="/" className="text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors">
-            ベストイレブンを作る &rarr;
+        {/* Tool CTA */}
+        <div
+          className="border-t border-[#1e1e1e] pt-10 mt-16"
+          style={{
+            padding: '32px 28px',
+            background: 'linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.03))',
+            border: '1px solid rgba(212,175,55,0.25)',
+            borderRadius: 16,
+            textAlign: 'center',
+            marginTop: 48,
+          }}
+        >
+          <p style={{ color: '#D4AF37', fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', marginBottom: 10 }}>
+            Best Eleven Maker
+          </p>
+          <p className="text-white font-bold text-lg mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+            歴代名選手でベストイレブンを編成しよう
+          </p>
+          <p className="text-[#888] text-sm mb-6 leading-relaxed">
+            AIが能力査定、フォーメーションを自動生成。作ったベストイレブンをXにシェアしよう。
+          </p>
+          <Link
+            href="/tool"
+            style={{
+              display: 'inline-block',
+              padding: '12px 32px',
+              background: 'linear-gradient(135deg, #D4AF37, #F0D060)',
+              color: '#0a0a0a',
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: 14,
+              textDecoration: 'none',
+            }}
+          >
+            ベストイレブンを作る →
           </Link>
         </div>
       </main>

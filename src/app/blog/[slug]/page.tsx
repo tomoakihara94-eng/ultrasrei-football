@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { blogPosts, getBlogPost } from '@/lib/blogPosts';
+import AdsenseUnit from '@/components/AdsenseUnit';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://ultrasrei.com/blog/${slug}`,
       siteName: '欧州サッカー歴代ベストイレブンメーカー',
       locale: 'ja_JP',
+      publishedTime: post.date,
     },
     twitter: {
       card: 'summary_large_image',
@@ -31,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
   };
 }
+
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
@@ -41,13 +44,25 @@ export default async function BlogPostPage({ params }: Props) {
   const prev = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
   const next = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
 
+  // Pick 3 related posts (excluding current)
+  const relatedPosts = blogPosts
+    .filter((p) => p.slug !== slug)
+    .slice(0, 3);
+
   const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
     author: { '@type': 'Organization', name: 'Hara Tech', url: 'https://ultrasrei.com/about' },
-    publisher: { '@type': 'Organization', name: 'Hara Tech', url: 'https://ultrasrei.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Hara Tech',
+      url: 'https://ultrasrei.com',
+      logo: { '@type': 'ImageObject', url: 'https://ultrasrei.com/logo.png' },
+    },
     url: `https://ultrasrei.com/blog/${slug}`,
     inLanguage: 'ja',
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://ultrasrei.com/blog/${slug}` },
@@ -109,35 +124,124 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
 
         {/* Lead */}
-        <p className="text-[#aaa] text-base leading-relaxed mb-12 border-l-2 border-[#D4AF37]/40 pl-5 italic">
+        <p className="text-[#aaa] text-base leading-relaxed mb-8 border-l-2 border-[#D4AF37]/40 pl-5 italic">
           {post.excerpt}
         </p>
 
-        {/* Sections */}
+        {/* Ad unit after lead */}
+        <AdsenseUnit />
+
+        {/* Sections with ads every 3 sections */}
         <div className="space-y-10">
           {post.sections.map((section, si) => (
-            <section key={si}>
-              {section.heading && (
-                <h2
-                  className="text-xl font-bold text-[#D4AF37] mb-4"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
-                >
-                  {section.heading}
-                </h2>
+            <div key={si}>
+              <section>
+                {section.heading && (
+                  <h2
+                    className="text-xl font-bold text-[#D4AF37] mb-4"
+                    style={{ fontFamily: 'var(--font-playfair)' }}
+                  >
+                    {section.heading}
+                  </h2>
+                )}
+                <div className="space-y-4">
+                  {section.paragraphs.map((para, pi) => (
+                    <p key={pi} className="text-[#bbb] leading-[1.9] text-[15px]">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              </section>
+              {/* Insert ad after every 3rd section */}
+              {(si + 1) % 3 === 0 && si < post.sections.length - 1 && (
+                <AdsenseUnit />
               )}
-              <div className="space-y-4">
-                {section.paragraphs.map((para, pi) => (
-                  <p key={pi} className="text-[#bbb] leading-[1.9] text-[15px]">
-                    {para}
-                  </p>
-                ))}
-              </div>
-            </section>
+            </div>
           ))}
         </div>
 
+        {/* Ad unit before navigation */}
+        <AdsenseUnit className="mt-6" />
+
+        {/* Tool CTA */}
+        <div
+          style={{
+            margin: '40px 0',
+            padding: '28px 24px',
+            background: 'linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.03))',
+            border: '1px solid rgba(212,175,55,0.3)',
+            borderRadius: 16,
+            textAlign: 'center',
+          }}
+        >
+          <p style={{ color: '#D4AF37', fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: 10 }}>
+            Best Eleven Maker
+          </p>
+          <p style={{ color: '#eee', fontSize: 17, fontWeight: 700, marginBottom: 8, fontFamily: 'var(--font-playfair)' }}>
+            あなたの歴代ベストイレブンを作ろう
+          </p>
+          <p style={{ color: '#888', fontSize: 13, marginBottom: 20, lineHeight: 1.7 }}>
+            レアル・マドリードの伝説たちを自由に組み合わせ、<br />あなただけのベストイレブンを編成してXにシェア。
+          </p>
+          <Link
+            href="/tool"
+            style={{
+              display: 'inline-block',
+              padding: '12px 32px',
+              background: 'linear-gradient(135deg, #D4AF37, #F0D060)',
+              color: '#0a0a0a',
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: 14,
+              textDecoration: 'none',
+            }}
+          >
+            ベストイレブンを作る →
+          </Link>
+        </div>
+
+        {/* Related articles */}
+        {relatedPosts.length > 0 && (
+          <div style={{ marginTop: 48, marginBottom: 40 }}>
+            <p style={{ fontSize: 11, letterSpacing: '0.25em', color: '#D4AF37', textTransform: 'uppercase', marginBottom: 16 }}>
+              Related Articles
+            </p>
+            <h3 style={{ color: '#fff', fontSize: 17, fontWeight: 700, marginBottom: 20, fontFamily: 'var(--font-playfair)' }}>
+              関連コラム
+            </h3>
+            <div style={{ display: 'grid', gap: 12 }}>
+              {relatedPosts.map((related) => (
+                <Link
+                  key={related.slug}
+                  href={`/blog/${related.slug}`}
+                  style={{
+                    display: 'block',
+                    padding: '16px 20px',
+                    background: '#0f0f0f',
+                    border: '1px solid #1e1e1e',
+                    borderRadius: 12,
+                    textDecoration: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  className="hover:border-[#D4AF37]/40"
+                >
+                  <p style={{ fontSize: 10, color: '#D4AF37', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 6 }}>
+                    {related.subtitle}
+                  </p>
+                  <p style={{ color: '#ddd', fontSize: 14, fontWeight: 600, lineHeight: 1.5, marginBottom: 6 }}>
+                    {related.title}
+                  </p>
+                  <p style={{ color: '#666', fontSize: 12, lineHeight: 1.6, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {related.excerpt}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Article navigation */}
-        <div className="border-t border-[#1e1e1e] mt-16 pt-10 grid grid-cols-2 gap-4">
+        <div className="border-t border-[#1e1e1e] mt-8 pt-10 grid grid-cols-2 gap-4">
           <div>
             {prev && (
               <Link
