@@ -434,6 +434,41 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== MEMBERS CTA ===== */}
+      <section
+        className="py-16 px-6 border-t border-[#1a1a1a]"
+        style={{ background: 'linear-gradient(135deg, #0e0800 0%, #0d0d0d 100%)' }}
+      >
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
+          <div className="flex-1">
+            <p className="text-[10px] tracking-[0.5em] text-[#D4AF37] uppercase mb-3 font-semibold">Members Only</p>
+            <h2 className="text-3xl font-black text-white mb-3 leading-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+              モウリーニョ×マドリー<br />
+              <span style={{ color: '#D4AF37' }}>プレミアム会員</span>
+            </h2>
+            <p className="text-[#666] text-sm leading-relaxed mb-6 max-w-md">
+              全試合の戦術振り返り・モウリーニョ采配解剖・CL＆リーガレビューを会員限定で配信。
+              月額¥1,000でいつでもキャンセル可。
+            </p>
+            <Link
+              href="/members"
+              className="inline-block px-8 py-3 rounded-xl font-bold text-sm text-black transition-all hover:shadow-lg"
+              style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}
+            >
+              詳細を見る・登録する →
+            </Link>
+          </div>
+          <div className="flex-shrink-0 grid grid-cols-1 gap-3 w-full md:w-64">
+            {['全試合振り返りレビュー', 'モウリーニョ采配の深掘り', '戦術分析コラム', '会員限定掲示板'].map((item) => (
+              <div key={item} className="flex items-center gap-3 text-sm text-[#bbb]">
+                <span className="text-[#D4AF37] shrink-0">✓</span>
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== X TIMELINE ===== */}
       <section className="py-14 px-6 bg-[#060606] border-t border-[#1a1a1a]">
         <div className="max-w-2xl mx-auto">
