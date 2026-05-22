@@ -448,7 +448,7 @@ export default function Home() {
             </h2>
             <p className="text-[#666] text-sm leading-relaxed mb-6 max-w-md">
               全試合の戦術振り返り・モウリーニョ采配解剖・CL＆リーガレビューを会員限定で配信。
-              月額¥1,000でいつでもキャンセル可。
+              月額¥900でいつでもキャンセル可。
             </p>
             <Link
               href="/members"

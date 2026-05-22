@@ -80,7 +80,7 @@ export default function MembersPage() {
           <div className="relative">
             <p className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-3 font-bold">月額プラン</p>
             <div className="flex items-end gap-2 mb-2">
-              <span className="text-5xl font-black text-white" style={{ fontFamily: 'var(--font-playfair)' }}>¥1,000</span>
+              <span className="text-5xl font-black text-white" style={{ fontFamily: 'var(--font-playfair)' }}>¥900</span>
               <span className="text-[#555] text-sm mb-2">/ 月（税込）</span>
             </div>
             <p className="text-[#444] text-xs mb-8">いつでもキャンセル可能</p>
