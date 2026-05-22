@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabaseBrowser';
 import type { PremiumPost } from '@/lib/premiumPosts';
 
 export default function PremiumArticlePage() {
