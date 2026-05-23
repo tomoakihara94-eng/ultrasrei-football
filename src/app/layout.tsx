@@ -114,6 +114,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/about" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>運営者情報</a>
               <a href="/contact" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>お問い合わせ</a>
               <a href="/privacy" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</a>
+              <a href="/tokusho" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>特定商取引法に基づく表記</a>
             </nav>
           </div>
         </footer>

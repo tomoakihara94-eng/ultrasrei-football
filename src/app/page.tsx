@@ -539,6 +539,7 @@ export default function Home() {
                 { href: '/gallery',  label: 'みんなのフォーメーション' },
                 { href: '/about',    label: '運営者情報' },
                 { href: '/privacy',  label: 'プライバシーポリシー' },
+                { href: '/tokusho', label: '特定商取引法に基づく表記' },
                 { href: '/contact',  label: 'お問い合わせ' },
               ].map(({ href, label }) => (
                 <Link key={href} href={href} className="text-[#444] hover:text-[#D4AF37] transition-colors">

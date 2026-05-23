@@ -100,13 +100,32 @@ export default function MembersPage() {
               ))}
             </ul>
 
+            {/* 定期課金の明示（特商法・消費者庁ガイドライン対応） */}
+            <div
+              className="rounded-xl px-4 py-3 mb-5 text-xs leading-relaxed"
+              style={{ background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.2)' }}
+            >
+              <p className="text-[#D4AF37] font-bold mb-1">【定期課金のご確認】</p>
+              <p className="text-[#888]">
+                本サービスは<strong className="text-white">月額¥900（税込）の自動更新サブスクリプション</strong>です。
+                お申し込み後、毎月自動的に課金されます。
+                会員ページの「支払い管理」からいつでも解約でき、解約後は次回請求日まで利用可能です。
+                日割り返金は行っておりません。
+              </p>
+              <p className="mt-2">
+                <a href="/tokusho" target="_blank" className="text-[#D4AF37]/70 underline hover:text-[#D4AF37]">
+                  特定商取引法に基づく表記 →
+                </a>
+              </p>
+            </div>
+
             <button
               onClick={handleSubscribe}
               disabled={loading}
               className="w-full py-4 rounded-xl font-black text-base text-black transition-all hover:shadow-lg hover:scale-[1.02] disabled:opacity-60"
               style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}
             >
-              {loading ? '処理中…' : '今すぐ登録する →'}
+              {loading ? '処理中…' : '上記に同意して登録する →'}
             </button>
             <p className="text-center text-[#333] text-xs mt-4">
               Stripeの安全な決済ページへ移動します
