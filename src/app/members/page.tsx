@@ -8,11 +8,16 @@ export default function MembersPage() {
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [configError, setConfigError] = useState('');
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setLoggedIn(!!session);
-    });
+    try {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setLoggedIn(!!session);
+      }).catch(() => {});
+    } catch (e) {
+      setConfigError(e instanceof Error ? e.message : '設定エラー');
+    }
   }, []);
 
   const handleSubscribe = async () => {
@@ -29,6 +34,19 @@ export default function MembersPage() {
     const { url } = await res.json();
     window.location.href = url;
   };
+
+  if (configError) {
+    return (
+      <div className="min-h-screen bg-[#060606] text-white flex items-center justify-center p-8" style={{ fontFamily: 'var(--font-inter)' }}>
+        <div className="max-w-md text-center">
+          <p className="text-red-400 text-sm font-bold mb-2">設定エラー</p>
+          <p className="text-[#666] text-xs leading-relaxed mb-4">{configError}</p>
+          <p className="text-[#444] text-xs">Vercel の Environment Variables に<br />NEXT_PUBLIC_SUPABASE_URL と NEXT_PUBLIC_SUPABASE_ANON_KEY を追加してください。</p>
+          <Link href="/" className="mt-6 inline-block text-[#D4AF37] text-sm">← トップへ戻る</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#060606] text-white" style={{ fontFamily: 'var(--font-inter)' }}>
