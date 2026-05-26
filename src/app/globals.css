@@ -5,39 +5,39 @@
 :root {
   --font-playfair: 'Playfair Display', Georgia, serif;
   --font-inter: 'Inter', system-ui, sans-serif;
+  --rm-white:  #FAFAF8;
+  --rm-gold:   #D4AF37;
+  --rm-navy:   #002B5C;
+  --rm-border: #E8E5DC;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: var(--rm-white);
+  color: #0d0d0d;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #141414; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+::-webkit-scrollbar-track { background: #f0ede8; }
+::-webkit-scrollbar-thumb { background: #d4c9b0; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
 
-/* Select arrow fix on dark bg */
 select option {
-  background: #1a1a1a;
-  color: #ffffff;
+  background: #fff;
+  color: #0d0d0d;
 }
 
-/* Gold shimmer animation */
+/* Gold shimmer */
 @keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
 }
-
 .shimmer-text {
-  background: linear-gradient(90deg, #D4AF37 25%, #F0D060 50%, #D4AF37 75%);
+  background: linear-gradient(90deg, #B8960C 20%, #D4AF37 50%, #B8960C 80%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -45,35 +45,16 @@ select option {
   animation: shimmer 3s linear infinite;
 }
 
-/* Fade-in */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Slide-up */
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .animate-fade-in  { animation: fadeIn  0.25s ease-out; }
-.animate-slide-up { animation: slideUp 0.3s ease-out; }
+.animate-slide-up { animation: slideUp 0.3s  ease-out; }
 
-/* Chemistry line flowing animation */
-@keyframes chemistryFlow {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: -10; }
-}
-.chemistry-line {
-  animation: chemistryFlow 0.6s linear infinite;
-}
+@keyframes chemistryFlow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -10; } }
+.chemistry-line { animation: chemistryFlow 0.6s linear infinite; }
 
-/* Chemistry bonus badge pulse */
 @keyframes chemistryPulse {
   0%, 100% { box-shadow: 0 0 8px rgba(212,175,55,0.4), 0 0 20px rgba(212,175,55,0.2); }
   50%       { box-shadow: 0 0 16px rgba(212,175,55,0.8), 0 0 40px rgba(212,175,55,0.4); }
 }
-.chemistry-badge {
-  animation: chemistryPulse 1.5s ease-in-out infinite;
-}
+.chemistry-badge { animation: chemistryPulse 1.5s ease-in-out infinite; }

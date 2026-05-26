@@ -90,31 +90,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div
           style={{
             position: 'fixed', bottom: '16px', right: '16px', zIndex: 50,
-            backgroundColor: 'rgba(10,10,10,0.88)',
-            border: '1px solid rgba(212,175,55,0.25)',
+            backgroundColor: 'rgba(250,250,248,0.92)',
+            border: '1px solid rgba(212,175,55,0.3)',
             borderRadius: '12px',
             padding: '8px 14px',
             backdropFilter: 'blur(8px)',
             WebkitBackdropFilter: 'blur(8px)',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
           }}
         >
           <VisitorCounter />
         </div>
 
-        <footer style={{ borderTop: '1px solid #1e1e1e', backgroundColor: '#0d0d0d', padding: '24px 16px', marginTop: '0', fontFamily: 'var(--font-inter)' }}>
+        <footer style={{ borderTop: '1px solid #E8E5DC', backgroundColor: '#F5F3EE', padding: '24px 16px', marginTop: '0', fontFamily: 'var(--font-inter)' }}>
           <div style={{ maxWidth: '960px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
-            <p style={{ color: '#444', fontSize: '12px', margin: 0 }}>
+            <p style={{ color: '#888', fontSize: '12px', margin: 0 }}>
               © 2024 欧州サッカー歴代ベストイレブンメーカー — 非公式ファンサイト
             </p>
             <nav style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-              <a href="/guide" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>使い方ガイド</a>
-              <a href="/vote" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>ベストイレブン投票</a>
-              <a href="/blog" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>コラム</a>
-              <a href="/mourinho" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>モウリーニョ名言集</a>
-              <a href="/about" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>運営者情報</a>
-              <a href="/contact" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>お問い合わせ</a>
-              <a href="/privacy" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</a>
-              <a href="/tokusho" style={{ color: '#666', fontSize: '12px', textDecoration: 'none' }}>特定商取引法に基づく表記</a>
+              <a href="/guide" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>使い方ガイド</a>
+              <a href="/vote" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>ベストイレブン投票</a>
+              <a href="/blog" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>コラム</a>
+              <a href="/mourinho" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>モウリーニョ名言集</a>
+              <a href="/about" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>運営者情報</a>
+              <a href="/contact" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>お問い合わせ</a>
+              <a href="/privacy" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</a>
+              <a href="/tokusho" style={{ color: '#777', fontSize: '12px', textDecoration: 'none' }}>特定商取引法に基づく表記</a>
             </nav>
           </div>
         </footer>

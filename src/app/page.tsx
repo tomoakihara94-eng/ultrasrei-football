@@ -50,17 +50,17 @@ const recordHighlights = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#060606] text-white" style={{ fontFamily: 'var(--font-inter)' }}>
+    <div className="min-h-screen bg-[#FAFAF8] text-[#0d0d0d]" style={{ fontFamily: 'var(--font-inter)' }}>
 
       {/* ===== HEADER ===== */}
-      <header className="sticky top-0 z-30 border-b border-[#1a1a1a] bg-[#060606]/95 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-[#E8E5DC] bg-[#FAFAF8]/95 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <span className="text-[#D4AF37] font-black tracking-widest text-sm" style={{ fontFamily: 'var(--font-playfair)' }}>
               ultrasrei
             </span>
-            <span className="hidden sm:inline text-[#333] text-xs">|</span>
-            <span className="hidden sm:inline text-[#555] text-xs">Hala Madrid</span>
+            <span className="hidden sm:inline text-[#CCC] text-xs">|</span>
+            <span className="hidden sm:inline text-[#999] text-xs">Hala Madrid</span>
           </Link>
 
           {/* Desktop nav */}
@@ -73,7 +73,7 @@ export default function Home() {
               <Link
                 key={href}
                 href={href}
-                className="px-3 py-1.5 rounded-lg text-xs text-[#888] hover:text-white transition-colors"
+                className="px-3 py-1.5 rounded-lg text-xs text-[#666] hover:text-[#0d0d0d] transition-colors"
               >
                 {label}
               </Link>
@@ -82,7 +82,7 @@ export default function Home() {
             <Link
               href="/mourinho"
               className="px-3 py-1.5 rounded-lg text-xs font-bold transition-colors"
-              style={{ color: '#D4AF37', border: '1px solid rgba(212,175,55,0.35)' }}
+              style={{ color: '#D4AF37', border: '1px solid rgba(212,175,55,0.4)' }}
             >
               THE SPECIAL ONE
             </Link>
@@ -97,9 +97,9 @@ export default function Home() {
 
           {/* Mobile nav */}
           <div className="flex md:hidden items-center gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
-            <Link href="/blog"     className="shrink-0 px-3 py-1.5 rounded-lg border border-[#222] text-[#777] text-xs whitespace-nowrap">記事</Link>
-            <Link href="/records"  className="shrink-0 px-3 py-1.5 rounded-lg border border-[#222] text-[#777] text-xs whitespace-nowrap">記録集</Link>
-            <Link href="/mourinho" className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap" style={{ color: '#D4AF37', border: '1px solid rgba(212,175,55,0.35)' }}>
+            <Link href="/blog"     className="shrink-0 px-3 py-1.5 rounded-lg border border-[#DDD] text-[#666] text-xs whitespace-nowrap">記事</Link>
+            <Link href="/records"  className="shrink-0 px-3 py-1.5 rounded-lg border border-[#DDD] text-[#666] text-xs whitespace-nowrap">記録集</Link>
+            <Link href="/mourinho" className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap" style={{ color: '#D4AF37', border: '1px solid rgba(212,175,55,0.4)' }}>
               モウリーニョ
             </Link>
             <Link
@@ -116,13 +116,13 @@ export default function Home() {
       {/* ===== HERO ===== */}
       <section
         className="relative overflow-hidden py-20 md:py-32 px-6"
-        style={{ background: 'linear-gradient(160deg, #0d0000 0%, #090909 50%, #060606 100%)' }}
+        style={{ background: 'linear-gradient(160deg, #FFFFFF 0%, #F5F3EE 55%, #FAFAF8 100%)' }}
       >
         {/* decorative background text */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden select-none" aria-hidden="true">
           <span
             className="text-[18vw] font-black leading-none whitespace-nowrap"
-            style={{ fontFamily: 'var(--font-playfair)', color: 'transparent', WebkitTextStroke: '1px rgba(212,175,55,0.04)' }}
+            style={{ fontFamily: 'var(--font-playfair)', color: 'transparent', WebkitTextStroke: '1px rgba(0,43,92,0.04)' }}
           >
             HALA MADRID
           </span>
@@ -136,17 +136,17 @@ export default function Home() {
             className="text-4xl md:text-6xl font-black mb-5 leading-tight"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            <span className="text-white">史上最強クラブ</span>
+            <span className="text-[#0d0d0d]">史上最強クラブ</span>
             <br />
             <span style={{ color: '#D4AF37' }}>レアル・マドリード</span>
-            <span className="text-white">の物語</span>
+            <span className="text-[#0d0d0d]">の物語</span>
           </h1>
-          <p className="text-[#777] text-sm md:text-base leading-relaxed mb-3 max-w-2xl">
+          <p className="text-[#555] text-sm md:text-base leading-relaxed mb-3 max-w-2xl">
             マドリーを愛してやまないファンが作る考察サイト。
             ディ・ステファノの5連覇からベリンガムの新時代まで——
             CL15回優勝クラブの歴史・選手・戦術・名将を、熱を持って深掘りする。
           </p>
-          <p className="text-[#D4AF37]/60 text-sm italic mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <p className="text-[#D4AF37]/70 text-sm italic mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
             &ldquo;Campeones, campeones, oé oé oé.&rdquo;
           </p>
           <div className="flex flex-wrap gap-3">
@@ -159,13 +159,14 @@ export default function Home() {
             </Link>
             <Link
               href="/mourinho"
-              className="px-6 py-3 rounded-xl font-bold text-sm text-[#D4AF37] border border-[#D4AF37]/40 hover:bg-[#D4AF37]/10 transition-all"
+              className="px-6 py-3 rounded-xl font-bold text-sm transition-all"
+              style={{ color: '#D4AF37', border: '1px solid rgba(212,175,55,0.5)', background: 'rgba(212,175,55,0.05)' }}
             >
               モウリーニョ語録
             </Link>
             <Link
               href="/records"
-              className="px-6 py-3 rounded-xl text-sm text-[#555] border border-[#222] hover:border-[#444] transition-all"
+              className="px-6 py-3 rounded-xl text-sm text-[#666] border border-[#DDD] hover:border-[#C0B090] transition-all"
             >
               記録集
             </Link>
@@ -176,10 +177,10 @@ export default function Home() {
       {/* gold divider */}
       <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }} />
 
-      {/* ===== MOURINHO — The Special One ===== */}
+      {/* ===== MOURINHO — The Special One (dark navy contrast) ===== */}
       <section
         className="py-16 px-6"
-        style={{ background: 'linear-gradient(135deg, #0e0800 0%, #110a00 40%, #0d0d0d 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #001a38 0%, #002B5C 40%, #001f45 100%)' }}
       >
         <div className="max-w-5xl mx-auto">
           {/* section label */}
@@ -196,7 +197,7 @@ export default function Home() {
                 ジョゼ・<br />
                 <span style={{ color: '#D4AF37' }}>モウリーニョ</span>
               </h2>
-              <p className="text-[#888] text-sm leading-relaxed mb-5">
+              <p className="text-[#A0B4CC] text-sm leading-relaxed mb-5">
                 このサイトの管理人が、レアル・マドリードと並んでもっとも敬愛する名将。
                 FCポルト・チェルシー・インテル・マドリード・マンU・ローマと欧州を渡り歩き、
                 どのクラブでもタイトルをもたらした「スペシャル・ワン」。
@@ -207,7 +208,7 @@ export default function Home() {
                   <span
                     key={t}
                     className="text-[10px] px-2.5 py-1 rounded-full font-bold"
-                    style={{ background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.25)', color: '#D4AF37' }}
+                    style={{ background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37' }}
                   >
                     {t}
                   </span>
@@ -232,12 +233,12 @@ export default function Home() {
                 <blockquote
                   key={quote}
                   className="rounded-xl px-5 py-4"
-                  style={{ background: 'rgba(212,175,55,0.05)', border: '1px solid rgba(212,175,55,0.15)' }}
+                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(212,175,55,0.2)' }}
                 >
                   <p className="text-[#D4AF37] text-sm italic mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
                     &ldquo;{quote}&rdquo;
                   </p>
-                  <p className="text-[#555] text-xs">{ja}</p>
+                  <p className="text-[#6B8BA4] text-xs">{ja}</p>
                 </blockquote>
               ))}
             </div>
@@ -246,26 +247,26 @@ export default function Home() {
       </section>
 
       {/* gold divider */}
-      <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent)' }} />
+      <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent)' }} />
 
       {/* ===== FEATURED ARTICLE ===== */}
-      <section className="py-14 px-6 bg-[#080808]">
+      <section className="py-14 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <p className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-6 font-semibold">Featured</p>
           <Link
             href={`/blog/${featuredArticle.slug}`}
-            className="group block rounded-2xl overflow-hidden transition-all"
-            style={{ background: 'linear-gradient(135deg, #0d0d0d 0%, #0f0900 100%)', border: '1px solid rgba(212,175,55,0.25)' }}
+            className="group block rounded-2xl overflow-hidden transition-all hover:shadow-md"
+            style={{ background: 'linear-gradient(135deg, #FAFAF8 0%, #F5F0E8 100%)', border: '1px solid rgba(212,175,55,0.3)' }}
           >
             <div className="p-8 md:p-12">
               <span
                 className="inline-block text-[10px] px-3 py-1 rounded-full font-bold tracking-widest uppercase mb-4"
-                style={{ backgroundColor: 'rgba(212,175,55,0.15)', color: '#D4AF37', border: '1px solid rgba(212,175,55,0.3)' }}
+                style={{ backgroundColor: 'rgba(212,175,55,0.12)', color: '#B8960C', border: '1px solid rgba(212,175,55,0.3)' }}
               >
                 {featuredArticle.label}
               </span>
               <h2
-                className="text-2xl md:text-4xl font-bold text-white leading-snug mb-4 group-hover:text-[#D4AF37] transition-colors"
+                className="text-2xl md:text-4xl font-bold text-[#0d0d0d] leading-snug mb-4 group-hover:text-[#B8960C] transition-colors"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 {featuredArticle.title}
@@ -282,16 +283,16 @@ export default function Home() {
       </section>
 
       {/* ===== RECENT ARTICLES GRID ===== */}
-      <section className="py-14 px-6 bg-[#060606]">
+      <section className="py-14 px-6 bg-[#FAFAF8]">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-8">
             <div>
               <p className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-1 font-semibold">Articles</p>
-              <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold text-[#0d0d0d]" style={{ fontFamily: 'var(--font-playfair)' }}>
                 レアル・マドリード 特集記事
               </h2>
             </div>
-            <Link href="/blog" className="text-xs text-[#555] hover:text-[#D4AF37] transition-colors whitespace-nowrap">
+            <Link href="/blog" className="text-xs text-[#888] hover:text-[#D4AF37] transition-colors whitespace-nowrap">
               全記事を見る →
             </Link>
           </div>
@@ -301,19 +302,19 @@ export default function Home() {
               <Link
                 key={a.slug}
                 href={`/blog/${a.slug}`}
-                className="group block rounded-xl p-5 transition-all"
-                style={{ background: '#0d0d0d', border: '1px solid #1a1a1a' }}
+                className="group block rounded-xl p-5 transition-all hover:shadow-sm"
+                style={{ background: '#FFFFFF', border: '1px solid #EAE7DF' }}
               >
                 <span
                   className="inline-block text-[9px] px-2 py-0.5 rounded-full font-bold tracking-wider uppercase mb-3"
-                  style={{ backgroundColor: 'rgba(212,175,55,0.1)', color: '#D4AF37', border: '1px solid rgba(212,175,55,0.2)' }}
+                  style={{ backgroundColor: 'rgba(212,175,55,0.1)', color: '#B8960C', border: '1px solid rgba(212,175,55,0.25)' }}
                 >
                   {a.label}
                 </span>
-                <h3 className="text-sm font-bold text-white leading-snug group-hover:text-[#D4AF37] transition-colors">
+                <h3 className="text-sm font-bold text-[#0d0d0d] leading-snug group-hover:text-[#B8960C] transition-colors">
                   {a.title}
                 </h3>
-                <span className="mt-3 inline-block text-[#444] text-xs group-hover:text-[#D4AF37]/60 transition-colors">
+                <span className="mt-3 inline-block text-[#AAA] text-xs group-hover:text-[#D4AF37] transition-colors">
                   続きを読む →
                 </span>
               </Link>
@@ -325,20 +326,20 @@ export default function Home() {
       {/* ===== RECORDS TEASER ===== */}
       <section
         className="py-14 px-6"
-        style={{ background: 'linear-gradient(135deg, #080808 0%, #0a0900 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #F5F3EE 0%, #FAFAF8 100%)' }}
       >
         <div className="max-w-6xl mx-auto">
           <p className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-2 font-semibold">Records</p>
-          <h2 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-2xl font-bold text-[#0d0d0d] mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
             レアル・マドリード 歴代記録
           </h2>
-          <p className="text-[#555] text-sm mb-8">数字が物語る、マドリーの圧倒的な強さ。</p>
+          <p className="text-[#777] text-sm mb-8">数字が物語る、マドリーの圧倒的な強さ。</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {recordHighlights.map((r) => (
               <div
                 key={r.label}
                 className="rounded-xl px-5 py-6 text-center"
-                style={{ background: 'rgba(212,175,55,0.05)', border: '1px solid rgba(212,175,55,0.15)' }}
+                style={{ background: '#FFFFFF', border: '1px solid #EAE7DF' }}
               >
                 <div
                   className="text-4xl font-black mb-1"
@@ -346,14 +347,15 @@ export default function Home() {
                 >
                   {r.value}
                 </div>
-                <div className="text-white text-xs font-semibold mb-0.5">{r.label}</div>
-                <div className="text-[#444] text-[10px]">{r.sub}</div>
+                <div className="text-[#0d0d0d] text-xs font-semibold mb-0.5">{r.label}</div>
+                <div className="text-[#AAA] text-[10px]">{r.sub}</div>
               </div>
             ))}
           </div>
           <Link
             href="/records"
-            className="inline-block px-6 py-2.5 rounded-xl text-sm font-bold text-[#D4AF37] border border-[#D4AF37]/40 hover:bg-[#D4AF37]/10 transition-all"
+            className="inline-block px-6 py-2.5 rounded-xl text-sm font-bold transition-all"
+            style={{ color: '#D4AF37', border: '1px solid rgba(212,175,55,0.4)', background: 'rgba(212,175,55,0.05)' }}
           >
             記録集をすべて見る →
           </Link>
@@ -361,16 +363,16 @@ export default function Home() {
       </section>
 
       {/* ===== PLAYER SPOTLIGHT ===== */}
-      <section className="py-14 px-6 bg-[#060606]">
+      <section className="py-14 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-8">
             <div>
               <p className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-1 font-semibold">Legends</p>
-              <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold text-[#0d0d0d]" style={{ fontFamily: 'var(--font-playfair)' }}>
                 銀河系の伝説たち
               </h2>
             </div>
-            <Link href="/blog" className="text-xs text-[#555] hover:text-[#D4AF37] transition-colors whitespace-nowrap">
+            <Link href="/blog" className="text-xs text-[#888] hover:text-[#D4AF37] transition-colors whitespace-nowrap">
               全選手記事 →
             </Link>
           </div>
@@ -379,18 +381,18 @@ export default function Home() {
               <Link
                 key={p.slug}
                 href={`/blog/${p.slug}`}
-                className="group flex items-start gap-4 rounded-xl p-5 transition-all"
-                style={{ background: '#0d0d0d', border: '1px solid #1a1a1a' }}
+                className="group flex items-start gap-4 rounded-xl p-5 transition-all hover:shadow-sm"
+                style={{ background: '#FAFAF8', border: '1px solid #EAE7DF' }}
               >
                 <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg font-black"
-                  style={{ background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.2)', color: '#D4AF37', fontFamily: 'var(--font-playfair)' }}
+                  style={{ background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.25)', color: '#D4AF37', fontFamily: 'var(--font-playfair)' }}
                 >
                   {p.name[0]}
                 </div>
                 <div className="min-w-0">
                   <div className="text-[#D4AF37] text-xs font-bold mb-0.5">{p.name}</div>
-                  <div className="text-[#333] text-[10px] mb-1">{p.era}</div>
-                  <p className="text-white text-xs leading-snug group-hover:text-[#D4AF37] transition-colors">
+                  <div className="text-[#BBB] text-[10px] mb-1">{p.era}</div>
+                  <p className="text-[#0d0d0d] text-xs leading-snug group-hover:text-[#B8960C] transition-colors">
                     {p.title}
                   </p>
                 </div>
@@ -401,21 +403,21 @@ export default function Home() {
       </section>
 
       {/* ===== TOOL CTA ===== */}
-      <section className="py-16 px-6 bg-[#080808] border-t border-[#1a1a1a]">
+      <section className="py-16 px-6 bg-[#FAFAF8] border-t border-[#E8E5DC]">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-3 font-semibold">Best XI Maker</p>
           <h2
-            className="text-3xl md:text-4xl font-bold text-white mb-4"
+            className="text-3xl md:text-4xl font-bold text-[#0d0d0d] mb-4"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             あなたの夢の<br />
             <span style={{ color: '#D4AF37' }}>レアル・マドリード</span>を作れ
           </h2>
-          <p className="text-[#555] text-sm leading-relaxed mb-3 max-w-xl mx-auto">
+          <p className="text-[#666] text-sm leading-relaxed mb-3 max-w-xl mx-auto">
             ディ・ステファノからベリンガムまで——好きな選手を自由に選んでベストイレブンを編成。
             AI能力査定・チームケミストリー計算・Xシェア機能を無料で。
           </p>
-          <p className="text-[#D4AF37]/50 text-xs italic mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <p className="text-[#D4AF37]/60 text-xs italic mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
             &ldquo;To be the best, you have to beat the best.&rdquo; — José Mourinho
           </p>
           <Link
@@ -425,7 +427,7 @@ export default function Home() {
           >
             ベストイレブンメーカーを使う →
           </Link>
-          <div className="mt-6 flex flex-wrap gap-4 justify-center text-xs text-[#333]">
+          <div className="mt-6 flex flex-wrap gap-4 justify-center text-xs text-[#AAA]">
             <span>✓ 完全無料</span>
             <span>✓ 登録不要</span>
             <span>✓ AI能力査定</span>
@@ -434,10 +436,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== MEMBERS CTA ===== */}
+      {/* ===== MEMBERS CTA (navy premium block) ===== */}
       <section
-        className="py-16 px-6 border-t border-[#1a1a1a]"
-        style={{ background: 'linear-gradient(135deg, #0e0800 0%, #0d0d0d 100%)' }}
+        className="py-16 px-6 border-t border-[#E8E5DC]"
+        style={{ background: 'linear-gradient(135deg, #002B5C 0%, #001f45 100%)' }}
       >
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
           <div className="flex-1">
@@ -446,7 +448,7 @@ export default function Home() {
               モウリーニョ×マドリー<br />
               <span style={{ color: '#D4AF37' }}>プレミアム会員</span>
             </h2>
-            <p className="text-[#666] text-sm leading-relaxed mb-6 max-w-md">
+            <p className="text-[#A0B4CC] text-sm leading-relaxed mb-6 max-w-md">
               全試合の戦術振り返り・モウリーニョ采配解剖・CL＆リーガレビューを会員限定で配信。
               月額¥900でいつでもキャンセル可。
             </p>
@@ -460,7 +462,7 @@ export default function Home() {
           </div>
           <div className="flex-shrink-0 grid grid-cols-1 gap-3 w-full md:w-64">
             {['全試合振り返りレビュー', 'モウリーニョ采配の深掘り', '戦術分析コラム', '会員限定掲示板'].map((item) => (
-              <div key={item} className="flex items-center gap-3 text-sm text-[#bbb]">
+              <div key={item} className="flex items-center gap-3 text-sm text-[#CBD5E1]">
                 <span className="text-[#D4AF37] shrink-0">✓</span>
                 {item}
               </div>
@@ -470,7 +472,7 @@ export default function Home() {
       </section>
 
       {/* ===== X TIMELINE ===== */}
-      <section className="py-14 px-6 bg-[#060606] border-t border-[#1a1a1a]">
+      <section className="py-14 px-6 bg-[#FAFAF8] border-t border-[#E8E5DC]">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="h-px flex-1" style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.3), transparent)' }} />
@@ -480,26 +482,26 @@ export default function Home() {
 
           <div
             className="rounded-2xl overflow-hidden"
-            style={{ background: '#0d0d0d', border: '1px solid rgba(212,175,55,0.2)' }}
+            style={{ background: '#FFFFFF', border: '1px solid #EAE7DF' }}
           >
             {/* header */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-[#1a1a1a]">
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-[#EAE7DF]">
               <div
                 className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm"
-                style={{ background: 'rgba(212,175,55,0.15)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontFamily: 'var(--font-playfair)' }}
+                style={{ background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37', fontFamily: 'var(--font-playfair)' }}
               >
                 U
               </div>
               <div>
-                <p className="text-white text-xs font-bold">ultras_rei</p>
-                <p className="text-[#555] text-[10px]">管理人 — マドリー＆モウリーニョ愛好家</p>
+                <p className="text-[#0d0d0d] text-xs font-bold">ultras_rei</p>
+                <p className="text-[#999] text-[10px]">管理人 — マドリー＆モウリーニョ愛好家</p>
               </div>
               <a
                 href="https://twitter.com/ultras_rei"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ml-auto text-[10px] font-bold px-3 py-1 rounded-full transition-colors"
-                style={{ background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.25)', color: '#D4AF37' }}
+                style={{ background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.3)', color: '#D4AF37' }}
               >
                 フォローする
               </a>
@@ -517,15 +519,15 @@ export default function Home() {
       <BulletinBoard />
 
       {/* ===== FOOTER ===== */}
-      <footer className="border-t border-[#111] bg-[#040404]">
+      <footer className="border-t border-[#E8E5DC] bg-[#F5F3EE]">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
             <div>
               <div className="text-[#D4AF37] font-black tracking-widest text-base mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
                 ultrasrei.com
               </div>
-              <p className="text-[#333] text-xs mb-1">レアル・マドリード ファンサイト — 非公式</p>
-              <p className="text-[#D4AF37]/30 text-[10px] italic" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <p className="text-[#888] text-xs mb-1">レアル・マドリード ファンサイト — 非公式</p>
+              <p className="text-[#D4AF37]/50 text-[10px] italic" style={{ fontFamily: 'var(--font-playfair)' }}>
                 Hala Madrid y nada más.
               </p>
             </div>
@@ -542,7 +544,7 @@ export default function Home() {
                 { href: '/tokusho', label: '特定商取引法に基づく表記' },
                 { href: '/contact',  label: 'お問い合わせ' },
               ].map(({ href, label }) => (
-                <Link key={href} href={href} className="text-[#444] hover:text-[#D4AF37] transition-colors">
+                <Link key={href} href={href} className="text-[#777] hover:text-[#D4AF37] transition-colors">
                   {label}
                 </Link>
               ))}
@@ -550,14 +552,14 @@ export default function Home() {
           </div>
 
           {/* Disclaimer */}
-          <div className="bg-[#080808] border border-[#111] rounded-xl p-6 mb-8 text-[10px] text-[#2a2a2a] leading-relaxed">
-            本サービスはサッカーファンが制作した<strong className="text-[#333]">非公式の考察・分析コンテンツ</strong>です。
+          <div className="bg-white border border-[#E8E5DC] rounded-xl p-6 mb-8 text-[10px] text-[#999] leading-relaxed">
+            本サービスはサッカーファンが制作した<strong className="text-[#666]">非公式の考察・分析コンテンツ</strong>です。
             UEFA・FIFA・レアル・マドリードCF、各クラブ・選手・関係機関とは一切の公式な関係を持ちません。
             選手能力値はAI（Claude by Anthropic）による推定であり、エンターテインメント目的のものです。
             権利侵害のご連絡は ren90no@hotmail.co.jp まで。
           </div>
 
-          <p className="text-[#222] text-[10px]">
+          <p className="text-[#BBB] text-[10px]">
             © 2024 ultrasrei.com — All trademarks and copyrights belong to their respective owners.
           </p>
         </div>
