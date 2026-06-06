@@ -5,20 +5,20 @@
 :root {
   --font-playfair: 'Playfair Display', Georgia, serif;
   --font-inter: 'Inter', system-ui, sans-serif;
-  --rm-white:  #FFFFFF;
-  --rm-surface: #F4F4F6;
+  --rm-bg:     #07090F;
+  --rm-bg2:    #0E1117;
+  --rm-card:   #141820;
   --rm-gold:   #C9A524;
   --rm-gold-light: #F0D060;
-  --rm-navy:   #080F1C;
-  --rm-border: #E5E7EB;
-  --rm-text:   #0A0A0A;
-  --rm-muted:  #6B7280;
+  --rm-border: rgba(255,255,255,0.06);
+  --rm-text:   #ffffff;
+  --rm-muted:  rgba(255,255,255,0.45);
 }
 
 * { box-sizing: border-box; }
 
 body {
-  background-color: var(--rm-white);
+  background-color: var(--rm-bg);
   color: var(--rm-text);
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
@@ -26,8 +26,8 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #F4F4F6; }
-::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+::-webkit-scrollbar-track { background: #0E1117; }
+::-webkit-scrollbar-thumb { background: #2a2f3a; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #C9A524; }
 
 select option {
