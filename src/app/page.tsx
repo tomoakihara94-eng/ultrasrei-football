@@ -138,7 +138,7 @@ export default function Home() {
 
               <h1 className="font-black leading-[0.88] mb-8" style={{
                 fontFamily: 'var(--font-playfair)',
-                fontSize: 'clamp(3.5rem, 9vw, 8.5rem)',
+                fontSize: 'clamp(2.4rem, 6vw, 5.5rem)',
                 letterSpacing: '-0.04em',
               }}>
                 <span className="text-white">史上最強</span>
