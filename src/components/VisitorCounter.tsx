@@ -22,6 +22,27 @@ function getDateKeys() {
   };
 }
 
+// sessionStorageのキー（期間キーと照合して重複カウントを防ぐ）
+const SS_KEY = 'pv_counted';
+
+function getAlreadyCounted(): Record<string, boolean> {
+  try {
+    return JSON.parse(sessionStorage.getItem(SS_KEY) ?? '{}') as Record<string, boolean>;
+  } catch {
+    return {};
+  }
+}
+
+function markCounted(keys: string[]) {
+  try {
+    const existing = getAlreadyCounted();
+    for (const k of keys) existing[k] = true;
+    sessionStorage.setItem(SS_KEY, JSON.stringify(existing));
+  } catch {
+    // sessionStorage unavailable (e.g. private mode) — ignore
+  }
+}
+
 const POLL_INTERVAL = 30_000;
 
 async function hitCounter(key: string): Promise<number> {
@@ -71,18 +92,28 @@ export default function VisitorCounter() {
 
   useEffect(() => {
     const keys = getDateKeys();
+    const counted = getAlreadyCounted();
 
-    // 初回: hit（カウントアップ）
+    // 各期間キーについて、このセッションで未カウントのものだけ hit、済みなら get
+    const needsHit = {
+      daily:   !counted[keys.daily],
+      weekly:  !counted[keys.weekly],
+      monthly: !counted[keys.monthly],
+    };
+
     Promise.all([
-      hitCounter(keys.daily),
-      hitCounter(keys.weekly),
-      hitCounter(keys.monthly),
+      needsHit.daily   ? hitCounter(keys.daily)   : getCounter(keys.daily),
+      needsHit.weekly  ? hitCounter(keys.weekly)  : getCounter(keys.weekly),
+      needsHit.monthly ? hitCounter(keys.monthly) : getCounter(keys.monthly),
     ]).then(([daily, weekly, monthly]) => {
       setCounts({ daily, weekly, monthly });
       setLive(true);
+      // カウントアップしたキーを記録
+      const toMark = Object.entries(needsHit).filter(([, v]) => v).map(([k]) => keys[k as keyof typeof keys]);
+      if (toMark.length > 0) markCounted(toMark);
     }).catch(() => {});
 
-    // 以降: 30秒ごとに get（カウントせず最新値取得）
+    // 30秒ごとに get（カウントせず最新値取得）
     const timer = setInterval(() => {
       Promise.all([
         getCounter(keys.daily),
