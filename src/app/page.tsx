@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import BulletinBoard from '@/components/BulletinBoard';
 import XTimeline from '@/components/XTimeline';
@@ -218,6 +219,41 @@ export default function Home() {
           <span className="text-[9px] tracking-[0.4em] uppercase" style={{ color: 'rgba(255,255,255,0.18)' }}>scroll</span>
         </div>
       </section>
+
+      {/* ══ FLAG BANNER ═════════════════════════════════ */}
+      <div className="relative w-full overflow-hidden" style={{ height: 'clamp(220px, 30vw, 420px)' }}>
+        <Image
+          src="/rm-flags.jpg"
+          alt="マドリディスタの旗——ベルナベウの熱狂"
+          fill
+          className="object-cover object-center"
+          priority={false}
+          sizes="100vw"
+        />
+        {/* gradient overlays */}
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(to right, ${BG} 0%, transparent 25%, transparent 75%, ${BG} 100%)`,
+        }} />
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(to bottom, ${BG}99 0%, transparent 30%, transparent 70%, ${BG} 100%)`,
+        }} />
+        {/* center tagline */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+          <span className="text-[10px] tracking-[0.7em] font-bold uppercase" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            Somos Madridistas
+          </span>
+          <p className="font-black tracking-[-0.03em] text-center" style={{
+            fontFamily: 'var(--font-playfair)',
+            fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
+            background: `linear-gradient(135deg, ${GL} 0%, ${G} 50%, #A07C10 100%)`,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>
+            Hala Madrid y nada más
+          </p>
+        </div>
+      </div>
 
       {/* ══ BENTO GRID ══════════════════════════════════ */}
       <section className="py-24 px-6" style={{ background: BG }}>
