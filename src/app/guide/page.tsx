@@ -42,7 +42,7 @@ export default function GuidePage() {
             <ul className="space-y-3 mb-4">
               <li className="bg-[#0f0f0f] border border-[#1e1e1e] rounded-lg p-4">
                 <span className="font-bold text-[#D4AF37]">4-3-3</span>
-                <span className="ml-3">攻撃的で流動的なスタイル。両ウイングとセンターFWの3トップが強力な攻撃陣を形成。レアル・マドリードやバルセロナが得意とするシステム。</span>
+                <span className="ml-3">攻撃的で流動的なスタイル。両ウイングとセンターFWの3トップが強力な攻撃陣を形成。マドリーやバルセロナが得意とするシステム。</span>
               </li>
               <li className="bg-[#0f0f0f] border border-[#1e1e1e] rounded-lg p-4">
                 <span className="font-bold text-[#D4AF37]">4-4-2</span>

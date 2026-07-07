@@ -120,7 +120,7 @@ export default function RealMadridDiagnosisPage() {
 
           <div style={{ fontSize: 52, marginBottom: 12 }}>👑</div>
           <h1 style={{ fontSize: 26, fontWeight: 900, color: C.white, marginBottom: 6, lineHeight: 1.3, fontFamily: 'Georgia, serif' }}>
-            レアル・マドリード<br />選手タイプ診断
+            マドリー<br />選手タイプ診断
           </h1>
           <p style={{ fontSize: 14, color: C.dimmer, marginBottom: 4 }}>
             {REAL_MADRID_PLAYERS.length}名の歴代マドリー選手から
@@ -257,7 +257,7 @@ export default function RealMadridDiagnosisPage() {
   const [first, ...rest] = matches;
 
   function shareText() {
-    return `👑 レアル・マドリード選手診断\n\n私は「${first.nickname}」${first.flag} ${first.name} でした！\n\n${first.description}\n\n#RealMadrid #レアルマドリード #マドリー選手診断\nhttps://ultrasrei.com/diagnosis/real-madrid`;
+    return `👑 マドリー選手診断\n\n私は「${first.nickname}」${first.flag} ${first.name} でした！\n\n${first.description}\n\n#RealMadrid #レアルマドリード #マドリー選手診断\nhttps://ultrasrei.com/diagnosis/real-madrid`;
   }
 
   return (

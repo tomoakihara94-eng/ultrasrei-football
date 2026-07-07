@@ -252,7 +252,12 @@ export default function Home() {
   }, [starters]);
 
   const chemistryBonus = chemistryPairs.length;
-  const totalScore = overallAvg > 0 ? Math.min(99, overallAvg + chemistryBonus) : 0;
+  // 11人全員が繋がった場合の最大ペア数 = 55。それを上限として99まで比例スケール
+  const MAX_PAIRS = 55;
+  const scaledBonus = overallAvg > 0
+    ? Math.round((chemistryBonus / MAX_PAIRS) * (99 - overallAvg))
+    : 0;
+  const totalScore = overallAvg > 0 ? Math.min(99, overallAvg + scaledBonus) : 0;
 
   return (
     <div className="min-h-screen bg-luxury-black flex flex-col">
@@ -413,7 +418,7 @@ export default function Home() {
                 <div className="chemistry-badge inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/40">
                   <Sparkles size={11} className="text-gold animate-pulse" />
                   <span className="shimmer-text text-xs font-black tracking-widest">
-                    +{chemistryBonus} Chemistry Bonus!
+                    +{scaledBonus} Chemistry Bonus!
                   </span>
                   <Sparkles size={11} className="text-gold animate-pulse" />
                 </div>
@@ -684,7 +689,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8 text-[#888] text-sm leading-relaxed">
             <div>
               <p className="mb-4">
-                本ツールは、欧州サッカー史に名を刻んだ歴代の名選手たちを自由に組み合わせ、あなただけの「ベストイレブン」を編成できる無料サービスです。レアル・マドリード、バルセロナ、ACミラン、マンチェスター・ユナイテッドなど、欧州の名門クラブで活躍した選手を自由に選択できます。
+                本ツールは、欧州サッカー史に名を刻んだ歴代の名選手たちを自由に組み合わせ、あなただけの「ベストイレブン」を編成できる無料サービスです。マドリー、バルセロナ、ACミラン、マンチェスター・ユナイテッドなど、欧州の名門クラブで活躍した選手を自由に選択できます。
               </p>
               <p className="mb-4">
                 選手名と国籍を入力すると、AIが歴史的な能力値（スピード・シュート・パス・ドリブル・守備・フィジカル）を査定。4-3-3、4-4-2、3-5-2など豊富なフォーメーションからタクティカルボードを生成し、Xにシェアすることができます。
@@ -782,7 +787,7 @@ export default function Home() {
             </a>
             <a href="/blog/4-3-3-evolution-real-madrid" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
               <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">戦術分析</p>
-              <h3 className="text-sm font-bold text-white leading-snug mb-2">4-3-3の進化論：なぜレアル・マドリードはこの布陣で世界を制し続けるのか</h3>
+              <h3 className="text-sm font-bold text-white leading-snug mb-2">4-3-3の進化論：なぜマドリーはこの布陣で世界を制し続けるのか</h3>
             </a>
             <a href="/blog/di-stefano-european-cups" className="block bg-[#0f0f0f] border border-[#1e1e1e] rounded-xl p-5 hover:border-[#D4AF37]/40 transition-all">
               <p className="text-[10px] tracking-wider text-[#D4AF37]/70 uppercase mb-2">1950年代</p>

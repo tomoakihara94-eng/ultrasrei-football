@@ -70,7 +70,7 @@ export default async function QuizSharePage({ searchParams }: Props) {
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ fontSize: 11, color: '#D4AF37', letterSpacing: '0.2em', fontWeight: 700, marginBottom: 6 }}>REAL MADRID C.F.</div>
-          <h1 style={{ fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 4 }}>レアル・マドリード 経歴クイズ</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 4 }}>マドリー 経歴クイズ</h1>
           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>LV.{lv} · {s}/{t}問正解</p>
         </div>
 

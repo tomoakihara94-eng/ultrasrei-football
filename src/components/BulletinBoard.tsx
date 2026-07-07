@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 type Post = {
   id: string;
@@ -23,7 +23,6 @@ export default function BulletinBoard() {
   const [body, setBody] = useState('');
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
-  const bottomRef = useRef<HTMLDivElement>(null);
 
   const fetchPosts = async () => {
     try {
@@ -108,7 +107,10 @@ export default function BulletinBoard() {
         </form>
 
         {/* 投稿一覧 */}
-        <div className="space-y-3">
+        <div
+          className="overflow-y-auto space-y-3 pr-1"
+          style={{ maxHeight: '480px', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
+        >
           {posts.length === 0 && (
             <p className="text-[#444] text-sm text-center py-8">まだ投稿がありません。最初の一言をどうぞ！</p>
           )}
@@ -125,7 +127,6 @@ export default function BulletinBoard() {
             </div>
           ))}
         </div>
-        <div ref={bottomRef} />
       </div>
     </section>
   );

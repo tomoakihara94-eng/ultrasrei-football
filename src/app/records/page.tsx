@@ -85,7 +85,7 @@ const personalRecords: Record[] = [
     number: '450',
     unit: 'ゴール',
     label: 'クラブ最多得点（クリスティアーノ・ロナウド）',
-    desc: '2009年から2018年の9シーズンでロナウドが記録したレアル・マドリードでの公式戦通算ゴール数。438試合で450ゴール。',
+    desc: '2009年から2018年の9シーズンでロナウドが記録したマドリーでの公式戦通算ゴール数。438試合で450ゴール。',
   },
   {
     number: '323',
@@ -97,7 +97,7 @@ const personalRecords: Record[] = [
     number: '741',
     unit: '試合',
     label: 'クラブ最多出場（イケル・カシージャス）',
-    desc: 'レアル・マドリードのキャプテンとして最も多くの試合に立ったカシージャスの出場記録。25年に渡るキャリアの集大成。',
+    desc: 'マドリーのキャプテンとして最も多くの試合に立ったカシージャスの出場記録。25年に渡るキャリアの集大成。',
   },
   {
     number: '5',
@@ -191,10 +191,10 @@ export default function RecordsPage() {
             className="text-4xl md:text-5xl font-bold mb-4 shimmer-text"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            レアル・マドリード<br className="sm:hidden" /> 歴代記録集
+            マドリー<br className="sm:hidden" /> 歴代記録集
           </h1>
           <p className="text-[#888] max-w-2xl leading-relaxed">
-            チャンピオンズリーグ15回制覇、ラ・リーガ勝ち点100、1シーズン121ゴール——レアル・マドリードが100年以上かけて積み上げてきた、破られていない・破りにくい記録を一覧にまとめた。
+            チャンピオンズリーグ15回制覇、ラ・リーガ勝ち点100、1シーズン121ゴール——マドリーが100年以上かけて積み上げてきた、破られていない・破りにくい記録を一覧にまとめた。
           </p>
         </div>
 
@@ -210,7 +210,7 @@ export default function RecordsPage() {
         />
         <Section
           label="Individual Records"
-          title="個人記録（レアル在籍時）"
+          title="個人記録（マドリー在籍時）"
           records={personalRecords}
         />
         <Section
@@ -226,7 +226,7 @@ export default function RecordsPage() {
 
         {/* Footer nav */}
         <div className="border-t border-[#1e1e1e] pt-10 text-center space-y-4">
-          <p className="text-[#555] text-sm">この記録を参考に、あなただけのレアル・マドリード歴代ベストイレブンを作ってみよう</p>
+          <p className="text-[#555] text-sm">この記録を参考に、あなただけのマドリー歴代ベストイレブンを作ってみよう</p>
           <Link
             href="/"
             className="inline-block text-[#D4AF37] text-sm hover:text-[#F0D060] transition-colors"

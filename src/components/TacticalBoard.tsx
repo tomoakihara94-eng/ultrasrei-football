@@ -24,6 +24,14 @@ interface FreeDragState {
   currentY: number;
 }
 
+interface TouchDragState {
+  idx: number;
+  startClientX: number;
+  startClientY: number;
+  currentX: number;
+  currentY: number;
+}
+
 function PitchMarkings() {
   return (
     <svg viewBox="0 0 400 560" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
@@ -59,12 +67,13 @@ interface PlayerTokenProps {
   isSwapped: boolean;
   freeMode: boolean;
   isFreeDragging: boolean;
-  // Grid mode
+  isTouchDragging: boolean;
+  // Grid mode (desktop HTML5 drag)
   onDragStart: () => void;
   onGridDragOver: (e: React.DragEvent) => void;
   onDrop: () => void;
   onDragEnd: () => void;
-  // Free mode
+  // Pointer events (free mode + grid mode touch)
   onPointerDown: (e: React.PointerEvent) => void;
   onPointerMove: (e: React.PointerEvent) => void;
   onPointerUp: (e: React.PointerEvent) => void;
@@ -73,18 +82,20 @@ interface PlayerTokenProps {
 function PlayerToken({
   player, slot, displayX, displayY, onClick,
   isDragging, isDragOver, isSwapped,
-  freeMode, isFreeDragging,
+  freeMode, isFreeDragging, isTouchDragging,
   onDragStart, onGridDragOver, onDrop, onDragEnd,
   onPointerDown, onPointerMove, onPointerUp,
 }: PlayerTokenProps) {
   const [showChart, setShowChart] = useState(false);
 
+  const isActiveDrag = isFreeDragging || isTouchDragging;
+
   const wrapStyle: React.CSSProperties = {
     left: `${displayX}%`,
     top: `${displayY}%`,
     transform: 'translate(-50%, -50%)',
-    zIndex: showChart ? 10 : isFreeDragging || isDragOver ? 5 : 1,
-    transition: isFreeDragging ? 'none' : 'left 0.2s ease-out, top 0.2s ease-out',
+    zIndex: showChart ? 10 : isActiveDrag || isDragOver ? 5 : 1,
+    transition: isActiveDrag ? 'none' : 'left 0.2s ease-out, top 0.2s ease-out',
   };
 
   if (!player) {
@@ -97,6 +108,7 @@ function PlayerToken({
       >
         <button
           onClick={onClick}
+          style={{ touchAction: 'none' }}
           className={`group flex flex-col items-center transition-all duration-200 ${isDragOver ? 'scale-110' : ''}`}
         >
           <div className={`w-12 h-12 rounded-full border-2 border-dashed flex flex-col items-center justify-center transition-all duration-200 ${
@@ -122,7 +134,7 @@ function PlayerToken({
       onDrop={freeMode ? undefined : onDrop}
     >
       {/* popup hex chart — hidden while dragging */}
-      {showChart && !isFreeDragging && (
+      {showChart && !isActiveDrag && (
         <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 z-20 bg-luxury-card border border-gold/30 rounded-xl shadow-gold-lg p-3 animate-fade-in pointer-events-none">
           <p className="text-center text-white text-xs font-bold mb-1">{player.name}</p>
           <HexChart stats={player.stats} size={160} position={player.position} />
@@ -131,8 +143,9 @@ function PlayerToken({
 
       <button
         draggable={!freeMode}
+        style={{ touchAction: 'none' }}
         onClick={freeMode ? undefined : onClick}
-        onMouseEnter={() => !isFreeDragging && setShowChart(true)}
+        onMouseEnter={() => !isActiveDrag && setShowChart(true)}
         onMouseLeave={() => setShowChart(false)}
         onDragStart={freeMode ? undefined : (e) => {
           e.dataTransfer.effectAllowed = 'move';
@@ -140,17 +153,34 @@ function PlayerToken({
           onDragStart();
         }}
         onDragEnd={freeMode ? undefined : onDragEnd}
-        onPointerDown={freeMode ? (e) => {
-          e.preventDefault();
-          (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-          setShowChart(false);
-          onPointerDown(e);
-        } : undefined}
-        onPointerMove={freeMode ? onPointerMove : undefined}
-        onPointerUp={freeMode ? onPointerUp : undefined}
+        onPointerDown={(e) => {
+          if (freeMode) {
+            e.preventDefault();
+            (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+            setShowChart(false);
+            onPointerDown(e);
+          } else if (e.pointerType !== 'mouse') {
+            // Touch/pen drag in grid mode
+            e.preventDefault();
+            (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+            setShowChart(false);
+            onPointerDown(e);
+          }
+        }}
+        onPointerMove={(e) => {
+          if (freeMode || e.pointerType !== 'mouse') onPointerMove(e);
+        }}
+        onPointerUp={(e) => {
+          if (freeMode || e.pointerType !== 'mouse') onPointerUp(e);
+        }}
+        onPointerCancel={(e) => {
+          if (freeMode || e.pointerType !== 'mouse') onPointerUp(e);
+        }}
         className={`group flex flex-col items-center transition-all duration-200 ${
           isDragging ? 'opacity-35 scale-90' : ''
-        } ${isDragOver ? 'scale-115' : ''} ${isSwapped ? 'scale-125' : ''} ${
+        } ${isTouchDragging ? 'opacity-25 scale-90' : ''} ${
+          isDragOver ? 'scale-115' : ''
+        } ${isSwapped ? 'scale-125' : ''} ${
           isFreeDragging
             ? 'scale-110 cursor-grabbing drop-shadow-[0_4px_12px_rgba(212,175,55,0.6)]'
             : 'cursor-grab active:cursor-grabbing'
@@ -187,7 +217,7 @@ export default function TacticalBoard({
   const slots = formations[formation];
   const boardRef = useRef<HTMLDivElement>(null);
 
-  // Grid mode state
+  // Grid mode (desktop HTML5 drag) state
   const [draggingIdx, setDraggingIdx] = useState<number | null>(null);
   const [dragOverIdx, setDragOverIdx] = useState<number | null>(null);
   const [swappedPair, setSwappedPair] = useState<[number, number] | null>(null);
@@ -195,6 +225,10 @@ export default function TacticalBoard({
 
   // Free mode state
   const [freeDrag, setFreeDrag] = useState<FreeDragState | null>(null);
+
+  // Grid mode touch drag state
+  const [touchDrag, setTouchDrag] = useState<TouchDragState | null>(null);
+  const [touchDragTarget, setTouchDragTarget] = useState<number | null>(null);
 
   function clientToPercent(clientX: number, clientY: number) {
     const rect = boardRef.current?.getBoundingClientRect();
@@ -213,50 +247,112 @@ export default function TacticalBoard({
     return { x: slots[i].x, y: slots[i].y };
   }
 
+  function findClosestSlot(x: number, y: number, excludeIdx: number): { idx: number; dist: number } {
+    let closestIdx = -1;
+    let minDist = Infinity;
+    slots.forEach((_, i) => {
+      if (i === excludeIdx) return;
+      const sp = { x: slots[i].x, y: slots[i].y };
+      const dist = Math.hypot(x - sp.x, y - sp.y);
+      if (dist < minDist) { minDist = dist; closestIdx = i; }
+    });
+    return { idx: closestIdx, dist: minDist };
+  }
+
+  function triggerSwap(i: number, j: number) {
+    onSwap?.(i, j);
+    setSwappedPair([i, j]);
+    if (swapTimer.current) clearTimeout(swapTimer.current);
+    swapTimer.current = setTimeout(() => setSwappedPair(null), 350);
+  }
+
+  // Desktop HTML5 drop handler
   function handleDrop(targetIdx: number) {
     if (draggingIdx === null || draggingIdx === targetIdx) {
       setDraggingIdx(null);
       setDragOverIdx(null);
       return;
     }
-    onSwap?.(draggingIdx, targetIdx);
-    setSwappedPair([draggingIdx, targetIdx]);
-    if (swapTimer.current) clearTimeout(swapTimer.current);
-    swapTimer.current = setTimeout(() => setSwappedPair(null), 350);
+    triggerSwap(draggingIdx, targetIdx);
     setDraggingIdx(null);
     setDragOverIdx(null);
   }
 
-  function handleFreeDragStart(e: React.PointerEvent, idx: number) {
-    const pos = getDisplayPos(idx);
-    setFreeDrag({ idx, startClientX: e.clientX, startClientY: e.clientY, currentX: pos.x, currentY: pos.y });
-  }
-
-  function handleFreeDragMove(e: React.PointerEvent, idx: number) {
-    if (!freeDrag || freeDrag.idx !== idx) return;
-    const pos = clientToPercent(e.clientX, e.clientY);
-    setFreeDrag(prev => prev ? { ...prev, currentX: pos.x, currentY: pos.y } : null);
-  }
-
-  function handleFreeDragEnd(e: React.PointerEvent, idx: number) {
-    if (!freeDrag || freeDrag.idx !== idx) return;
-    const dx = Math.abs(e.clientX - freeDrag.startClientX);
-    const dy = Math.abs(e.clientY - freeDrag.startClientY);
-    const finalPos = clientToPercent(e.clientX, e.clientY);
-    setFreeDrag(null);
-    if (dx > 8 || dy > 8) {
-      onPositionChange?.(idx, finalPos.x, finalPos.y);
+  // Unified pointer event handlers (free mode + grid mode touch)
+  function handlePointerDown(e: React.PointerEvent, idx: number) {
+    if (freeMode) {
+      const pos = getDisplayPos(idx);
+      setFreeDrag({ idx, startClientX: e.clientX, startClientY: e.clientY, currentX: pos.x, currentY: pos.y });
     } else {
-      onSlotClick(idx);
+      const pos = clientToPercent(e.clientX, e.clientY);
+      setTouchDrag({ idx, startClientX: e.clientX, startClientY: e.clientY, currentX: pos.x, currentY: pos.y });
+      setTouchDragTarget(null);
     }
   }
+
+  function handlePointerMove(e: React.PointerEvent, idx: number) {
+    if (freeMode) {
+      if (!freeDrag || freeDrag.idx !== idx) return;
+      const pos = clientToPercent(e.clientX, e.clientY);
+      setFreeDrag(prev => prev ? { ...prev, currentX: pos.x, currentY: pos.y } : null);
+    } else {
+      if (!touchDrag || touchDrag.idx !== idx) return;
+      const pos = clientToPercent(e.clientX, e.clientY);
+      setTouchDrag(prev => prev ? { ...prev, currentX: pos.x, currentY: pos.y } : null);
+      const { idx: ci, dist } = findClosestSlot(pos.x, pos.y, idx);
+      setTouchDragTarget(dist < 14 ? ci : null);
+    }
+  }
+
+  function handlePointerUp(e: React.PointerEvent, idx: number) {
+    if (freeMode) {
+      if (!freeDrag || freeDrag.idx !== idx) return;
+      const dx = Math.abs(e.clientX - freeDrag.startClientX);
+      const dy = Math.abs(e.clientY - freeDrag.startClientY);
+      const finalPos = clientToPercent(e.clientX, e.clientY);
+      setFreeDrag(null);
+      if (dx > 8 || dy > 8) {
+        onPositionChange?.(idx, finalPos.x, finalPos.y);
+      } else {
+        onSlotClick(idx);
+      }
+    } else {
+      if (!touchDrag || touchDrag.idx !== idx) {
+        setTouchDrag(null);
+        setTouchDragTarget(null);
+        return;
+      }
+      const dx = Math.abs(e.clientX - touchDrag.startClientX);
+      const dy = Math.abs(e.clientY - touchDrag.startClientY);
+      setTouchDrag(null);
+      setTouchDragTarget(null);
+
+      if (dx > 8 || dy > 8) {
+        const pos = clientToPercent(e.clientX, e.clientY);
+        const { idx: ci, dist } = findClosestSlot(pos.x, pos.y, idx);
+        if (ci !== -1 && dist < 14) {
+          triggerSwap(idx, ci);
+        }
+      } else {
+        onSlotClick(idx);
+      }
+    }
+  }
+
+  // Ghost token for touch drag in grid mode
+  const touchDragPlayer = touchDrag !== null ? (players[touchDrag.idx] ?? null) : null;
 
   return (
     <div
       id="tactical-board"
       ref={boardRef}
-      className="relative w-full"
-      style={{ paddingBottom: '140%' }}
+      className="relative w-full select-none"
+      style={{
+        paddingBottom: '140%',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none' as 'none',
+      }}
     >
       {/* field background */}
       <div className="absolute inset-0 rounded-xl overflow-hidden">
@@ -275,7 +371,7 @@ export default function TacticalBoard({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.3)_100%)]" />
       </div>
 
-      {/* chemistry lines — follow actual player positions in real time */}
+      {/* chemistry lines */}
       {chemistryPairs.length > 0 && (
         <svg
           viewBox="0 0 100 100"
@@ -329,20 +425,48 @@ export default function TacticalBoard({
             displayY={pos.y}
             onClick={() => onSlotClick(i)}
             isDragging={draggingIdx === i}
-            isDragOver={dragOverIdx === i && draggingIdx !== i}
+            isDragOver={(dragOverIdx === i && draggingIdx !== i) || touchDragTarget === i}
             isSwapped={swappedPair !== null && swappedPair.includes(i)}
             freeMode={freeMode}
             isFreeDragging={freeDrag?.idx === i}
+            isTouchDragging={touchDrag?.idx === i}
             onDragStart={() => { setDraggingIdx(i); setDragOverIdx(null); }}
             onGridDragOver={(e) => { e.preventDefault(); setDragOverIdx(i); }}
             onDrop={() => handleDrop(i)}
             onDragEnd={() => { setDraggingIdx(null); setDragOverIdx(null); }}
-            onPointerDown={(e) => handleFreeDragStart(e, i)}
-            onPointerMove={(e) => handleFreeDragMove(e, i)}
-            onPointerUp={(e) => handleFreeDragEnd(e, i)}
+            onPointerDown={(e) => handlePointerDown(e, i)}
+            onPointerMove={(e) => handlePointerMove(e, i)}
+            onPointerUp={(e) => handlePointerUp(e, i)}
           />
         );
       })}
+
+      {/* Ghost token following touch in grid mode */}
+      {!freeMode && touchDrag && touchDragPlayer && (
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            left: `${touchDrag.currentX}%`,
+            top: `${touchDrag.currentY}%`,
+            transform: 'translate(-50%, -50%)',
+            zIndex: 20,
+          }}
+        >
+          <div className="flex flex-col items-center scale-110 drop-shadow-[0_4px_16px_rgba(212,175,55,0.7)]">
+            <div className="relative w-12 h-12 rounded-full bg-gold-gradient flex items-center justify-center border-2 border-white shadow-[0_0_20px_rgba(212,175,55,0.8)]">
+              <span className="text-black font-black text-sm leading-none">
+                {touchDragPlayer.number || touchDragPlayer.position}
+              </span>
+              <span className="absolute -top-1 -right-1 text-base leading-none">{touchDragPlayer.flagEmoji}</span>
+            </div>
+            <div className="mt-1 max-w-[72px] text-center">
+              <div className="text-[10px] font-bold text-white leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] truncate">
+                {touchDragPlayer.name.split(' ').slice(-1)[0]}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -20,7 +20,7 @@ interface QuizQuestion {
   hint?: string;
 }
 interface RankingEntry {
-  id: string; nickname: string; score: number; total: number; created_at: string;
+  id: string; nickname: string; score: number; total: number; level: number; points: number; created_at: string;
 }
 type Phase = 'start' | 'quiz' | 'result' | 'ranking';
 
@@ -174,6 +174,11 @@ export default function QuizPage() {
 
   useEffect(() => { if (phase === 'ranking') fetchRankings(); }, [phase, fetchRankings]);
 
+  // 画面切り替え（レベル選択→問題、結果→次のレベルなど）のたびに先頭にスクロール
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [phase, currentIdx]);
+
   function handleSelect(choice: string) {
     if (selected !== null) return;
     const correct = choice === questions[currentIdx].correct_answer;
@@ -198,7 +203,7 @@ export default function QuizPage() {
     try {
       const res = await fetch('/api/quiz/ranking', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname: nickname.trim(), score, total: questions.length }),
+        body: JSON.stringify({ nickname: nickname.trim(), score, total: questions.length, level: selectedLevel }),
       });
       if (!res.ok) throw new Error('保存に失敗しました');
       setSubmitted(true); setPhase('ranking');
@@ -601,6 +606,27 @@ export default function QuizPage() {
             )}
           </div>
 
+          {/* Next level CTA */}
+          {passed && selectedLevel < 3 && (
+            <button
+              onClick={() => {
+                const next = (selectedLevel + 1) as 1 | 2 | 3;
+                setSelectedLevel(next);
+                fetchQuestions(next);
+              }}
+              disabled={loading}
+              style={{
+                width: '100%', padding: '14px 0', borderRadius: 12, border: 'none', cursor: 'pointer',
+                background: `linear-gradient(135deg, ${C.gold}, #A07D10)`, color: '#000',
+                fontWeight: 700, fontSize: 14, marginBottom: 12,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                opacity: loading ? 0.6 : 1,
+              }}
+            >
+              {loading ? '読み込み中...' : `LV.${selectedLevel + 1} へ進む`}<ChevronRight size={16} />
+            </button>
+          )}
+
           {/* Score card */}
           <div style={{
             background: 'linear-gradient(160deg,#122040 0%,#0F1E35 100%)',
@@ -749,7 +775,7 @@ export default function QuizPage() {
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
           <Trophy size={26} color={C.gold} style={{ margin: '0 auto 8px' }} />
           <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 17, fontWeight: 700, color: C.white, marginBottom: 4 }}>ランキング</h2>
-          <p style={{ fontSize: 10, color: C.dimmer }}>レアル・マドリード 経歴クイズ</p>
+          <p style={{ fontSize: 10, color: C.dimmer }}>マドリー 経歴クイズ</p>
         </div>
 
         <div style={{ backgroundColor: C.navyCard, border: `1px solid ${C.navyBorder}`, borderRadius: 16, overflow: 'hidden', marginBottom: 14 }}>
@@ -759,6 +785,7 @@ export default function QuizPage() {
               const r   = getRankLabel(i);
               const t   = getTitle(entry.score);
               const pct = Math.round((entry.score / entry.total) * 100);
+              const lv  = LV_CONFIG[(entry.level ?? 1) as 1 | 2 | 3] ?? LV_CONFIG[1];
               return (
                 <div key={entry.id} style={{
                   display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
@@ -767,10 +794,15 @@ export default function QuizPage() {
                 }}>
                   <span style={{ fontSize: i < 3 ? 18 : 11, color: r.color, width: 30, textAlign: 'center', flexShrink: 0 }}>{r.label}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: C.white, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{entry.nickname}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: C.white, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{entry.nickname}</span>
+                      <span style={{ fontSize: 8, fontWeight: 700, color: lv.color, backgroundColor: lv.bg, border: `1px solid ${lv.border}`, borderRadius: 5, padding: '1px 5px', flexShrink: 0 }}>
+                        LV.{entry.level ?? 1}
+                      </span>
+                    </div>
                     <div style={{ fontSize: 9, color: C.dimmer, marginTop: 1 }}>{t.emoji} {t.title} · {entry.score}/{entry.total}問 ({pct}%)</div>
                   </div>
-                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, fontWeight: 900, color: C.gold, flexShrink: 0 }}>{entry.score}</div>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, fontWeight: 900, color: C.gold, flexShrink: 0 }}>{entry.points ?? entry.score}</div>
                 </div>
               );
             })

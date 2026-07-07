@@ -6,8 +6,7 @@ import { BlogPost } from '@/lib/blogPosts';
 import { BlogTag, ALL_TAGS, postTags } from '@/lib/blogTags';
 
 const TAG_COLORS: Record<BlogTag, string> = {
-  'レアル・マドリード': '#D4AF37',
-  'バルセロナ': '#a855f7',
+  'マドリー': '#D4AF37',
   '選手列伝': '#3b82f6',
   '戦術・歴史': '#22c55e',
   'チャンピオンズリーグ': '#f97316',

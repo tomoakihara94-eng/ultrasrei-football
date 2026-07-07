@@ -143,7 +143,7 @@ export default function DiagnosisPage() {
                 color: '#D4AF37', fontSize: 14, fontWeight: 700,
               }}
             >
-              👑 レアル・マドリード選手のみで診断する →
+              👑 マドリー選手のみで診断する →
             </a>
             <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', textAlign: 'center' }}>
               <Link href="/" style={{ color: 'rgba(255,255,255,0.35)', textDecoration: 'none' }}>

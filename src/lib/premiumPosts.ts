@@ -12,9 +12,9 @@ export type PremiumPost = {
 export const premiumPosts: PremiumPost[] = [
   {
     slug: 'rm-vs-arsenal-ucl-2025',
-    title: 'レアル・マドリード×アーセナル — モウリーニョが見せた「守備の美学」',
+    title: 'マドリー×アーセナル — モウリーニョが見せた「守備の美学」',
     date: '2025年4月',
-    match: 'レアル・マドリード 1-0 アーセナル',
+    match: 'マドリー 1-0 アーセナル',
     competition: 'UEFAチャンピオンズリーグ 準々決勝',
     excerpt:
       'モウリーニョが就任後初のCL大一番で見せたのは、彼のキャリアを貫く哲学——「1-0で勝つ美しさ」だった。ベリンガムの決勝弾、そしてクルトワの2度のビッグセーブが、マドリーをベスト4へ押し上げた。',
@@ -57,7 +57,7 @@ export const premiumPosts: PremiumPost[] = [
     slug: 'rm-vs-barcelona-laliga-2025',
     title: 'クラシコ完全制圧——モウリーニョが「エル・クラシコの主」に返り咲いた夜',
     date: '2025年3月',
-    match: 'レアル・マドリード 3-1 バルセロナ',
+    match: 'マドリー 3-1 バルセロナ',
     competition: 'ラ・リーガ 第29節',
     excerpt:
       'ベルナベウがあの夜の熱狂を取り戻した。バルサを3-1で粉砕したマドリーの戦い方は、2011-12シーズンのモウリーニョ・マドリードを思わせる圧倒的な強度だった。',

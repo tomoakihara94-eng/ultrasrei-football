@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
+import Link from 'next/link';
 import './globals.css';
 import VisitorCounter from '@/components/VisitorCounter';
+import ScrollToTop from '@/components/ScrollToTop';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -73,6 +75,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" className={`${playfair.variable} ${inter.variable}`}>
       <head>
+        {/* スクロール復元をReact hydration前に無効化 */}
+        <script dangerouslySetInnerHTML={{ __html: `if('scrollRestoration'in history)history.scrollRestoration='manual';` }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -84,12 +88,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <ScrollToTop />
         {children}
 
         {/* ── アクセス数 固定ウィジェット（右下） ── */}
         <div
           style={{
-            position: 'fixed', bottom: '16px', right: '16px', zIndex: 50,
+            position: 'fixed', bottom: '16px', left: '16px', zIndex: 50,
             backgroundColor: 'rgba(14,17,23,0.92)',
             border: '1px solid rgba(255,255,255,0.08)',
             borderRadius: '12px',
@@ -108,14 +113,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               © 2024 欧州サッカー歴代ベストイレブンメーカー — 非公式ファンサイト
             </p>
             <nav style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-              <a href="/guide"    style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>使い方ガイド</a>
-              <a href="/vote"     style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>ベストイレブン投票</a>
-              <a href="/blog"     style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>コラム</a>
-              <a href="/mourinho" style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>モウリーニョ名言集</a>
-              <a href="/about"    style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>運営者情報</a>
-              <a href="/contact"  style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>お問い合わせ</a>
-              <a href="/privacy"  style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</a>
-              <a href="/tokusho"  style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>特定商取引法に基づく表記</a>
+              <Link href="/guide"    style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>使い方ガイド</Link>
+              <Link href="/vote"     style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>ベストイレブン投票</Link>
+              <Link href="/blog"     style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>コラム</Link>
+              <Link href="/mourinho" style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>モウリーニョ名言集</Link>
+              <Link href="/about"    style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>運営者情報</Link>
+              <Link href="/contact"  style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>お問い合わせ</Link>
+              <Link href="/privacy"  style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>プライバシーポリシー</Link>
+              <Link href="/tokusho"  style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>特定商取引法に基づく表記</Link>
             </nav>
           </div>
         </footer>

@@ -156,7 +156,7 @@ export default function MembersPage() {
           <h2 className="text-sm font-bold text-[#D4AF37] mb-4 tracking-widest uppercase">よくある質問</h2>
           {[
             { q: 'いつでもキャンセルできますか？', a: 'はい。マイページからいつでも解約できます。解約後は次回請求日まで引き続き記事をご覧いただけます。' },
-            { q: 'どんな記事が読めますか？', a: 'モウリーニョが指揮するレアル・マドリードの試合振り返り・戦術解説・選手採点を毎試合後に掲載します。シーズン通じてのコラムや特集記事も含みます。' },
+            { q: 'どんな記事が読めますか？', a: 'モウリーニョが指揮するマドリーの試合振り返り・戦術解説・選手採点を毎試合後に掲載します。シーズン通じてのコラムや特集記事も含みます。' },
             { q: '支払い方法は？', a: 'クレジットカード（VISA・MasterCard・AMEX等）に対応しています。Stripeの安全な決済システムを使用しています。' },
           ].map(({ q, a }) => (
             <div key={q} className="rounded-xl px-5 py-4" style={{ background: '#0d0d0d', border: '1px solid #1a1a1a' }}>

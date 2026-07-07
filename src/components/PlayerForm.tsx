@@ -200,7 +200,7 @@ export default function PlayerForm({ slot, existingPlayer, onSave, onClose, onRe
             )}
           </div>
 
-          {/* right: hex chart */}
+          {/* right: hex chart + aggregate stats */}
           <div className="flex flex-col items-center justify-center min-w-[175px]">
             <p className="text-xs text-white/30 uppercase tracking-widest mb-3">能力値プレビュー</p>
             <HexChart stats={stats} size={175} position={position} />

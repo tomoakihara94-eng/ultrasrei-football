@@ -181,7 +181,7 @@ export default async function BlogPostPage({ params }: Props) {
             あなたの歴代ベストイレブンを作ろう
           </p>
           <p style={{ color: '#888', fontSize: 13, marginBottom: 20, lineHeight: 1.7 }}>
-            レアル・マドリードの伝説たちを自由に組み合わせ、<br />あなただけのベストイレブンを編成してXにシェア。
+            マドリーの伝説たちを自由に組み合わせ、<br />あなただけのベストイレブンを編成してXにシェア。
           </p>
           <Link
             href="/tool"

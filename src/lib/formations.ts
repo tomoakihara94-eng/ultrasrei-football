@@ -14,6 +14,19 @@ export const formations: Record<Formation, FormationSlot[]> = {
     { position: 'ST',  x: 62, y: 22 },
     { position: 'ST',  x: 38, y: 22 },
   ],
+  '4-4-2D': [
+    { position: 'GK',  x: 50, y: 87 },
+    { position: 'RB',  x: 82, y: 70 },
+    { position: 'CB',  x: 62, y: 70 },
+    { position: 'CB',  x: 38, y: 70 },
+    { position: 'LB',  x: 18, y: 70 },
+    { position: 'CDM', x: 50, y: 62 },
+    { position: 'CM',  x: 76, y: 48 },
+    { position: 'CM',  x: 24, y: 48 },
+    { position: 'CAM', x: 50, y: 34 },
+    { position: 'ST',  x: 62, y: 18 },
+    { position: 'ST',  x: 38, y: 18 },
+  ],
   '4-3-3': [
     { position: 'GK',  x: 50, y: 87 },
     { position: 'RB',  x: 82, y: 70 },
@@ -96,6 +109,7 @@ export const formations: Record<Formation, FormationSlot[]> = {
 
 export const formationLabels: Record<Formation, string> = {
   '4-4-2':   '4-4-2',
+  '4-4-2D':  '4-4-2 ◆',
   '4-3-3':   '4-3-3',
   '4-2-3-1': '4-2-3-1',
   '3-5-2':   '3-5-2',

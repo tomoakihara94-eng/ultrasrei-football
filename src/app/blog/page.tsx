@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { blogPosts } from '@/lib/blogPosts';
-import BlogSearch from '@/components/BlogSearch';
+import { getNewsArticles } from '@/lib/newsArticles';
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: 'サッカー戦術・歴史コラム | 欧州サッカー歴代ベストイレブンメーカー',
@@ -9,7 +10,18 @@ export const metadata: Metadata = {
     'レアル・マドリードの歴史、4-3-3などの戦術分析、歴代名選手の考察まで。欧州サッカーを深く楽しむための専門コラム集。ディ・ステファノ、ロナウド、ベンゼマ、ジダンなど歴代スターを深掘りします。',
 };
 
-export default function BlogIndexPage() {
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Tokyo',
+  });
+}
+
+export default async function BlogIndexPage() {
+  const newsArticles = await getNewsArticles(30);
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white" style={{ fontFamily: 'var(--font-inter)' }}>
       {/* Header */}
@@ -33,12 +45,56 @@ export default function BlogIndexPage() {
             サッカー戦術・歴史コラム
           </h1>
           <p className="text-[#888] max-w-2xl leading-relaxed">
-            欧州サッカーの歴史と戦術を深く掘り下げる専門コラム。レアル・マドリードの栄光の歴史から、現代戦術の進化、歴代名選手の考察まで——サッカーをより深く、より面白く楽しむための読み物です。
+            欧州サッカーの歴史と戦術を深く掘り下げる専門コラム。マドリーの栄光の歴史から、現代戦術の進化、歴代名選手の考察まで——サッカーをより深く、より面白く楽しむための読み物です。
           </p>
         </div>
 
-        {/* Search + Filter + List (client component) */}
-        <BlogSearch posts={blogPosts} />
+        {/* News article list */}
+        {newsArticles.length === 0 ? (
+          <p className="text-[#555] text-sm text-center py-20">まだ記事がありません。</p>
+        ) : (
+          <div className="space-y-6">
+            {newsArticles.map((article, i) => (
+              <Link
+                key={article.id}
+                href={`/news/${article.id}`}
+                className="group block bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl p-6 md:p-8 hover:border-[#D4AF37]/40 transition-all"
+              >
+                <div className="flex flex-col md:flex-row md:items-start gap-4">
+                  <div
+                    className="text-5xl font-black shrink-0 w-14 text-center leading-none"
+                    style={{ fontFamily: 'var(--font-playfair)', color: '#D4AF3720' }}
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold tracking-widest uppercase"
+                        style={{ color: '#D4AF37', backgroundColor: '#D4AF3718', border: '1px solid #D4AF3740' }}>
+                        {article.source_name}
+                      </span>
+                      <span className="text-[10px] text-[#555]">{formatDate(article.published_at)}</span>
+                    </div>
+                    <h2
+                      className="text-xl md:text-2xl font-bold text-white group-hover:text-[#D4AF37] transition-colors mb-3 leading-snug"
+                      style={{ fontFamily: 'var(--font-playfair)' }}
+                    >
+                      {article.title}
+                    </h2>
+                    <p className="text-[#777] text-sm leading-relaxed line-clamp-2">
+                      {article.content.replace(/\n/g, ' ')}
+                    </p>
+                    <div className="flex items-center mt-4">
+                      <span className="text-[11px] text-[#D4AF37] group-hover:underline ml-auto">
+                        記事を読む &rarr;
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Tool CTA */}
         <div
