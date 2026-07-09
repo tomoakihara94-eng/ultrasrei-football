@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AdsenseUnit from '@/components/AdsenseUnit';
 
 export const metadata: Metadata = {
   title: 'モウリーニョ名言集 | 欧州サッカー歴代ベストイレブンメーカー',
@@ -415,54 +416,56 @@ export default function MourinhoPage() {
             const color = categoryColors[quote.category] || '#D4AF37';
             const isGold = quote.category === '自信';
             return (
-              <article
-                key={i}
-                className="rounded-2xl p-6 md:p-8 transition-all"
-                style={{
-                  background: isGold
-                    ? 'linear-gradient(135deg, #0f0d06 0%, #100f09 100%)'
-                    : '#0c0c0c',
-                  border: `1px solid ${isGold ? 'rgba(212,175,55,0.25)' : '#1a1a1a'}`,
-                }}
-              >
-                <div className="flex items-start justify-between gap-4 mb-5">
-                  <span
-                    className="text-[10px] px-3 py-1 rounded-full font-bold tracking-wider uppercase"
-                    style={{ backgroundColor: color + '20', color: color, border: `1px solid ${color}40` }}
-                  >
-                    {quote.category}
-                  </span>
-                  <span
-                    className="text-3xl font-black leading-none shrink-0 tabular-nums"
-                    style={{ fontFamily: 'var(--font-playfair)', color: 'rgba(212,175,55,0.08)' }}
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-
-                {/* English quote */}
-                <blockquote
-                  className="text-lg md:text-xl font-medium leading-relaxed mb-3 italic"
+              <div key={i}>
+                <article
+                  className="rounded-2xl p-6 md:p-8 transition-all"
                   style={{
-                    color: isGold ? '#f0e4b0' : '#e0e0e0',
-                    fontFamily: 'var(--font-playfair)',
-                    borderLeft: `3px solid ${color}`,
-                    paddingLeft: '1rem',
+                    background: isGold
+                      ? 'linear-gradient(135deg, #0f0d06 0%, #100f09 100%)'
+                      : '#0c0c0c',
+                    border: `1px solid ${isGold ? 'rgba(212,175,55,0.25)' : '#1a1a1a'}`,
                   }}
                 >
-                  &ldquo;{quote.text}&rdquo;
-                </blockquote>
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <span
+                      className="text-[10px] px-3 py-1 rounded-full font-bold tracking-wider uppercase"
+                      style={{ backgroundColor: color + '20', color: color, border: `1px solid ${color}40` }}
+                    >
+                      {quote.category}
+                    </span>
+                    <span
+                      className="text-3xl font-black leading-none shrink-0 tabular-nums"
+                      style={{ fontFamily: 'var(--font-playfair)', color: 'rgba(212,175,55,0.08)' }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
 
-                {/* Japanese translation */}
-                <p className="text-[#999] text-sm leading-relaxed mb-5 pl-5">
-                  「{quote.translation}」
-                </p>
+                  {/* English quote */}
+                  <blockquote
+                    className="text-lg md:text-xl font-medium leading-relaxed mb-3 italic"
+                    style={{
+                      color: isGold ? '#f0e4b0' : '#e0e0e0',
+                      fontFamily: 'var(--font-playfair)',
+                      borderLeft: `3px solid ${color}`,
+                      paddingLeft: '1rem',
+                    }}
+                  >
+                    &ldquo;{quote.text}&rdquo;
+                  </blockquote>
 
-                {/* Context */}
-                <p className="text-[#444] text-xs leading-relaxed border-t pt-4" style={{ borderColor: '#1a1a1a' }}>
-                  {quote.context}
-                </p>
-              </article>
+                  {/* Japanese translation */}
+                  <p className="text-[#999] text-sm leading-relaxed mb-5 pl-5">
+                    「{quote.translation}」
+                  </p>
+
+                  {/* Context */}
+                  <p className="text-[#444] text-xs leading-relaxed border-t pt-4" style={{ borderColor: '#1a1a1a' }}>
+                    {quote.context}
+                  </p>
+                </article>
+                {i % 8 === 7 && <AdsenseUnit />}
+              </div>
             );
           })}
         </div>

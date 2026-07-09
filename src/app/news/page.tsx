@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getNewsArticles } from '@/lib/newsArticles';
+import AdsenseUnit from '@/components/AdsenseUnit';
 
 export const metadata: Metadata = {
   title: '最新ニュース | 欧州サッカー歴代ベストイレブンメーカー',
@@ -50,24 +51,26 @@ export default async function NewsPage() {
           <p className="text-[#666]">まだニュースがありません。</p>
         ) : (
           <div className="space-y-8">
-            {articles.map((article) => (
-              <Link
-                key={article.id}
-                href={`/news/${article.id}`}
-                className="block border border-[#1e1e1e] rounded-lg p-6 bg-[#0d0d0d] hover:border-[#D4AF37]/40 transition-colors"
-              >
-                <div className="flex items-center gap-3 mb-3 text-xs text-[#666]">
-                  <span className="text-[#D4AF37]">{article.source_name}</span>
-                  <span>{formatDate(article.published_at)}</span>
-                </div>
-                <h2 className="text-xl font-bold mb-3">{article.title}</h2>
-                <p className="text-[#ccc] leading-relaxed line-clamp-4 whitespace-pre-line">
-                  {article.content}
-                </p>
-                <span className="inline-block mt-4 text-xs text-[#D4AF37] hover:text-[#F0D060] transition-colors">
-                  続きを読む &rarr;
-                </span>
-              </Link>
+            {articles.map((article, i) => (
+              <div key={article.id}>
+                <Link
+                  href={`/news/${article.id}`}
+                  className="block border border-[#1e1e1e] rounded-lg p-6 bg-[#0d0d0d] hover:border-[#D4AF37]/40 transition-colors"
+                >
+                  <div className="flex items-center gap-3 mb-3 text-xs text-[#666]">
+                    <span className="text-[#D4AF37]">{article.source_name}</span>
+                    <span>{formatDate(article.published_at)}</span>
+                  </div>
+                  <h2 className="text-xl font-bold mb-3">{article.title}</h2>
+                  <p className="text-[#ccc] leading-relaxed line-clamp-4 whitespace-pre-line">
+                    {article.content}
+                  </p>
+                  <span className="inline-block mt-4 text-xs text-[#D4AF37] hover:text-[#F0D060] transition-colors">
+                    続きを読む &rarr;
+                  </span>
+                </Link>
+                {i % 3 === 2 && <AdsenseUnit />}
+              </div>
             ))}
           </div>
         )}

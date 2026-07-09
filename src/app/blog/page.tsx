@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getNewsArticles } from '@/lib/newsArticles';
+import AdsenseUnit from '@/components/AdsenseUnit';
 
 export const revalidate = 300;
 
@@ -55,43 +56,45 @@ export default async function BlogIndexPage() {
         ) : (
           <div className="space-y-6">
             {newsArticles.map((article, i) => (
-              <Link
-                key={article.id}
-                href={`/news/${article.id}`}
-                className="group block bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl p-6 md:p-8 hover:border-[#D4AF37]/40 transition-all"
-              >
-                <div className="flex flex-col md:flex-row md:items-start gap-4">
-                  <div
-                    className="text-5xl font-black shrink-0 w-14 text-center leading-none"
-                    style={{ fontFamily: 'var(--font-playfair)', color: '#D4AF3720' }}
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold tracking-widest uppercase"
-                        style={{ color: '#D4AF37', backgroundColor: '#D4AF3718', border: '1px solid #D4AF3740' }}>
-                        {article.source_name}
-                      </span>
-                      <span className="text-[10px] text-[#555]">{formatDate(article.published_at)}</span>
-                    </div>
-                    <h2
-                      className="text-xl md:text-2xl font-bold text-white group-hover:text-[#D4AF37] transition-colors mb-3 leading-snug"
-                      style={{ fontFamily: 'var(--font-playfair)' }}
+              <div key={article.id}>
+                <Link
+                  href={`/news/${article.id}`}
+                  className="group block bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl p-6 md:p-8 hover:border-[#D4AF37]/40 transition-all"
+                >
+                  <div className="flex flex-col md:flex-row md:items-start gap-4">
+                    <div
+                      className="text-5xl font-black shrink-0 w-14 text-center leading-none"
+                      style={{ fontFamily: 'var(--font-playfair)', color: '#D4AF3720' }}
                     >
-                      {article.title}
-                    </h2>
-                    <p className="text-[#777] text-sm leading-relaxed line-clamp-2">
-                      {article.content.replace(/\n/g, ' ')}
-                    </p>
-                    <div className="flex items-center mt-4">
-                      <span className="text-[11px] text-[#D4AF37] group-hover:underline ml-auto">
-                        記事を読む &rarr;
-                      </span>
+                      {String(i + 1).padStart(2, '0')}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-[9px] px-2 py-0.5 rounded-full font-bold tracking-widest uppercase"
+                          style={{ color: '#D4AF37', backgroundColor: '#D4AF3718', border: '1px solid #D4AF3740' }}>
+                          {article.source_name}
+                        </span>
+                        <span className="text-[10px] text-[#555]">{formatDate(article.published_at)}</span>
+                      </div>
+                      <h2
+                        className="text-xl md:text-2xl font-bold text-white group-hover:text-[#D4AF37] transition-colors mb-3 leading-snug"
+                        style={{ fontFamily: 'var(--font-playfair)' }}
+                      >
+                        {article.title}
+                      </h2>
+                      <p className="text-[#777] text-sm leading-relaxed line-clamp-2">
+                        {article.content.replace(/\n/g, ' ')}
+                      </p>
+                      <div className="flex items-center mt-4">
+                        <span className="text-[11px] text-[#D4AF37] group-hover:underline ml-auto">
+                          記事を読む &rarr;
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+                {i % 3 === 2 && <AdsenseUnit />}
+              </div>
             ))}
           </div>
         )}

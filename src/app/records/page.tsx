@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AdsenseUnit from '@/components/AdsenseUnit';
 
 export const metadata: Metadata = {
   title: 'レアル・マドリード 歴代記録集 | 欧州サッカー歴代ベストイレブンメーカー',
@@ -208,6 +209,9 @@ export default function RecordsPage() {
           title="ラ・リーガの記録"
           records={ligaRecords}
         />
+
+        <AdsenseUnit />
+
         <Section
           label="Individual Records"
           title="個人記録（マドリー在籍時）"

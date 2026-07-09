@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AdsenseUnit from '@/components/AdsenseUnit';
 
 export const metadata: Metadata = {
   title: '使い方ガイド | 欧州サッカー歴代ベストイレブンメーカー',
@@ -102,6 +103,8 @@ export default function GuidePage() {
               選んだ選手の組み合わせによって、分析結果が大きく変わります。守備的な選手を多く選べば堅守のチームに、攻撃的な選手を揃えれば高得点チームになります。
             </p>
           </section>
+
+          <AdsenseUnit />
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4 border-l-4 border-[#D4AF37] pl-4">ステップ4：SNSでシェアして議論しよう</h2>
