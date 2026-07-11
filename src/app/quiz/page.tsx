@@ -86,6 +86,9 @@ const LV_CONFIG = {
   3: { label: 'LV.3 上級', color: C.purpleLight, bg: 'rgba(124,58,237,0.20)', border: 'rgba(167,139,250,0.5)' },
 };
 
+// 画面ラッパー共通クラス
+const SCREEN_WRAP = 'min-h-screen flex flex-col items-center justify-center p-[1.5rem]';
+
 // localStorage キー
 const LS_KEY = 'rm_quiz_cleared';
 const LS_SEEN_PREFIX = 'rm_quiz_seen_lv';
@@ -226,7 +229,6 @@ export default function QuizPage() {
   const q        = questions[currentIdx];
   const progress = questions.length > 0 ? ((currentIdx + (selected !== null ? 1 : 0)) / questions.length) * 100 : 0;
   const passed   = score >= PASS_THRESHOLD[selectedLevel];
-  const bg       = { backgroundColor: C.navy, minHeight: '100vh' };
 
   // ═══════════════════════════════════════════════════════════
   // START — レベル選択画面
@@ -260,34 +262,32 @@ export default function QuizPage() {
     ];
 
     return (
-      <div style={{ ...bg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-        <div style={{ maxWidth: 460, width: '100%' }}>
+      <div className={SCREEN_WRAP} style={{ backgroundColor: C.navy }}>
+        <div className="max-w-[460px] w-full">
 
           {/* Hero */}
-          <div style={{ textAlign: 'center', marginBottom: 24 }}>
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              width: 72, height: 72, borderRadius: '50%',
+          <div className="text-center mb-[24px]">
+            <div className="inline-flex items-center justify-center w-[72px] h-[72px] rounded-full mb-[14px]" style={{
               background: `linear-gradient(135deg, ${C.navyLight}, ${C.navyCard})`,
-              border: `2px solid ${C.gold}`, marginBottom: 14,
+              border: `2px solid ${C.gold}`,
               boxShadow: `0 0 32px rgba(212,175,55,0.22)`,
             }}>
               <span style={{ fontSize: 32 }}>⭐</span>
             </div>
-            <div style={{ fontSize: 10, color: C.gold, letterSpacing: '0.2em', fontWeight: 700, marginBottom: 6 }}>UEFA CHAMPIONS LEAGUE</div>
-            <h1 style={{ fontFamily: 'Georgia,serif', fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 4 }}>
+            <div className="tracking-[0.2em] font-bold mb-[6px]" style={{ fontSize: 10, color: C.gold }}>UEFA CHAMPIONS LEAGUE</div>
+            <h1 className="font-bold mb-[4px]" style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: C.white }}>
               21世紀 CLマスタークイズ
             </h1>
             <p style={{ fontSize: 12, color: C.dim }}>全10問・4択形式　2000-01〜現在</p>
           </div>
 
           {/* Level selector */}
-          <div style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 10, color: C.dimmer, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10 }}>
+          <div className="mb-[16px]">
+            <div className="font-bold tracking-[0.12em] uppercase mb-[10px]" style={{ fontSize: 10, color: C.dimmer }}>
               レベルを選択
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div className="flex flex-col gap-[10px]">
               {LEVEL_INFO.map(({ lv, title, sub, pass, unlock, tip }) => {
                 const lc      = LV_CONFIG[lv];
                 const unlocked = isUnlocked(lv);
@@ -299,22 +299,20 @@ export default function QuizPage() {
                     key={lv}
                     onClick={() => unlocked && setSelectedLevel(lv)}
                     disabled={!unlocked}
+                    className="w-full text-left rounded-[14px] px-[16px] py-[14px]"
                     style={{
-                      width: '100%', textAlign: 'left', cursor: unlocked ? 'pointer' : 'not-allowed',
+                      cursor: unlocked ? 'pointer' : 'not-allowed',
                       backgroundColor: active ? lc.bg : C.navyCard,
                       border: `2px solid ${active ? lc.border : unlocked ? C.navyBorder : 'rgba(255,255,255,0.05)'}`,
-                      borderRadius: 14, padding: '14px 16px',
                       opacity: unlocked ? 1 : 0.45,
                       transition: 'all 0.15s ease',
                       boxShadow: active ? `0 0 18px ${lc.color}20` : 'none',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                    <div className="flex items-start gap-[12px]">
 
                       {/* Left icon */}
-                      <div style={{
-                        width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      <div className="w-[36px] h-[36px] rounded-full shrink-0 flex items-center justify-center" style={{
                         backgroundColor: lc.bg, border: `1px solid ${lc.border}`,
                       }}>
                         {!unlocked
@@ -328,31 +326,31 @@ export default function QuizPage() {
                       </div>
 
                       {/* Content */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
-                          <span style={{ fontSize: 13, fontWeight: 700, color: unlocked ? lc.color : C.dimmer }}>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-[8px] mb-[3px]">
+                          <span className="font-bold" style={{ fontSize: 13, color: unlocked ? lc.color : C.dimmer }}>
                             {lv === 3 && '🔥 '}{title}
                           </span>
                           {cleared && (
-                            <span style={{ fontSize: 9, color: C.green, fontWeight: 700, backgroundColor: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.4)', borderRadius: 10, padding: '1px 6px' }}>
+                            <span className="font-bold rounded-[10px] px-[6px] py-[1px]" style={{ fontSize: 9, color: C.green, backgroundColor: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.4)' }}>
                               ✓ クリア済み
                             </span>
                           )}
                           {!unlocked && (
-                            <span style={{ fontSize: 9, color: C.dimmer, backgroundColor: C.dimmest, borderRadius: 10, padding: '1px 6px' }}>
+                            <span className="rounded-[10px] px-[6px] py-[1px]" style={{ fontSize: 9, color: C.dimmer, backgroundColor: C.dimmest }}>
                               🔒 ロック中
                             </span>
                           )}
                         </div>
-                        <div style={{ fontSize: 11, color: unlocked ? C.dim : C.dimmer, marginBottom: 4 }}>{sub}</div>
-                        <div style={{ fontSize: 10, color: unlocked ? lc.color : C.dimmer, fontWeight: 700, marginBottom: 2 }}>
+                        <div className="mb-[4px]" style={{ fontSize: 11, color: unlocked ? C.dim : C.dimmer }}>{sub}</div>
+                        <div className="font-bold mb-[2px]" style={{ fontSize: 10, color: unlocked ? lc.color : C.dimmer }}>
                           📋 {pass}
                         </div>
                         <div style={{ fontSize: 10, color: unlocked ? C.dimmer : 'rgba(255,255,255,0.15)' }}>
                           → {unlock}
                         </div>
                         {unlocked && active && (
-                          <div style={{ fontSize: 9, color: C.dimmer, marginTop: 6, borderTop: `1px solid ${C.dimmest}`, paddingTop: 6 }}>
+                          <div className="mt-[6px] pt-[6px]" style={{ fontSize: 9, color: C.dimmer, borderTop: `1px solid ${C.dimmest}` }}>
                             💡 {tip}
                           </div>
                         )}
@@ -360,11 +358,10 @@ export default function QuizPage() {
 
                       {/* Active check */}
                       {active && unlocked && (
-                        <div style={{
-                          width: 18, height: 18, borderRadius: '50%', flexShrink: 0,
-                          backgroundColor: lc.color, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        <div className="w-[18px] h-[18px] rounded-full shrink-0 flex items-center justify-center" style={{
+                          backgroundColor: lc.color,
                         }}>
-                          <span style={{ fontSize: 10, color: '#000', fontWeight: 900 }}>✓</span>
+                          <span className="font-black" style={{ fontSize: 10, color: '#000' }}>✓</span>
                         </div>
                       )}
                     </div>
@@ -375,7 +372,7 @@ export default function QuizPage() {
           </div>
 
           {error && (
-            <div style={{ backgroundColor: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 10, padding: '10px 14px', marginBottom: 12, fontSize: 11, color: '#FCA5A5' }}>
+            <div className="rounded-[10px] px-[14px] py-[10px] mb-[12px]" style={{ backgroundColor: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', fontSize: 11, color: '#FCA5A5' }}>
               {error}
             </div>
           )}
@@ -383,12 +380,12 @@ export default function QuizPage() {
           <button
             onClick={() => fetchQuestions(selectedLevel)}
             disabled={loading || !isUnlocked(selectedLevel)}
+            className="w-full py-[14px] px-0 rounded-[12px] font-bold tracking-[0.05em] flex items-center justify-center gap-[8px]"
             style={{
-              width: '100%', padding: '14px 0', borderRadius: 12, border: 'none',
+              border: 'none',
               background: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, #A07D10 100%)`,
-              color: '#000', fontWeight: 700, fontSize: 14, letterSpacing: '0.05em',
+              color: '#000', fontSize: 14,
               cursor: loading ? 'not-allowed' : 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               opacity: loading ? 0.6 : 1,
               boxShadow: loading ? 'none' : `0 0 28px rgba(212,175,55,0.35)`,
             }}
@@ -397,8 +394,8 @@ export default function QuizPage() {
             {loading ? '読み込み中...' : `LV.${selectedLevel} を始める`}
           </button>
 
-          <div style={{ textAlign: 'center', marginTop: 12 }}>
-            <a href="/tool" style={{ fontSize: 11, color: C.dimmer, textDecoration: 'none' }}>← ベストイレブンメーカーに戻る</a>
+          <div className="text-center mt-[12px]">
+            <a href="/tool" className="no-underline" style={{ fontSize: 11, color: C.dimmer }}>← ベストイレブンメーカーに戻る</a>
           </div>
         </div>
       </div>
@@ -416,27 +413,26 @@ export default function QuizPage() {
     const remaining = threshold - score;
 
     return (
-      <div style={{ ...bg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-        <div style={{ maxWidth: 480, width: '100%' }}>
+      <div className={SCREEN_WRAP} style={{ backgroundColor: C.navy }}>
+        <div className="max-w-[480px] w-full">
 
           {/* Progress */}
-          <div style={{ marginBottom: 18 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div className="mb-[18px]">
+            <div className="flex justify-between items-center mb-[6px]">
+              <div className="flex items-center gap-[6px]">
                 <span style={{ fontSize: 11, color: C.dimmer }}>問題 {currentIdx + 1} / {questions.length}</span>
-                <span style={{ fontSize: 9, color: LV_CONFIG[selectedLevel].color, fontWeight: 700,
+                <span className="font-bold rounded-[10px] px-[6px] py-[1px]" style={{ fontSize: 9, color: LV_CONFIG[selectedLevel].color,
                   backgroundColor: LV_CONFIG[selectedLevel].bg, border: `1px solid ${LV_CONFIG[selectedLevel].border}`,
-                  borderRadius: 10, padding: '1px 6px',
                 }}>
                   LV.{selectedLevel}
                 </span>
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: 11, fontWeight: 700, color: C.gold }}>{score}問正解</span>
-                <span style={{ fontSize: 9, color: C.dimmer, marginLeft: 6 }}>合格まで残り{Math.max(0, remaining - (currentIdx - answers.length))}問</span>
+              <div className="text-right">
+                <span className="font-bold" style={{ fontSize: 11, color: C.gold }}>{score}問正解</span>
+                <span className="ml-[6px]" style={{ fontSize: 9, color: C.dimmer }}>合格まで残り{Math.max(0, remaining - (currentIdx - answers.length))}問</span>
               </div>
             </div>
-            <div style={{ width: '100%', backgroundColor: C.dimmest, borderRadius: 99, height: 4 }}>
+            <div className="w-full rounded-[99px] h-[4px]" style={{ backgroundColor: C.dimmest }}>
               <div style={{
                 width: `${progress}%`, height: 4, borderRadius: 99,
                 background: `linear-gradient(90deg, ${C.gold}, ${C.goldLight})`,
@@ -452,10 +448,9 @@ export default function QuizPage() {
               }}>▲ 合格ライン</div>
             </div>
             {/* Answer dots */}
-            <div style={{ display: 'flex', gap: 4, marginTop: 4, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+            <div className="flex gap-[4px] mt-[4px] justify-end flex-wrap">
               {questions.map((qq, i) => (
-                <div key={i} style={{
-                  width: 7, height: 7, borderRadius: '50%',
+                <div key={i} className="w-[7px] h-[7px] rounded-full" style={{
                   backgroundColor: i < currentIdx
                     ? (answers[i] ? C.green : C.red)
                     : i === currentIdx ? GENRE_CONFIG[qq.genre].color : C.dimmest,
@@ -466,41 +461,40 @@ export default function QuizPage() {
           </div>
 
           {/* Question card */}
-          <div style={{
+          <div className="rounded-[18px] pt-[24px] px-[20px] pb-[20px] mb-[12px]" style={{
             background: isLv3 && q.genre === 'legends' ? 'linear-gradient(160deg,#130d2a 0%,#0f1e35 60%)' : genre.cardBg,
             border: `1px solid ${isLv3 && q.genre === 'legends' ? 'rgba(167,139,250,0.35)' : genre.cardBorder}`,
-            borderRadius: 18, padding: '24px 20px 20px', marginBottom: 12,
             animation: 'slideUp 0.25s ease-out',
           }}>
             {/* Genre + Level badges */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, backgroundColor: genre.bg, border: `1px solid ${genre.border}`, borderRadius: 20, padding: '3px 10px' }}>
+            <div className="flex items-center justify-center gap-[8px] mb-[16px]">
+              <div className="inline-flex items-center gap-[5px] rounded-[20px] px-[10px] py-[3px]" style={{ backgroundColor: genre.bg, border: `1px solid ${genre.border}` }}>
                 <genre.Icon size={10} color={genre.color} />
-                <span style={{ fontSize: 9, fontWeight: 700, color: genre.color, letterSpacing: '0.08em' }}>{genre.label}</span>
+                <span className="font-bold tracking-[0.08em]" style={{ fontSize: 9, color: genre.color }}>{genre.label}</span>
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, backgroundColor: lv.bg, border: `1px solid ${lv.border}`, borderRadius: 20, padding: '3px 10px' }}>
+              <div className="inline-flex items-center gap-[4px] rounded-[20px] px-[10px] py-[3px]" style={{ backgroundColor: lv.bg, border: `1px solid ${lv.border}` }}>
                 {isLv3 && <Flame size={9} color={lv.color} />}
-                <span style={{ fontSize: 9, fontWeight: 700, color: lv.color, letterSpacing: '0.08em' }}>{lv.label}</span>
+                <span className="font-bold tracking-[0.08em]" style={{ fontSize: 9, color: lv.color }}>{lv.label}</span>
               </div>
             </div>
 
             {/* Context */}
             {q.context && (
-              <div style={{ textAlign: 'center', marginBottom: 10 }}>
-                {q.emoji && <div style={{ fontSize: 36, marginBottom: 6 }}>{q.emoji}</div>}
-                <div style={{ fontSize: 10, color: C.dimmer, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>Real Madrid C.F.</div>
-                <div style={{ fontFamily: 'Georgia,serif', fontSize: 14, fontWeight: 700, color: C.white, marginBottom: 8 }}>{q.context}</div>
+              <div className="text-center mb-[10px]">
+                {q.emoji && <div className="mb-[6px]" style={{ fontSize: 36 }}>{q.emoji}</div>}
+                <div className="tracking-[0.15em] uppercase mb-[4px]" style={{ fontSize: 10, color: C.dimmer }}>Real Madrid C.F.</div>
+                <div className="font-bold mb-[8px]" style={{ fontFamily: 'Georgia,serif', fontSize: 14, color: C.white }}>{q.context}</div>
               </div>
             )}
-            {!q.context && q.emoji && <div style={{ textAlign: 'center', fontSize: 38, marginBottom: 12 }}>{q.emoji}</div>}
+            {!q.context && q.emoji && <div className="text-center mb-[12px]" style={{ fontSize: 38 }}>{q.emoji}</div>}
 
             {/* Question text */}
-            <div style={{ textAlign: 'center', marginBottom: 18, padding: '12px 14px', backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)' }}>
-              <p style={{ fontSize: 14, fontWeight: 700, color: C.white, lineHeight: 1.6, margin: 0 }}>{q.question_text}</p>
+            <div className="text-center mb-[18px] px-[14px] py-[12px] rounded-[10px]" style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <p className="font-bold leading-[1.6] m-0" style={{ fontSize: 14, color: C.white }}>{q.question_text}</p>
             </div>
 
             {/* Choices */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div className="grid grid-cols-2 gap-[10px]">
               {q.choices.map(choice => {
                 const isCorrect = choice === q.correct_answer;
                 const isWrong   = selected !== null && choice === selected && !isCorrect;
@@ -512,15 +506,16 @@ export default function QuizPage() {
                   else if (isDimmed) { bg2 = 'rgba(255,255,255,0.02)'; border2 = 'rgba(255,255,255,0.04)'; color2 = 'rgba(255,255,255,0.2)'; }
                 }
                 return (
-                  <button key={choice} onClick={() => handleSelect(choice)} disabled={selected !== null} style={{
-                    backgroundColor: bg2, border: `1px solid ${border2}`, borderRadius: 12,
-                    padding: '10px', color: color2,
-                    fontFamily: /^\d/.test(choice) ? 'Georgia,serif' : 'inherit',
-                    fontSize: 15,
-                    fontWeight: 700, cursor: selected !== null ? 'default' : 'pointer',
-                    transition: 'all 0.15s ease', boxShadow: shadow, lineHeight: 1.4,
-                    minHeight: 60, wordBreak: 'break-word', whiteSpace: 'normal',
-                  }}>
+                  <button key={choice} onClick={() => handleSelect(choice)} disabled={selected !== null}
+                    className="rounded-[12px] p-[10px] font-bold min-h-[60px] break-words whitespace-normal"
+                    style={{
+                      backgroundColor: bg2, border: `1px solid ${border2}`,
+                      color: color2,
+                      fontFamily: /^\d/.test(choice) ? 'Georgia,serif' : 'inherit',
+                      fontSize: 15,
+                      cursor: selected !== null ? 'default' : 'pointer',
+                      transition: 'all 0.15s ease', boxShadow: shadow, lineHeight: 1.4,
+                    }}>
                     {choice}
                   </button>
                 );
@@ -529,24 +524,25 @@ export default function QuizPage() {
 
             {/* Feedback */}
             {selected !== null && (
-              <div style={{ marginTop: 14, textAlign: 'center', animation: 'slideUp 0.2s ease-out' }}>
+              <div className="mt-[14px] text-center" style={{ animation: 'slideUp 0.2s ease-out' }}>
                 {selected === q.correct_answer
-                  ? <span style={{ fontSize: 13, color: C.green, fontWeight: 700 }}>✓ 正解！　{q.correct_answer}</span>
+                  ? <span className="font-bold" style={{ fontSize: 13, color: C.green }}>✓ 正解！　{q.correct_answer}</span>
                   : <span style={{ fontSize: 13, color: C.red }}>✗ 不正解… 正解は <strong style={{ color: C.white }}>{q.correct_answer}</strong></span>
                 }
-                {q.hint && <p style={{ fontSize: 10, color: C.dimmer, marginTop: 6, lineHeight: 1.5 }}>💡 {q.hint}</p>}
+                {q.hint && <p className="mt-[6px] leading-[1.5]" style={{ fontSize: 10, color: C.dimmer }}>💡 {q.hint}</p>}
               </div>
             )}
           </div>
 
           {selected !== null && (
-            <button onClick={handleNext} style={{
-              width: '100%', padding: '13px 0', borderRadius: 12, border: 'none',
-              background: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, #A07D10 100%)`,
-              color: '#000', fontWeight: 700, fontSize: 13, letterSpacing: '0.04em', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-              boxShadow: `0 0 20px rgba(212,175,55,0.3)`, animation: 'slideUp 0.2s ease-out',
-            }}>
+            <button onClick={handleNext}
+              className="w-full py-[13px] px-0 rounded-[12px] font-bold tracking-[0.04em] cursor-pointer flex items-center justify-center gap-[6px]"
+              style={{
+                border: 'none',
+                background: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, #A07D10 100%)`,
+                color: '#000', fontSize: 13,
+                boxShadow: `0 0 20px rgba(212,175,55,0.3)`, animation: 'slideUp 0.2s ease-out',
+              }}>
               {currentIdx + 1 < questions.length
                 ? <><span>次の問題</span><ChevronRight size={15} /></>
                 : <><Trophy size={15} /><span>結果を見る</span></>}
@@ -569,37 +565,36 @@ export default function QuizPage() {
     const hColor    = hensachiColor(hensachi);
 
     return (
-      <div style={{ ...bg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-        <div style={{ maxWidth: 440, width: '100%', animation: 'slideUp 0.3s ease-out' }}>
+      <div className={SCREEN_WRAP} style={{ backgroundColor: C.navy }}>
+        <div className="max-w-[440px] w-full" style={{ animation: 'slideUp 0.3s ease-out' }}>
 
           {/* Pass / Fail banner */}
-          <div style={{
-            borderRadius: 14, padding: '12px 20px', marginBottom: 12, textAlign: 'center',
+          <div className="rounded-[14px] px-[20px] py-[12px] mb-[12px] text-center" style={{
             backgroundColor: passed ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)',
             border: `1px solid ${passed ? 'rgba(34,197,94,0.5)' : 'rgba(239,68,68,0.4)'}`,
           }}>
             {isLv3Legend ? (
               <>
-                <div style={{ fontSize: 28, marginBottom: 4 }}>👑</div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: C.gold, fontFamily: 'Georgia,serif' }}>
+                <div className="mb-[4px]" style={{ fontSize: 28 }}>👑</div>
+                <div className="font-bold" style={{ fontSize: 16, color: C.gold, fontFamily: 'Georgia,serif' }}>
                   伝説のレジェンド 称号獲得！
                 </div>
               </>
             ) : passed ? (
               <>
-                <div style={{ fontSize: 22, marginBottom: 3 }}>🎉</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: C.green }}>LV.{selectedLevel} 合格！</div>
+                <div className="mb-[3px]" style={{ fontSize: 22 }}>🎉</div>
+                <div className="font-bold" style={{ fontSize: 15, color: C.green }}>LV.{selectedLevel} 合格！</div>
                 {selectedLevel < 3 && (
-                  <div style={{ fontSize: 11, color: C.dim, marginTop: 4 }}>
+                  <div className="mt-[4px]" style={{ fontSize: 11, color: C.dim }}>
                     🔓 LV.{selectedLevel + 1} が解放されました！
                   </div>
                 )}
               </>
             ) : (
               <>
-                <div style={{ fontSize: 22, marginBottom: 3 }}>😤</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: C.red }}>LV.{selectedLevel} 不合格…</div>
-                <div style={{ fontSize: 11, color: C.dim, marginTop: 4 }}>
+                <div className="mb-[3px]" style={{ fontSize: 22 }}>😤</div>
+                <div className="font-bold" style={{ fontSize: 15, color: C.red }}>LV.{selectedLevel} 不合格…</div>
+                <div className="mt-[4px]" style={{ fontSize: 11, color: C.dim }}>
                   合格ライン：{threshold}問正解　あと{threshold - score}問必要です
                 </div>
               </>
@@ -615,11 +610,11 @@ export default function QuizPage() {
                 fetchQuestions(next);
               }}
               disabled={loading}
+              className="w-full py-[14px] px-0 rounded-[12px] cursor-pointer font-bold mb-[12px] flex items-center justify-center gap-[6px]"
               style={{
-                width: '100%', padding: '14px 0', borderRadius: 12, border: 'none', cursor: 'pointer',
+                border: 'none',
                 background: `linear-gradient(135deg, ${C.gold}, #A07D10)`, color: '#000',
-                fontWeight: 700, fontSize: 14, marginBottom: 12,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                fontSize: 14,
                 opacity: loading ? 0.6 : 1,
               }}
             >
@@ -628,33 +623,31 @@ export default function QuizPage() {
           )}
 
           {/* Score card */}
-          <div style={{
+          <div className="rounded-[20px] px-[22px] py-[24px] text-center mb-[12px]" style={{
             background: 'linear-gradient(160deg,#122040 0%,#0F1E35 100%)',
-            border: '1px solid rgba(212,175,55,0.4)', borderRadius: 20,
-            padding: '24px 22px', textAlign: 'center', marginBottom: 12,
+            border: '1px solid rgba(212,175,55,0.4)',
             boxShadow: '0 0 40px rgba(212,175,55,0.1)',
           }}>
-            <div style={{ fontSize: 38, marginBottom: 6 }}>{isLv3Legend ? '👑' : t.emoji}</div>
-            <div style={{ fontSize: 10, color: C.dimmer, letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 5 }}>あなたの称号</div>
-            <div style={{ fontFamily: 'Georgia,serif', fontSize: 16, fontWeight: 700, color: C.gold, marginBottom: 16 }}>
+            <div className="mb-[6px]" style={{ fontSize: 38 }}>{isLv3Legend ? '👑' : t.emoji}</div>
+            <div className="tracking-[0.2em] uppercase mb-[5px]" style={{ fontSize: 10, color: C.dimmer }}>あなたの称号</div>
+            <div className="font-bold mb-[16px]" style={{ fontFamily: 'Georgia,serif', fontSize: 16, color: C.gold }}>
               {isLv3Legend ? '永遠のレジェンド "Hala Madrid"' : t.title}
             </div>
 
-            <div style={{ fontFamily: 'Georgia,serif', fontSize: 50, fontWeight: 900, color: C.gold, lineHeight: 1 }}>
-              {score}<span style={{ fontSize: 20, color: C.dimmer, fontWeight: 400 }}>/{questions.length}</span>
+            <div className="font-black leading-none" style={{ fontFamily: 'Georgia,serif', fontSize: 50, color: C.gold }}>
+              {score}<span className="font-normal" style={{ fontSize: 20, color: C.dimmer }}>/{questions.length}</span>
             </div>
-            <div style={{ fontSize: 12, color: C.dim, marginTop: 4, marginBottom: 16 }}>
+            <div className="mt-[4px] mb-[16px]" style={{ fontSize: 12, color: C.dim }}>
               正解率 {pct}%　|　合格ライン {threshold}問
             </div>
 
             {/* Answer dots */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
+            <div className="flex justify-center gap-[4px] flex-wrap">
               {answers.map((ok, i) => {
                 const qq = questions[i];
                 return (
-                  <div key={i} style={{
-                    width: 22, height: 22, borderRadius: '50%', fontSize: 9, fontWeight: 700,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  <div key={i} className="w-[22px] h-[22px] rounded-full font-bold flex items-center justify-center" style={{
+                    fontSize: 9,
                     backgroundColor: ok ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.15)',
                     border: `1px solid ${ok ? C.green + '80' : C.red + '80'}`,
                     color: ok ? C.green : C.red,
@@ -668,7 +661,7 @@ export default function QuizPage() {
             </div>
 
             {/* Genre breakdown */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginTop: 14, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="flex justify-center gap-[20px] mt-[14px] pt-[12px]" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
               {(['winners', 'legends'] as const).map(genre => {
                 const g  = GENRE_CONFIG[genre];
                 const qs = questions.filter(qq => qq.genre === genre);
@@ -677,10 +670,10 @@ export default function QuizPage() {
                   return acc + (answers[idx] ? 1 : 0);
                 }, 0);
                 return (
-                  <div key={genre} style={{ textAlign: 'center' }}>
-                    <g.Icon size={11} color={g.color} style={{ margin: '0 auto 2px' }} />
-                    <div style={{ fontSize: 10, color: g.color, fontWeight: 700 }}>{g.label}</div>
-                    <div style={{ fontSize: 13, color: C.white, fontWeight: 700 }}>{ok}/{qs.length}</div>
+                  <div key={genre} className="text-center">
+                    <g.Icon size={11} color={g.color} className="mt-0 mx-auto mb-[2px]" />
+                    <div className="font-bold" style={{ fontSize: 10, color: g.color }}>{g.label}</div>
+                    <div className="font-bold" style={{ fontSize: 13, color: C.white }}>{ok}/{qs.length}</div>
                   </div>
                 );
               })}
@@ -688,77 +681,75 @@ export default function QuizPage() {
           </div>
 
           {/* 偏差値ゲージ */}
-          <div style={{
+          <div className="rounded-[20px] px-[22px] py-[20px] mb-[12px]" style={{
             background: 'linear-gradient(160deg,#0d1a30 0%,#0F1E35 100%)',
             border: `2px solid ${hColor}40`,
-            borderRadius: 20, padding: '20px 22px', marginBottom: 12,
             boxShadow: `0 0 24px ${hColor}18`,
           }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 12 }}>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em' }}>CL偏差値</span>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                <span style={{ fontFamily: 'Georgia,serif', fontSize: 52, fontWeight: 900, color: hColor, lineHeight: 1 }}>{hensachi}</span>
+            <div className="flex items-baseline justify-between mb-[12px]">
+              <span className="tracking-[0.15em]" style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>CL偏差値</span>
+              <div className="flex items-baseline gap-[4px]">
+                <span className="font-black leading-none" style={{ fontFamily: 'Georgia,serif', fontSize: 52, color: hColor }}>{hensachi}</span>
                 <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.2)' }}>/100</span>
               </div>
             </div>
 
             {/* Gauge bar */}
-            <div style={{ width: '100%', height: 14, backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: 7, overflow: 'hidden', marginBottom: 6 }}>
-              <div style={{
-                width: `${hensachi}%`, height: '100%',
+            <div className="w-full h-[14px] rounded-[7px] overflow-hidden mb-[6px]" style={{ backgroundColor: 'rgba(255,255,255,0.07)' }}>
+              <div className="h-full rounded-[7px]" style={{
+                width: `${hensachi}%`,
                 background: 'linear-gradient(90deg,#F87171 0%,#FBBF24 40%,#D4AF37 68%,#F0D060 100%)',
-                borderRadius: 7,
                 transition: 'width 1s ease-out',
               }} />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div className="flex justify-between">
               {['初心者', '普通', '上級', '銀河系', '伝説'].map(l => (
                 <span key={l} style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)' }}>{l}</span>
               ))}
             </div>
 
             {/* Share prompt */}
-            <div style={{
-              marginTop: 14, padding: '10px 14px', borderRadius: 10,
+            <div className="mt-[14px] px-[14px] py-[10px] rounded-[10px] text-center" style={{
               backgroundColor: `${hColor}14`, border: `1px solid ${hColor}35`,
-              textAlign: 'center',
             }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: hColor }}>
+              <span className="font-bold" style={{ fontSize: 13, color: hColor }}>
                 俺のCL偏差値は{hensachi}。これを超えられる奴いる？💪
               </span>
             </div>
           </div>
 
           {/* Ranking submit */}
-          <div style={{ backgroundColor: C.navyCard, border: `1px solid ${C.navyBorder}`, borderRadius: 14, padding: '14px 16px', marginBottom: 12 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+          <div className="rounded-[14px] px-[16px] py-[14px] mb-[12px]" style={{ backgroundColor: C.navyCard, border: `1px solid ${C.navyBorder}` }}>
+            <div className="flex items-center gap-[6px] mb-[10px]">
               <Medal size={13} color={C.gold} />
-              <span style={{ fontSize: 10, fontWeight: 700, color: C.dimmer, letterSpacing: '0.12em', textTransform: 'uppercase' }}>ランキングに登録</span>
+              <span className="font-bold tracking-[0.12em] uppercase" style={{ fontSize: 10, color: C.dimmer }}>ランキングに登録</span>
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div className="flex gap-[8px]">
               <input type="text" value={nickname} onChange={e => setNickname(e.target.value)}
                 placeholder="ニックネーム（最大20文字）" maxLength={20}
-                style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 8, padding: '8px 12px', color: C.white, fontSize: 12, outline: 'none' }}
+                className="flex-1 rounded-[8px] px-[12px] py-[8px]"
+                style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', color: C.white, fontSize: 12, outline: 'none' }}
               />
               <button onClick={handleSubmitRanking} disabled={!nickname.trim() || submitted || loading}
-                style={{ padding: '8px 16px', borderRadius: 8, border: 'none', cursor: 'pointer', background: `linear-gradient(135deg, ${C.gold}, #A07D10)`, color: '#000', fontWeight: 700, fontSize: 11, opacity: (!nickname.trim() || submitted || loading) ? 0.4 : 1, whiteSpace: 'nowrap' }}
+                className="px-[16px] py-[8px] rounded-[8px] cursor-pointer font-bold whitespace-nowrap"
+                style={{ border: 'none', background: `linear-gradient(135deg, ${C.gold}, #A07D10)`, color: '#000', fontSize: 11, opacity: (!nickname.trim() || submitted || loading) ? 0.4 : 1 }}
               >
                 {loading ? '...' : submitted ? '登録済み' : '登録'}
               </button>
             </div>
-            {error && <p style={{ color: C.red, fontSize: 10, marginTop: 6 }}>{error}</p>}
+            {error && <p className="mt-[6px]" style={{ color: C.red, fontSize: 10 }}>{error}</p>}
           </div>
 
           {/* Actions */}
-          <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
-            <button onClick={handleShareX} style={{ flex: 1, padding: '12px 0', borderRadius: 12, border: '1px solid rgba(255,255,255,0.18)', backgroundColor: '#000', color: C.white, fontWeight: 700, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+          <div className="flex gap-[10px] mb-[10px]">
+            <button onClick={handleShareX} className="flex-1 py-[12px] px-0 rounded-[12px] font-bold cursor-pointer flex items-center justify-center gap-[6px]" style={{ border: '1px solid rgba(255,255,255,0.18)', backgroundColor: '#000', color: C.white, fontSize: 12 }}>
               <Share2 size={14} />Xにシェア
             </button>
-            <button onClick={() => setPhase('ranking')} style={{ flex: 1, padding: '12px 0', borderRadius: 12, border: 'rgba(212,175,55,0.4) solid 1px', backgroundColor: 'rgba(212,175,55,0.08)', color: C.gold, fontWeight: 700, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+            <button onClick={() => setPhase('ranking')} className="flex-1 py-[12px] px-0 rounded-[12px] font-bold cursor-pointer flex items-center justify-center gap-[6px]" style={{ border: 'rgba(212,175,55,0.4) solid 1px', backgroundColor: 'rgba(212,175,55,0.08)', color: C.gold, fontSize: 12 }}>
               <Trophy size={14} />ランキング
             </button>
           </div>
-          <button onClick={handleRestart} style={{ width: '100%', padding: '11px 0', borderRadius: 12, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'transparent', color: C.dimmer, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+          <button onClick={handleRestart} className="w-full py-[11px] px-0 rounded-[12px] cursor-pointer flex items-center justify-center gap-[6px]" style={{ border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'transparent', color: C.dimmer, fontSize: 12 }}>
             <RotateCcw size={12} />レベル選択に戻る
           </button>
         </div>
@@ -770,56 +761,55 @@ export default function QuizPage() {
   // RANKING
   // ═══════════════════════════════════════════════════════════
   if (phase === 'ranking') return (
-    <div style={{ ...bg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-      <div style={{ maxWidth: 440, width: '100%', animation: 'slideUp 0.3s ease-out' }}>
-        <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <Trophy size={26} color={C.gold} style={{ margin: '0 auto 8px' }} />
-          <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 17, fontWeight: 700, color: C.white, marginBottom: 4 }}>ランキング</h2>
+    <div className={SCREEN_WRAP} style={{ backgroundColor: C.navy }}>
+      <div className="max-w-[440px] w-full" style={{ animation: 'slideUp 0.3s ease-out' }}>
+        <div className="text-center mb-[20px]">
+          <Trophy size={26} color={C.gold} className="mt-0 mx-auto mb-[8px]" />
+          <h2 className="font-bold mb-[4px]" style={{ fontFamily: 'Georgia,serif', fontSize: 17, color: C.white }}>ランキング</h2>
           <p style={{ fontSize: 10, color: C.dimmer }}>マドリー 経歴クイズ</p>
         </div>
 
-        <div style={{ backgroundColor: C.navyCard, border: `1px solid ${C.navyBorder}`, borderRadius: 16, overflow: 'hidden', marginBottom: 14 }}>
+        <div className="rounded-[16px] overflow-hidden mb-[14px]" style={{ backgroundColor: C.navyCard, border: `1px solid ${C.navyBorder}` }}>
           {rankings.length === 0
-            ? <div style={{ padding: '32px 16px', textAlign: 'center', color: C.dimmer, fontSize: 12 }}>まだ登録者がいません</div>
+            ? <div className="px-[16px] py-[32px] text-center" style={{ color: C.dimmer, fontSize: 12 }}>まだ登録者がいません</div>
             : rankings.map((entry, i) => {
               const r   = getRankLabel(i);
               const t   = getTitle(entry.score);
               const pct = Math.round((entry.score / entry.total) * 100);
               const lv  = LV_CONFIG[(entry.level ?? 1) as 1 | 2 | 3] ?? LV_CONFIG[1];
               return (
-                <div key={entry.id} style={{
-                  display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
+                <div key={entry.id} className="flex items-center gap-[12px] px-[16px] py-[12px]" style={{
                   borderBottom: i < rankings.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
                   backgroundColor: i === 0 ? 'rgba(212,175,55,0.07)' : 'transparent',
                 }}>
-                  <span style={{ fontSize: i < 3 ? 18 : 11, color: r.color, width: 30, textAlign: 'center', flexShrink: 0 }}>{r.label}</span>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: C.white, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{entry.nickname}</span>
-                      <span style={{ fontSize: 8, fontWeight: 700, color: lv.color, backgroundColor: lv.bg, border: `1px solid ${lv.border}`, borderRadius: 5, padding: '1px 5px', flexShrink: 0 }}>
+                  <span className="w-[30px] text-center shrink-0" style={{ fontSize: i < 3 ? 18 : 11, color: r.color }}>{r.label}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-[6px]">
+                      <span className="font-bold overflow-hidden text-ellipsis whitespace-nowrap" style={{ fontSize: 12, color: C.white }}>{entry.nickname}</span>
+                      <span className="font-bold rounded-[5px] px-[5px] py-[1px] shrink-0" style={{ fontSize: 8, color: lv.color, backgroundColor: lv.bg, border: `1px solid ${lv.border}` }}>
                         LV.{entry.level ?? 1}
                       </span>
                     </div>
-                    <div style={{ fontSize: 9, color: C.dimmer, marginTop: 1 }}>{t.emoji} {t.title} · {entry.score}/{entry.total}問 ({pct}%)</div>
+                    <div className="mt-[1px]" style={{ fontSize: 9, color: C.dimmer }}>{t.emoji} {t.title} · {entry.score}/{entry.total}問 ({pct}%)</div>
                   </div>
-                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, fontWeight: 900, color: C.gold, flexShrink: 0 }}>{entry.points ?? entry.score}</div>
+                  <div className="font-black shrink-0" style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: C.gold }}>{entry.points ?? entry.score}</div>
                 </div>
               );
             })
           }
         </div>
 
-        <div style={{ display: 'flex', gap: 10 }}>
-          <button onClick={handleShareX} style={{ flex: 1, padding: '12px 0', borderRadius: 12, border: '1px solid rgba(255,255,255,0.18)', backgroundColor: '#000', color: C.white, fontWeight: 700, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+        <div className="flex gap-[10px]">
+          <button onClick={handleShareX} className="flex-1 py-[12px] px-0 rounded-[12px] font-bold cursor-pointer flex items-center justify-center gap-[6px]" style={{ border: '1px solid rgba(255,255,255,0.18)', backgroundColor: '#000', color: C.white, fontSize: 12 }}>
             <Share2 size={14} />Xにシェア
           </button>
-          <button onClick={handleRestart} style={{ flex: 1, padding: '12px 0', borderRadius: 12, border: 'none', background: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, #A07D10 100%)`, color: '#000', fontWeight: 700, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 0 18px rgba(212,175,55,0.25)' }}>
+          <button onClick={handleRestart} className="flex-1 py-[12px] px-0 rounded-[12px] font-bold cursor-pointer flex items-center justify-center gap-[6px]" style={{ border: 'none', background: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, #A07D10 100%)`, color: '#000', fontSize: 12, boxShadow: '0 0 18px rgba(212,175,55,0.25)' }}>
             <RotateCcw size={12} />もう一度
           </button>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: 14 }}>
-          <a href="/tool" style={{ fontSize: 11, color: C.dimmer, textDecoration: 'none' }}>← ベストイレブンメーカーに戻る</a>
+        <div className="text-center mt-[14px]">
+          <a href="/tool" className="no-underline" style={{ fontSize: 11, color: C.dimmer }}>← ベストイレブンメーカーに戻る</a>
         </div>
       </div>
     </div>
