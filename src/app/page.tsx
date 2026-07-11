@@ -58,6 +58,7 @@ export default async function Home() {
               { href: '/blog', label: '記事' },
               { href: '/records', label: '記録集' },
               { href: '/quiz', label: 'CLクイズ' },
+              { href: '/diagnosis', label: '選手診断' },
             ].map(({ href, label }) => (
               <Link key={href} href={href}
                 className="px-4 py-2 text-[13px] rounded-lg transition-colors"
@@ -620,6 +621,7 @@ export default async function Home() {
                 { href: '/mourinho', label: 'モウリーニョ語録' },
                 { href: '/tool',     label: 'ベストイレブンメーカー' },
                 { href: '/quiz',     label: 'CLクイズ' },
+                { href: '/diagnosis', label: '選手診断' },
                 { href: '/gallery',  label: 'みんなのフォーメーション' },
                 { href: '/about',    label: '運営者情報' },
                 { href: '/privacy',  label: 'プライバシーポリシー' },
