@@ -144,7 +144,7 @@ export default function WorldCup2026DiagnosisPage() {
             borderRadius: 16, padding: '24px 28px', marginBottom: 32, textAlign: 'left',
           }}>
             {[
-              ['🌎', 'W杯2026出場国のスターのみ', 'エムバペ・メッシ・久保建英ら総勢' + WORLD_CUP_2026_PLAYERS.length + '名'],
+              ['🌎', 'W杯2026出場国のスターのみ', 'エムバペ・メッシ・ハーランドら総勢' + WORLD_CUP_2026_PLAYERS.length + '名'],
               ['📋', '20問の診断', '性格・プレースタイルを問う4択'],
               ['⏱', '所要時間', '約2〜3分'],
             ].map(([icon, label, desc]) => (
