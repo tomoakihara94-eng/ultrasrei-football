@@ -20,9 +20,19 @@ function calcScore(answers: number[][]): Score {
   return base;
 }
 
+const PARAM_KEYS: Param[] = ['attack', 'defense', 'technique', 'mentality', 'intelligence'];
+
+// ユーザーの累積スコアは20問分の生の合計（選手パラメータの0-10とスケールが異なる）ため、
+// 単位ベクトルに正規化してから比較する（＝プロフィールの「形」の近さで判定する）
+function normalize(v: Record<Param, number>): Record<Param, number> {
+  const mag = Math.sqrt(PARAM_KEYS.reduce((s, k) => s + v[k] ** 2, 0)) || 1;
+  return PARAM_KEYS.reduce((out, k) => ({ ...out, [k]: v[k] / mag }), {} as Record<Param, number>);
+}
+
 function euclidean(a: Score, b: Record<Param, number>): number {
-  const keys: Param[] = ['attack', 'defense', 'technique', 'mentality', 'intelligence'];
-  return Math.sqrt(keys.reduce((sum, k) => sum + (a[k] - b[k]) ** 2, 0));
+  const na = normalize(a);
+  const nb = normalize(b);
+  return Math.sqrt(PARAM_KEYS.reduce((sum, k) => sum + (na[k] - nb[k]) ** 2, 0));
 }
 
 function findMatches(score: Score, top = 3): DiagnosisPlayer[] {
